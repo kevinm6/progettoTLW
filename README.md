@@ -8,7 +8,9 @@
 
 ---
 
-[Relazione](./Relazione.md)
+[🗺️ Mappa Concettuale](https://excalidraw.com/#room=da3ab79ee669f3f02a7a,JyxrLt7sjJYe53ffVLerYg)
+
+[📃 Relazione](./docs/Relazione.md)
 
 ---
 
