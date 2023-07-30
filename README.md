@@ -27,3 +27,4 @@
 ## Database
 
 + come memorizzare i vari dati su MongoDb?
++ diagrammi e struttura del db
