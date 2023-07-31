@@ -1,8 +1,8 @@
 const menuItems = [
-  { label: 'Home', link: 'index.html' },
-  { label: 'Ricerca', link: 'search.html' },
-  { label: 'Scheda Film', link: 'scheda-film.html?id_film=502356' },
-  { label: 'Scheda Attore', link: 'scheda-attore.html?id_attore=502356' },
+  { label: 'Home', link: '../html/index.html' },
+  { label: 'Ricerca', link: '../html/search.html' },
+  { label: 'Playlists', link: '../html/playlist.html?id_user=502356' },
+  { label: 'Groups', link: '../html/groups.html?id_user=502356' },
 ]
 
 var menuHTML = ''

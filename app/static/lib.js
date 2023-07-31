@@ -1,12 +1,12 @@
 // TODO: modify for Spotify
 //       and move all sensitive info into < config/prefs.js > file
 
-const prefs = require('../config/prefs');
-const BASE = prefs.spotify.base_url
-const image_base_url = prefs.spotify.image_base_url
-const LANG = prefs.spotify.lang
+// console.log(settings)
 
-const API_KEY = prefs.spotify.apikey
+// FIX: check file prefs.js:22
+const API_KEY = 'api_key=siudasubdsdsaadsdsiadasadsuadssa',
+   BASE = "https://api.spotify.com/v1/",
+   LANG = 'language=it-IT';
 
 var page = 1
 var pageCast = 0
@@ -14,14 +14,14 @@ var pageCast = 0
 function prev() {
   if (page > 1) {
     page = page - 1
-    getPopolari(page)
+    getRecommended(page)
   }
 }
 
 function next() {
   if (page < 1000) {
     page = page + 1
-    getPopolari(page)
+    getRecommended(page)
   }
 }
 
@@ -37,7 +37,7 @@ function nextCast() {
   getCredits(id, pageCast)
 }
 
-function mostraPopolari(popolari) {
+function getRecommended(popolari) {
   var card = document.getElementById('card-film')
   var container = document.getElementById('container-film')
   container.innerHTML = ''
@@ -64,7 +64,7 @@ function mostraPopolari(popolari) {
   }
 }
 
-function mostraFilm(film) {
+function showTrack(film) {
   console.log(film)
   document.getElementById('card-title').innerHTML = film.title
   document.getElementById('card-overview').innerHTML = film.overview
@@ -72,14 +72,14 @@ function mostraFilm(film) {
   document.getElementById('card-img').src = image_base_url + film.poster_path
 }
 
-function getFilm(id) {
+function getTrack(id) {
   fetch(`${BASE}movie/${id}?${API_KEY}&${LANG}`)
     .then((response) => {
       if (!response.ok) {
         response.json().then((data) => alert(data.status_message))
         return
       }
-      response.json().then((film) => mostraFilm(film))
+      response.json().then((film) => showTrack(film))
     })
     .catch((error) => alert(error))
 }
@@ -91,34 +91,34 @@ function getCredits(id, pageCast) {
         response.json().then((data) => alert(data.status_message))
         return
       }
-      response.json().then((people) => mostraCast(people, pageCast))
+      response.json().then((people) => showAuthors(people, pageCast))
     })
     .catch((error) => alert(error))
 }
 
-function mostraCast(people, pageCast) {
-  console.log(people)
+function showAuthors(author, pageAuthors) {
+  console.log(author)
   var card = document.getElementById('card-cast')
   var container = document.getElementById('container-cast')
   container.innerHTML = ''
   container.append(card)
 
-  for (var i = pageCast * 6; i < (pageCast + 1) * 6; i++) {
+  for (var i = pageAuthors * 6; i < (pageAuthors + 1) * 6; i++) {
     var clone = card.cloneNode(true)
 
     clone.id = 'card-cast-' + i
-    clone.getElementsByClassName('card-text')[0].innerHTML = people.cast[i].name
+    clone.getElementsByClassName('card-text')[0].innerHTML = author.cast[i].name
     clone.getElementsByClassName('text-body-secondary')[0].innerHTML =
-      people.cast[i].character
-    if (people.cast[i].profile_path != null) {
+      author.cast[i].character
+    if (author.cast[i].profile_path != null) {
       clone.getElementsByClassName('card-img-top')[0].src =
-        image_base_url + people.cast[i].profile_path
+        image_base_url + author.cast[i].profile_path
     } else {
       clone.getElementsByClassName('card-img-top')[0].src =
         'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
     }
     clone.getElementsByClassName('btn')[0].href =
-      'scheda-attore.html?id_attore=' + people.cast[i].id
+      'scheda-attore.html?id_attore=' + author.cast[i].id
 
     clone.classList.remove('d-none')
 
@@ -126,19 +126,19 @@ function mostraCast(people, pageCast) {
   }
 }
 
-function getPopolari(page) {
+function getRecommended(page) {
   fetch(`${BASE}movie/popular?${API_KEY}&${LANG}&page=${page}`)
     .then((response) => {
       if (!response.ok) {
         response.json().then((data) => alert(data.status_message))
         return
       }
-      response.json().then((popolari) => mostraPopolari(popolari))
+      response.json().then((popolari) => getRecommended(popolari))
     })
     .catch((error) => alert(error))
 }
 
-function ricerca(query) {
+function search(query) {
   console.log(query)
 
   fetch(`${BASE}search/movie?${API_KEY}&${LANG}&page=${page}&query=${query}`)
@@ -147,7 +147,7 @@ function ricerca(query) {
         response.json().then((data) => alert(data.status_message))
         return
       }
-      response.json().then((popolari) => mostraPopolari(popolari))
+      response.json().then((popolari) => getRecommended(popolari))
     })
     .catch((error) => alert(error))
 }
@@ -158,7 +158,7 @@ function getGuestSessionId() {
   )
 }
 
-function vota() {
+function vote() {
   voto = document.getElementById('voto').value
 
   sessionId = getGuestSessionId()
@@ -182,32 +182,32 @@ function vota() {
   })
 }
 
-function getPreferiti() {
+function getFavourites() {
   fetch(`${BASE}movie/preferiti?${API_KEY}`)
     .then((response) => {
       if (!response.ok) {
         response.json().then((data) => alert(data.status_message))
         return
       }
-      response.json().then((preferiti) => mostraPopolari(preferiti))
+      response.json().then((preferiti) => getRecommended(preferiti))
     })
     .catch((error) => alert(error))
 }
 
-function mostraPreferiti(preferiti) {
-  for (var i = preferiti.results.length - 1; i >= 0; i--) {
+function showFavourites(favourites) {
+  for (var i = favourites.results.length - 1; i >= 0; i--) {
     clone.id = 'card-film-' + i
 
     clone.getElementsByClassName('card-title')[0].innerHTML =
-      preferiti.results[i].title
+      favourites.results[i].title
     clone.getElementsByClassName('card-text')[0].innerHTML =
-      preferiti.results[i].overview
+      favourites.results[i].overview
     clone.getElementsByClassName('text-body-secondary')[0].innerHTML =
-      preferiti.results[i].release_date
+      favourites.results[i].release_date
     clone.getElementsByClassName('card-img-top')[0].src =
-      image_base_url + preferiti.results[i].poster_path
+      image_base_url + favourites.results[i].poster_path
     clone.getElementsByClassName('btn')[0].href =
-      'scheda-film.html?id_film=' + preferiti.results[i].id
+      'scheda-film.html?id_film=' + favourites.results[i].id
 
     clone.classList.remove('d-none')
 

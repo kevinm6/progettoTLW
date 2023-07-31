@@ -1,17 +1,23 @@
-const mongoClient = require('mongodb').MongoClient
-const ObjectId = require('mongodb').ObjectId
-// const auth = require('./auth').auth
-const crypto = require('crypto')
-var cors = require('cors')
-const express = require('express')
-const path = require('path')
-const prefs = require('./src/config/prefs')
+const mongoClient = require('mongodb').MongoClient,
+   ObjectId = require('mongodb').ObjectId,
+   auth = require('./app/static/auth').auth,
+   crypto = require('crypto'),
+   express = require('express'),
+   path = require('path'),
+   prefs = require('./app/config/prefs');
 
+var cors = require('cors')
 
 // TODO: For now is just a semi-skeleton for what we need to do!
 
 const app = express()
 app.use(cors())
+
+// HACK: this avoid no-sniff error for loading
+app.use(express.static(__dirname))
+app.use(express.static(path.join( __dirname, '/app/')))
+app.use(express.static(path.join( __dirname, '/app/config/')))
+app.use(express.static(path.join( __dirname, '/app/static/')))
 // app.use(auth) // Per avere apikey su tutti gli endpoint
 app.use(express.json())
 
@@ -183,7 +189,7 @@ app.post('/users', auth, function(req, res) {
 })
 
 app.get('/login', async (req, res) => {
-  res.sendFile(path.join(__dirname, '/login.html'))
+  res.sendFile(__dirname + '/app/html/login.html')
 })
 
 app.post('/login', async (req, res) => {
@@ -223,7 +229,8 @@ app.delete('/users/:id', auth, function(req, res) {
 })
 
 app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, '/index.html'))
+   // res.setHeader('Content-Type', 'text/html');
+   res.sendFile(path.join(__dirname, "/app/html/index.html"));
 })
 
 app.get('/favorites/:id', async (req, res) => {
