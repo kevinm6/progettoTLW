@@ -2,7 +2,7 @@
 
 // Main configs
 const settings = {
-   port: '3000',
+   port: 3000,
    listen_on: 'localhost',
    auth_apikey: '123456'
 };
@@ -22,7 +22,7 @@ settings.mongodb = {
 // FIX: can't use these for now on lib.js
 // Since is a static JS file, require can't work
 // Figure out a better way to manage and avoid keep this data
-//    in `lib.js` file, even for security reason
+//    in < lib.js > file, even for security reason
 settings.spotify = {
    base_url : 'https://api.themoviedb.org/3/',
    img_base_url : 'https://image.tmdb.org/t/p/w300',
@@ -30,7 +30,6 @@ settings.spotify = {
    apikey: 'api_key=siudasubdsdsaadsdsiadasadsuadssa',
    client_id: 'f6250455148444c19addcada7c1b33f0',
    client_secret: '9e65f0fd425041098a26352ffd529044',
-   url: "https://accounts.spotify.com/api/token"
 };
 
 

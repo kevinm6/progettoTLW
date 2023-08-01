@@ -7,8 +7,7 @@ function auth(req, res, next) {
       res.status(401)
       return res.json({ message: "Invalid API key" })
     }
-
     next()
   }
 
-module.exports = { auth }
+module.exports = auth
