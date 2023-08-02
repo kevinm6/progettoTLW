@@ -1,19 +1,18 @@
 /**
  * Generate Spotify token and access from other modules
  */
-import settings from "../../config/prefs";
-const url = 'https://accounts.spotify.com/api/token'
+import spotify from "../../config/prefs.js";
 
 /**
  * Generate a new Spotify API token
- * @requires {settings.client_id, settings.client_secret}
- * @returns {String} token
+ * @requires {spotify.client_id, spotify.client_secret}
+ * @returns {string} token
  */
 const generateSpotifyToken = async () => {
 
   console.log(Date.now() + " generating Spotify token")
 
-  const basicAuth = new Buffer.from(`${settings.client_id}:${settings.client_secret}`).toString("base64")
+  const basicAuth = new Buffer.from(`${spotify.client_id}:${spotify.client_secret}`).toString("base64")
 
   const res = await fetch(URL, {
     method: "POST",
@@ -27,9 +26,10 @@ const generateSpotifyToken = async () => {
   const { access_token: token } = await res.json()
 
   // save Spotify token in localStorage
-  localStorage.setItem()
+  localStorage.setItem(access_token, token)
 
+   console.log(token)
   return token
 }
 
-export { generateSpotifyToken }
+export default generateSpotifyToken

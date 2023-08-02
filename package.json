@@ -1,8 +1,18 @@
 {
    "scripts": {
-      "start": "nodemon app.js"
+      "start": "nodemon app.js",
+      "test": "echo \"ERROR: no test specified\" && exit 1"
    },
    "homepage": "https://kevinm6.github.io/progettoTLW",
+   "type": "module",
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/kevinm6/progettoTLW.git"
+   },
+   "author": {
+      "Kevin Manca": "kevin.manca@studenti.unimi.it",
+      "Alessandro Riemer": "alessandro.riemer@studenti.unimi.it"
+   },
    "dependencies": {
       "cors": "^2.8.5",
       "express": "^4.18.2",

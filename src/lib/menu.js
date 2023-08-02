@@ -3,6 +3,7 @@ const menuItems = [
   { label: 'Ricerca', link: '../html/search.html' },
   { label: 'Playlists', link: '../html/playlist.html?id_user=502356' },
   { label: 'Groups', link: '../html/groups.html?id_user=502356' },
+  { label: 'Community', link: '../html/community.html?id_user=502356' },
 ]
 
 var menuHTML = ''
@@ -44,12 +45,15 @@ function logout() {
 const menuElement = document.getElementById('menu')
 menuElement.innerHTML = `
 <nav class="navbar navbar-expand-md bg-body-tertiary">
+
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Movie</a>
+            <a class="navbar-brand" href="#">Social Network for Music</a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     ${menuHTML}
@@ -57,8 +61,6 @@ menuElement.innerHTML = `
                 </ul>
               ${dropdown}
             </div>
-
-
 
         </div>
     </nav>

@@ -1,6 +1,6 @@
 // TODO: move to < config/prefs.js > file ??
 
-const apiKey = require('../config/prefs').auth_apikey;
+const apiKey = require('../config/prefs').default.auth_apikey;
 
 function auth(req, res, next) {
     if (req.query.apikey != apiKey) {
@@ -10,4 +10,4 @@ function auth(req, res, next) {
     next()
   }
 
-module.exports = auth
+export default auth
