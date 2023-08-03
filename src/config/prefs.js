@@ -1,48 +1,68 @@
 /*
  * Configuration for Server and Database
+ * plus config params for Spotify and MongoDB
  */
 
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { existsSync } from "fs";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
 
 const getAppRootDir = () => {
-   var currentDir = path.dirname(fileURLToPath(import.meta.url));
-   while(!fs.existsSync(path.join(currentDir, 'package.json'))) {
-      currentDir = path.join(currentDir, '../')
+   var currentDir = dirname(fileURLToPath(import.meta.url));
+   while (!existsSync(join(currentDir, "package.json"))) {
+      currentDir = join(currentDir, "../");
    }
-   return currentDir
-}
+   return currentDir;
+};
 
-// Main configs
+/**
+ * Main configs
+ * @param {string} host - Host to use as server for NodeJS environment
+ * @param {string} port - Port to use for the host if available
+ * @param {string} __dirname - set project root directory (based on location of package.json)
+ *                              because is not accessible anymore using ES6 modules standard
+ *                              instead of CommonJS
+ */
 const config = {
-   host: 'localhost',
+   host: "localhost",
    port: 3000,
-   __dirname: getAppRootDir()
+   __dirname: getAppRootDir(),
 };
-// MongoDB configs
+
+/**
+ * MongoDB config parameters
+ * @param {string} database - name/identifier of cluster in MongoDB instance
+ * @param {string} dbName - effective database name that store all the informations
+ * @param {string} url - connection string to access the above Mongo database;
+ *                       using mongodb module in this project
+ * @param {array} collections - list of all accessible collections of database to work with
+ */
 const mongodb = {
-   dbName: 'socialnetworkmusic',
-   database : 'tlwproject',
-   host : 'localhost',
-   uri: 'mongodb+srv://tlwuser:2BoK4Q6NZhQCNud@tlwproject.tszysxw.mongodb.net/?retryWrites=true&w=majority',
+   database: "tlwproject",
+   dbName: "socialnetworkmusic",
+   url: "mongodb+srv://tlwuser:2BoK4Q6NZhQCNud@tlwproject.tszysxw.mongodb.net/?retryWrites=true&w=majority",
    // TODO: others to be added when decided how manage data in Mongo
-   // see
-   collections : [
-      'users',
-      'community',
-      'playlists'
-   ],
+   collections: ["users", "community", "playlists"],
 };
-// Spotify configs
+
+/**
+ * Spotify config parameters
+ * @param {string} base_url - Base url to use Spotify API
+ * @param {string} token_url - Url for generate/refresh Spotify token
+ * @param {string} client_id - Identification string of the User/Client
+ * @param {string} client_secret - Code for access and use API
+ *
+ * ```
+ * For further reference and usage, visit:
+ * https://developer.spotify.com/documentation/web-api/reference
+ * ```
+ */
 const spotify = {
    base_url: "https://api.spotify.com/v1",
-   token_url: 'https://accounts.spotify.com/api/token',
-   lang: 'language=it-IT',
-   client_id: 'f6250455148444c19addcada7c1b33f0',
-   client_secret: '9e65f0fd425041098a26352ffd529044',
+   token_url: "https://accounts.spotify.com/api/token",
+   client_id: "f6250455148444c19addcada7c1b33f0",
+   client_secret: "9e65f0fd425041098a26352ffd529044",
 };
 
 // NOTE: decide what to export and expose outside and maybe wrap it
-//       around a function call (like encapsulation) if it's better
 export { config, spotify, mongodb };

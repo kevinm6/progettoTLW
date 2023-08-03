@@ -1,20 +1,20 @@
 const menuItems = [
-  { label: 'Home', link: '../html/index.html' },
-  { label: 'Ricerca', link: '../html/search.html' },
-  { label: 'Playlists', link: '../html/playlist.html?id_user=502356' },
-  { label: 'Groups', link: '../html/groups.html?id_user=502356' },
-  { label: 'Community', link: '../html/community.html?id_user=502356' },
-]
+   { label: "Home", link: "../html/index.html" },
+   { label: "Ricerca", link: "../html/search.html" },
+   { label: "Playlists", link: "../html/playlist.html?id_user=502356" },
+   { label: "Groups", link: "../html/groups.html?id_user=502356" },
+   { label: "Community", link: "../html/community.html?id_user=502356" },
+];
 
-var menuHTML = ''
+var menuHTML = "";
 
-var dropdown = '<div></div>'
-if (window.localStorage.getItem('user') != null) {
-  var user = JSON.parse(localStorage.getItem('user'))
-  console.log(localStorage.getItem('user'))
-  console.log(user)
-  menuItems.push({ label: `Preferiti`, link: 'preferiti.html' })
-  var dropdown = `
+var dropdown = "<div></div>";
+if (window.localStorage.getItem("user") != null) {
+   var user = JSON.parse(localStorage.getItem("user"));
+   console.log(localStorage.getItem("user"));
+   console.log(user);
+   menuItems.push({ label: `Preferiti`, link: "preferiti.html" });
+   var dropdown = `
         <div class="d-flex">
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
@@ -31,18 +31,18 @@ if (window.localStorage.getItem('user') != null) {
                 </li>
             </ul>
         </div>
-        `
+        `;
 }
 
 for (let i = 0; i < menuItems.length; i++) {
-  let item = menuItems[i]
-  menuHTML += `<li class="nav-item"><a class="nav-link" href="${item.link}">${item.label}</a></li>`
+   let item = menuItems[i];
+   menuHTML += `<li class="nav-item"><a class="nav-link" href="${item.link}">${item.label}</a></li>`;
 }
 function logout() {
-  localStorage.removeItem('user')
-  window.location.href = './html/index.html'
+   localStorage.removeItem("user");
+   window.location.href = "../html/index.html";
 }
-const menuElement = document.getElementById('menu')
+const menuElement = document.getElementById("menu");
 menuElement.innerHTML = `
 <nav class="navbar navbar-expand-md bg-body-tertiary">
 
@@ -64,4 +64,4 @@ menuElement.innerHTML = `
 
         </div>
     </nav>
-`
+`;

@@ -27,8 +27,7 @@ function login() {
       .then(logged_user => {
          localStorage.setItem("user", JSON.stringify(logged_user))
          window.location.href = "../html/index.html"
-      }
-      )
+      })
 }
 
 // document.querySelector('button').addEventListener('click', test);
