@@ -30,7 +30,8 @@
 
 + come memorizzare i vari dati su MongoDb?
 + diagrammi e struttura del db
-+ brainstorming e descrizione delle collections
++ brainstorming e descrizione delle collections.
++ rappresentazione grafica della base dati
 
 ---
 
