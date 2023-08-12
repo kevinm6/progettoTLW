@@ -121,6 +121,36 @@ app.post("/login", async (req, res) => {
    }
 });
 
+app.get("/register", async (req, res) => {
+   res.sendFile(config.__dirname + "/src/html/register.html");  
+});
+
+app.post("/register", async (req, res) => {
+   const newUser = req.body;
+ 
+   if (!newUser.name || !newUser.email || !newUser.username || !newUser.password) {
+     res.status(400).send("Missing required fields");
+     return;
+   }
+ 
+   newUser.password = hash(newUser.password);
+ 
+   const pwmClient = await new mongoClient(mongodb.url).connect();
+   try {
+     await pwmClient
+       .db(mongodb.dbName)
+       .collection("users")
+       .insertOne(newUser);
+ 
+     res.status(201).send("User registered successfully");
+   } catch (error) {
+     res.status(500).send("Error registering user");
+   } finally {
+     pwmClient.close();
+   }
+ });
+ 
+
 // ------------------- PAGINA PRINCIPALE -------------------
 
 // Endpoint per la pagina principale
