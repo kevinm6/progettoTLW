@@ -1,15 +1,15 @@
-const swaggerAutogen = require('swagger-autogen')();
+import swaggerAutogen from "swagger-autogen";
 
 const doc = {
    info: {
-      title: 'SNM API',
-      description: 'Description',
+      title: 'Social Network for Music API',
+      description: 'REST API Docs of Social Network for Music',
    },
    host: 'localhost:3000',
-   schemes: ['http'],
+   schemes: ['http', 'https'],
+   basePath: "/api-docs",
 };
 
-const outputFile = './swagger_out.json'
 const endpointsFiles = ['../../app.js', '../html/index.html']
 
-swaggerAutogen(outputFile, endpointsFiles, doc);
+swaggerAutogen('./swagger_out.json', endpointsFiles, doc);

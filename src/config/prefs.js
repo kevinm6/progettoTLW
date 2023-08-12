@@ -42,7 +42,11 @@ const mongodb = {
    dbName: "socialnetworkmusic",
    url: "mongodb+srv://tlwuser:jZgQI7LnL0hfCOQB@tlwproject.tszysxw.mongodb.net/",
    // TODO: others to be added when decided how manage data in Mongo
-   collections: ["users", "community", "playlists"],
+   collections: {
+      users: "users",
+      community: "community",
+      playlists: "playlists"
+   }
 };
 
 /**
