@@ -3,6 +3,7 @@
  * plus config params for Spotify and MongoDB
  */
 
+import 'dotenv/config'
 import { existsSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
@@ -15,6 +16,7 @@ const getAppRootDir = () => {
    return currentDir;
 };
 
+
 /**
  * Main configs
  * @param {string} host - Host to use as server for NodeJS environment
@@ -24,8 +26,8 @@ const getAppRootDir = () => {
  *                              instead of CommonJS
  */
 const config = {
-   host: "localhost",
-   port: 3000,
+   host: process.env.HOST,
+   port: process.env.PORT,
    __dirname: getAppRootDir(),
 };
 
@@ -38,14 +40,15 @@ const config = {
  * @param {array} collections - list of all accessible collections of database to work with
  */
 const mongodb = {
-   database: "tlwproject",
-   dbName: "socialnetworkmusic",
-   url: "mongodb+srv://tlwuser:jZgQI7LnL0hfCOQB@tlwproject.tszysxw.mongodb.net/",
+   database: process.env.DATABASE,
+   dbName: process.env.DB_NAME,
+   uri: process.env.DB_URI,
    // TODO: others to be added when decided how manage data in Mongo
    collections: {
       users: "users",
       community: "community",
-      playlists: "playlists"
+      playlists: "playlists",
+      tracks: "tracks"
    }
 };
 
@@ -62,10 +65,9 @@ const mongodb = {
  * ```
  */
 const spotify = {
-   base_url: "https://api.spotify.com/v1",
-   token_url: "https://accounts.spotify.com/api/token",
-   client_id: "f6250455148444c19addcada7c1b33f0",
-   client_secret: "9e65f0fd425041098a26352ffd529044",
+   token_url: process.env.TOKEN_URL,
+   client_id: process.env.CLIENT_ID,
+   client_secret: process.env.CLIENT_SECRET,
 };
 
 // NOTE: decide what to export and expose outside and maybe wrap it

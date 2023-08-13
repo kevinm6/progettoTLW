@@ -1,12 +1,11 @@
-import { config } from '../config/prefs.js';
+// import { config } from "./../config/prefs.js";
 
-function test() {
-   console.log(settings)
-}
 
+// console.log(config.host)
 /**
  * Maybe is useful use the objectid of mongodb to save it in localStorage and go on
  */
+
 
 function login() {
    var email = document.getElementById('email').value
@@ -26,8 +25,7 @@ function login() {
    }).then(response => response.json())
       .then(logged_user => {
          localStorage.setItem("user", JSON.stringify(logged_user))
-         window.location.href = "../html/index.html"
+         window.location.href = "./../html/index.html"
       })
 }
 
-// document.querySelector('button').addEventListener('click', test);

@@ -10,14 +10,14 @@ let _db;
  * @return _db - database instance of MongoDB
  */
 export const Db = async (collection) => {
-   console.log(!collection, collection == undefined)
+   // console.log(!collection, collection == undefined)
    if(_db && ! collection == undefined) {
       // console.log(_db);
       return _db;
    }
    let client;
    try {
-      client = new MongoClient(mongodb.url).db(mongodb.dbName);
+      client = new MongoClient(mongodb.uri).db(mongodb.dbName);
       if (collection) {
          _db = client.collection(collection);
       } else {

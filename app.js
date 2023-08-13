@@ -12,6 +12,7 @@ import { config } from "./src/config/prefs.js";
 import { Db } from "./src/lib/database.js";
 import { join } from "path";
 import swaggerDocument from "./src/api/docs/swagger_out.json" assert { type: "json" };
+import 'dotenv/config'
 
 // Creazione di un'istanza di Express per l'applicazione
 const app = express();
@@ -87,7 +88,7 @@ app.delete("/users/:id", function (req, res) {
 
 // Endpoint per ottenere la pagina di accesso
 app.get("/login", async (req, res) => {
-   res.sendFile(config.__dirname + "/src/html/login.html");
+   res.sendFile(config.__dirname + "./src/html/login.html");
 });
 
 // Endpoint per effettuare l'accesso
@@ -122,26 +123,26 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/register", async (req, res) => {
-   res.sendFile(config.__dirname + "/src/html/register.html");  
+   res.sendFile(config.__dirname + "/src/html/register.html");
 });
 
 app.post("/register", async (req, res) => {
    const newUser = req.body;
- 
+
    if (!newUser.name || !newUser.email || !newUser.username || !newUser.password) {
      res.status(400).send("Missing required fields");
      return;
    }
- 
+
    newUser.password = hash(newUser.password);
- 
+
    const pwmClient = await new mongoClient(mongodb.url).connect();
    try {
      await pwmClient
        .db(mongodb.dbName)
        .collection("users")
        .insertOne(newUser);
- 
+
      res.status(201).send("User registered successfully");
    } catch (error) {
      res.status(500).send("Error registering user");
@@ -149,7 +150,7 @@ app.post("/register", async (req, res) => {
      pwmClient.close();
    }
  });
- 
+
 
 // ------------------- PAGINA PRINCIPALE -------------------
 
@@ -166,5 +167,6 @@ const db = Db();
 app.listen(config.port, config.host, () => {
    console.log(`Server listening on port: ${config.port}`);
 });
+
 
 export default app
