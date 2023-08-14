@@ -6,28 +6,32 @@ let _db;
 /**
  * Create a singleton for MongoDB connection
  *
- * @param collection - if present, collection of database to use
+ * @param collection - if present, collection of database to connect
  * @return _db - database instance of MongoDB
+ *
+ * @usage
+ * ```javascript
+ *   const dbUserCollection = () => Db('<collection_name>');
+ *   let collection = await dbUserCollection();       // è necessario attendere la connessione e response al db
+ * ```
  */
 export const Db = async (collection) => {
-   // console.log(!collection, collection == undefined)
+   // console.log(collection, collection == undefined)
    if(_db && ! collection == undefined) {
-      // console.log(_db);
       return _db;
    }
-   let client;
    try {
-      client = new MongoClient(mongodb.uri).db(mongodb.dbName);
+      let client = new MongoClient(mongodb.uri).db(mongodb.dbName);
       if (collection) {
          _db = client.collection(collection);
+         console.log(`✅ MongoDB connected successful (collection: ${collection})`)
       } else {
          _db = client;
+         console.log("✅ MongoDB connected successful")
       }
-      console.log("✅ MongoDB connected successful")
    } catch (e) {
       console.error(`⚠️ Error connection with MongoDB:\n\t${e.message}`);
       process.exit(1);
    }
    return _db
 }
-

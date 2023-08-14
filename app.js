@@ -8,7 +8,7 @@ import {
 import express from "express";
 import cors from "cors";
 import { getUsers, getUser, addUser, updateUser, deleteUser } from "./src/lib/user.js";
-import { config } from "./src/config/prefs.js";
+import { mongodb, config } from "./src/config/prefs.js";
 import { Db } from "./src/lib/database.js";
 import { join } from "path";
 import swaggerDocument from "./src/api/docs/swagger_out.json" assert { type: "json" };
@@ -70,13 +70,13 @@ app.get("/users", async function (_, res) {
 // Endpoint per aggiungere un nuovo utente
 app.post("/users", function (req, res) {
    // console.log(req)
-   addUser(mongoClient, res, req.body);
+   addUser(res, req.body);
 });
 
 // Endpoint per aggiornare i dettagli di un utente
 app.put("/users/:id", function (req, res) {
    // var userLib = require("./src/lib/user.js")
-   updateUser(mongoClient, res, req.params.id, req.body);
+   updateUser(res, req.params.id, req.body);
 });
 
 // Endpoint per eliminare un utente
@@ -106,7 +106,7 @@ app.post("/login", async (req, res) => {
 
    login.password = hash(login.password);
 
-   var pwmClient = await new mongoClient(mongodb.url).connect();
+   var pwmClient = await new mongoClient(mongodb.uri).connect();
    var filter = {
       $and: [{ email: login.email }, { password: login.password }],
    };
@@ -127,6 +127,7 @@ app.get("/register", async (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
+   // TODO: this part must be moved to a register.js file and here we just call that
    const newUser = req.body;
 
    if (!newUser.name || !newUser.email || !newUser.username || !newUser.password) {
@@ -136,11 +137,12 @@ app.post("/register", async (req, res) => {
 
    newUser.password = hash(newUser.password);
 
-   const pwmClient = await new mongoClient(mongodb.url).connect();
+
+   const pwmClient = await new mongoClient(mongodb.uri).connect();
    try {
      await pwmClient
        .db(mongodb.dbName)
-       .collection("users")
+       .collection(mongodb.collections.users)
        .insertOne(newUser);
 
      res.status(201).send("User registered successfully");
@@ -161,7 +163,7 @@ app.get("/", function (req, res) {
 
 
 // Avvio della connessione al Database
-const db = Db();
+export const db = Db();
 
 // Avvio del server
 app.listen(config.port, config.host, () => {

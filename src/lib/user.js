@@ -3,8 +3,7 @@ import crypto from "crypto";
 import { ObjectId } from "mongodb";
 import { Db } from "./database.js";
 
-const dbUserCollection = async () => await Db('users');
-dbUserCollection()
+const dbUserCollection = () => Db('users');
 
 function hash(input) {
    return crypto.createHash('md5').update(input).digest('hex')
@@ -16,29 +15,33 @@ function hash(input) {
 
 
 
+/**
+ * Async function to get specific user from id
+ *
+ * @param req - request passed from express
+ * @return information about specific user from id
+ */
 export async function getUser(req) {
    var id = req.params.id;
-   console.log(id)
-
-   console.log(dbUserCollection)
-   return
-
-   // var mongoClient = await new mongoClient(mongodb.url).connect();
-   // var user = await mongoClient
-   //    .db(mongodb.dbName)
-   //    .collection("users")
-   //    .find({ _id: new ObjectId(id) })
-   //    .project({ password: 0 })
-   //    .toArray();
-   // res.json(user);
+   let collection = await dbUserCollection();
+   let users = await collection.find({ _id: id });
+   res.json(users);
 }
 
 
+
+/**
+ * Async function to get all users
+ *
+ * @param res - response passed from express
+ * @returns array of users
+ */
 export async function getUsers(res) {
-   // console.log(dbUserCollection)
-   let user = dbUserCollection();
-   res.json(user);
+   let collection = await dbUserCollection();
+   let users = await collection.find({}).toArray();
+   res.json(users);
 }
+
 
 /**
  * Async function to update an existing user
@@ -74,10 +77,7 @@ export async function updateUser(mongoClient, res, id, updatedUser) {
          $set: updatedUser,
       }
 
-      var item = await mongoClient
-         .db(mongodb.dbName)
-         .collection(mongodb.collections.users)
-         .updateOne(filter, updatedUserToInsert)
+      var item = await dbUserCollection.updateOne(filter, updatedUserToInsert)
       res.send(item)
    } catch (e) {
       if (e.code == 11000) {
