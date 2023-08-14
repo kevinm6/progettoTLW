@@ -7,7 +7,7 @@ let _db;
  * Create a singleton for MongoDB connection
  *
  * @param collection - if present, collection of database to connect
- * @return _db - database instance of MongoDB
+ * @returns _db - database instance of MongoDB
  *
  * @usage
  * ```javascript

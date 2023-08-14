@@ -88,7 +88,7 @@ app.delete("/users/:id", function (req, res) {
 
 // Endpoint per ottenere la pagina di accesso
 app.get("/login", async (req, res) => {
-   res.sendFile(config.__dirname + "./src/html/login.html");
+   res.sendFile(config.__dirname + "/src/html/login.html");
 });
 
 // Endpoint per effettuare l'accesso

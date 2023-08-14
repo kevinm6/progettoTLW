@@ -19,7 +19,7 @@ function hash(input) {
  * Async function to get specific user from id
  *
  * @param req - request passed from express
- * @return information about specific user from id
+ * @returns {object} users information about specific user from id
  */
 export async function getUser(req) {
    var id = req.params.id;
@@ -33,8 +33,8 @@ export async function getUser(req) {
 /**
  * Async function to get all users
  *
- * @param res - response passed from express
- * @returns array of users
+ * @param {object} res - response passed from express
+ * @returns {array.<object>} array of users
  */
 export async function getUsers(res) {
    let collection = await dbUserCollection();

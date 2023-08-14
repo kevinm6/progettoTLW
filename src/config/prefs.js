@@ -4,17 +4,14 @@
  */
 
 import 'dotenv/config'
-import { existsSync } from "fs";
-import { dirname, join } from "path";
-import { fileURLToPath } from "url";
+import { resolve } from "path";
 
-const getAppRootDir = () => {
-   var currentDir = dirname(fileURLToPath(import.meta.url));
-   while (!existsSync(join(currentDir, "package.json"))) {
-      currentDir = join(currentDir, "../");
-   }
-   return currentDir;
-};
+/**
+ * Get Application root directory.
+ *
+ * @returns {string} path of current working directory
+ */
+const getAppRootDir = () => resolve();
 
 
 /**
@@ -30,6 +27,7 @@ const config = {
    port: process.env.PORT,
    __dirname: getAppRootDir(),
 };
+
 
 /**
  * MongoDB config parameters
