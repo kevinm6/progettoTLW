@@ -4,7 +4,7 @@
  */
 
 import 'dotenv/config'
-import { resolve } from "path";
+import { resolve } from 'path';
 
 /**
  * Get Application root directory.
@@ -57,6 +57,7 @@ const mongodb = {
  * @param {string} client_id - Identification string of the User/Client
  * @param {string} client_secret - Code for access and use API
  *
+ * @usage
  * ```
  * For further reference and usage, visit:
  * https://developer.spotify.com/documentation/web-api/reference
@@ -68,5 +69,4 @@ const spotify = {
    client_secret: process.env.CLIENT_SECRET,
 };
 
-// NOTE: decide what to export and expose outside and maybe wrap it
 export { config, spotify, mongodb };

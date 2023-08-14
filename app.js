@@ -41,16 +41,7 @@ function hash(input) {
 
 // Endpoint per ottenere i dettagli di un utente specifico
 app.get("/users/:id", async function (req, res) {
-   // var id = req.params.id;
-   // var pwmClient = await new mongoClient(mongodb.url).connect();
-   // var user = await pwmClient
-   //    .db(mongodb.dbName)
-   //    .collection("users")
-   //    .find({ _id: new ObjectId(id) })
-   //    .project({ password: 0 })
-   //    .toArray();
-   // res.json(user);
-   getUser(req)
+   getUser(req, res)
 });
 
 // Endpoint per ottenere la lista di tutti gli utenti
@@ -161,6 +152,7 @@ app.get("/", function (req, res) {
    res.sendFile(config.__dirname + "/src/html/index.html");
 });
 
+// console.log(process.env)
 
 // Avvio della connessione al Database
 export const db = Db();

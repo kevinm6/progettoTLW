@@ -3,31 +3,46 @@ import crypto from "crypto";
 import { ObjectId } from "mongodb";
 import { Db } from "./database.js";
 
+
+/**
+ * User Collection from MongoDB
+ */
 const dbUserCollection = () => Db('users');
 
+
+/**
+ * Get hash (md5) from current input.
+ *
+ * @param {string} input - input to be encrypted
+ * @returns {string} hash of md5 algorithm applied to given input
+ */
 function hash(input) {
    return crypto.createHash('md5').update(input).digest('hex')
 }
 
-// TODO: Nelle funzioni sottostanti dobbiamo verificare meglio gli utenti ed eseguire
-//       una validazione dei dati nuovi/aggiornati!
-//       In questo modo possiamo gestire diversamente i vari check per dati mancanti ecc..
 
+/*
+ * TODO: Nelle funzioni sottostanti dobbiamo verificare meglio gli utenti ed eseguire
+ *       una validazione dei dati nuovi/aggiornati!
+ *       In questo modo possiamo gestire diversamente i vari check per dati mancanti ecc..
+ */
 
 
 /**
  * Async function to get specific user from id
  *
  * @param req - request passed from express
- * @returns {object} users information about specific user from id
+ * @returns {object} user information from id passed as request param
  */
-export async function getUser(req) {
-   var id = req.params.id;
+export async function getUser(req, res) {
+   let id = req.params.id;
    let collection = await dbUserCollection();
-   let users = await collection.find({ _id: id });
-   res.json(users);
+   let user = await collection
+      .find({ _id: new ObjectId(id) })
+      .project({})
+      .toArray();
+   res.json(user);
 }
-
 
 
 /**
@@ -38,7 +53,10 @@ export async function getUser(req) {
  */
 export async function getUsers(res) {
    let collection = await dbUserCollection();
-   let users = await collection.find({}).toArray();
+   let users = await collection
+      .find({})
+      .project({})
+      .toArray();
    res.json(users);
 }
 
@@ -51,7 +69,7 @@ export async function getUsers(res) {
  * @param id - id of the user to be updated
  * @param updateduser - user to be updated
  */
-export async function updateUser(mongoClient, res, id, updatedUser) {
+export async function updateUser(res, id, updatedUser) {
    if (updatedUser.name == undefined) {
       res.status(400).send('Missing Name')
       return
@@ -77,14 +95,15 @@ export async function updateUser(mongoClient, res, id, updatedUser) {
          $set: updatedUser,
       }
 
-      var item = await dbUserCollection.updateOne(filter, updatedUserToInsert)
+      var item = await dbUserCollection
+         .updateOne(filter, updatedUserToInsert);
       res.send(item)
    } catch (e) {
       if (e.code == 11000) {
-         res.status(400).send('Utente già presente')
+         res.status(400).send("User already exists!")
          return
       }
-      res.status(500).send(`Errore generico: ${e}`)
+      res.status(500).send(`Generic Error: ${e}`)
    }
 }
 
@@ -96,8 +115,7 @@ export async function updateUser(mongoClient, res, id, updatedUser) {
  * @param res - response passed from express
  * @param user - user to be created
  */
-export async function addUser(mongoClient, res, user) {
-   console.log(mongoClient)
+export async function addUser(res, user) {
    if (user.name == undefined) {
       res.status(400).send('Missing Name')
       return
@@ -118,20 +136,19 @@ export async function addUser(mongoClient, res, user) {
    user.password = hash(user.password)
 
    try {
-      var items = await mongoClient
-         .db(mongodb.dbName)
-         .collection(mongodb.collections.users)
-         .insertOne(user)
+      var items = await dbUserCollection()
+         .insertOne(user);
 
       res.json(items)
    } catch (e) {
       if (e.code == 11000) {
-         res.status(400).send('Utente già presente')
+         res.status(400).send("User already exists!")
          return
       }
-      res.status(500).send(`Errore generico: ${e}`)
+      res.status(500).send(`Generic Error: ${e}`)
    }
 }
+
 
 /**
  * Async function to delete a user
@@ -140,7 +157,7 @@ export async function addUser(mongoClient, res, user) {
  * @param res - response passed from express
  * @param id - id of user to be deleted
  */
-export async function deleteUser(mongoClient, res, id) {
+export async function deleteUser(res, id) {
    let index = users.findIndex((user) => user.id == id)
    if (index == -1) {
       res.status(404).send('User not found')
@@ -149,17 +166,15 @@ export async function deleteUser(mongoClient, res, id) {
    users = users.filter((user) => user.id != id)
    res.json(users)
    try {
-      var items = await mongoClient
-         .db(mongodb.dbName)
-         .collection(mongodb.collections.users)
-         .deleteOne(user)
+      var items = await dbUserCollection()
+         .deleteOne(user);
 
       res.json(items)
    } catch (e) {
       if (e.code == 11000) {
-         res.status(400).send('Utente già presente')
+         res.status(400).send("User already exists!");
          return
       }
-      res.status(500).send(`Errore generico: ${e}`)
+      res.status(500).send(`Generic Error: ${e}`)
    }
 }
