@@ -1,18 +1,20 @@
 // Import dei moduli necessari utilizzando il sistema di moduli ES6
 
-import { createHash } from "crypto";
+import express from "express";
+import cors from "cors";
+import { config } from "./src/config/prefs.js";
 import {
    serve as swaggeruiServe,
    setup as swaggeruiSetup,
 } from "swagger-ui-express";
-import express from "express";
-import cors from "cors";
+import 'dotenv/config'
+import { login } from "./src/lib/login.js";
 import { getUsers, getUser, addUser, updateUser, deleteUser } from "./src/lib/user.js";
-import { mongodb, config } from "./src/config/prefs.js";
 import { Db } from "./src/lib/database.js";
 import { join } from "path";
 import swaggerDocument from "./src/api/docs/swagger_out.json" assert { type: "json" };
-import 'dotenv/config'
+import { login } from "./src/lib/login.js";
+import { register } from "./src/lib/register.js";
 
 // Creazione di un'istanza di Express per l'applicazione
 const app = express();
@@ -32,11 +34,6 @@ app.use(express.static(join(config.__dirname, "/src/config/")));
 app.use(express.static(join(config.__dirname, "/src/static/")));
 
 
-// Funzione per creare un hash utilizzando l'algoritmo MD5
-function hash(input) {
-   return createHash("md5").update(input).digest("hex");
-}
-
 // ------------------- GESTIONE UTENTI -------------------
 
 // Endpoint per ottenere i dettagli di un utente specifico
@@ -46,27 +43,16 @@ app.get("/users/:id", async function (req, res) {
 
 // Endpoint per ottenere la lista di tutti gli utenti
 app.get("/users", async function (_, res) {
-   // var pwmClient = await new mongoClient(mongodb.url).connect();
-   // var users = await pwmClient
-   //    .db(mongodb.dbName)
-   //    .collection(mongodb.collections.users)
-   //    .find()
-   //    .project({ password: 0 })
-   //    .toArray();
-   // res.json(users);
-   // console.log(db.connection);
    getUsers(res)
 });
 
 // Endpoint per aggiungere un nuovo utente
 app.post("/users", function (req, res) {
-   // console.log(req)
    addUser(res, req.body);
 });
 
 // Endpoint per aggiornare i dettagli di un utente
 app.put("/users/:id", function (req, res) {
-   // var userLib = require("./src/lib/user.js")
    updateUser(res, req.params.id, req.body);
 });
 
@@ -78,77 +64,28 @@ app.delete("/users/:id", function (req, res) {
 // ------------------- AUTENTICAZIONE -------------------
 
 // Endpoint per ottenere la pagina di accesso
-app.get("/login", async (req, res) => {
+app.get("/login", async (_, res) => {
    res.sendFile(config.__dirname + "/src/html/login.html");
 });
 
 // Endpoint per effettuare l'accesso
 app.post("/login", async (req, res) => {
-   login = req.body;
-
-   if (login.email == undefined) {
-      res.status(400).send("Missing Email");
-      return;
-   }
-   if (login.password == undefined) {
-      res.status(400).send("Missing Password");
-      return;
-   }
-
-   login.password = hash(login.password);
-
-   var pwmClient = await new mongoClient(mongodb.uri).connect();
-   var filter = {
-      $and: [{ email: login.email }, { password: login.password }],
-   };
-   var loggedUser = await pwmClient
-      .db(mongodb.dbName)
-      .collection("users")
-      .findOne(filter);
-
-   if (loggedUser == null) {
-      res.status(401).send("Unauthorized");
-   } else {
-      res.json(loggedUser);
-   }
+   login(req, res);
 });
 
-app.get("/register", async (req, res) => {
+app.get("/register", async (_, res) => {
    res.sendFile(config.__dirname + "/src/html/register.html");
 });
 
 app.post("/register", async (req, res) => {
-   // TODO: this part must be moved to a register.js file and here we just call that
-   const newUser = req.body;
-
-   if (!newUser.name || !newUser.email || !newUser.username || !newUser.password) {
-     res.status(400).send("Missing required fields");
-     return;
-   }
-
-   newUser.password = hash(newUser.password);
-
-
-   const pwmClient = await new mongoClient(mongodb.uri).connect();
-   try {
-     await pwmClient
-       .db(mongodb.dbName)
-       .collection(mongodb.collections.users)
-       .insertOne(newUser);
-
-     res.status(201).send("User registered successfully");
-   } catch (error) {
-     res.status(500).send("Error registering user");
-   } finally {
-     pwmClient.close();
-   }
+   register(req, res);
  });
 
 
 // ------------------- PAGINA PRINCIPALE -------------------
 
 // Endpoint per la pagina principale
-app.get("/", function (req, res) {
+app.get("/", async (_, res) => {
    res.sendFile(config.__dirname + "/src/html/index.html");
 });
 

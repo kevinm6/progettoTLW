@@ -35,7 +35,7 @@ const config = {
  * @param {string} dbName - effective database name that store all the informations
  * @param {string} url - connection string to access the above Mongo database;
  *                       using mongodb module in this project
- * @param {array} collections - list of all accessible collections of database to work with
+ * @param {{string}} collections - list of all accessible collections of database to work with
  */
 const mongodb = {
    database: process.env.DATABASE,

@@ -7,7 +7,7 @@ import { Db } from "./database.js";
 /**
  * User Collection from MongoDB
  */
-const dbUserCollection = () => Db('users');
+export const dbUserCollection = () => Db('users');
 
 
 /**
