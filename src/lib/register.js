@@ -2,38 +2,60 @@
  * TODO: add description of module
  */
 import { dbUserCollection } from "./user.js";
+import {hash} from "./utils.js";
 
 /**
- * Async function to register new user
+ * Async function to add a new user, if it doesn't exist
  *
- * @param {string} req - request passed from express
- * @param {string} res - response passed from express
- * @returns {object | string} user information to be passed to register new user or stautus error
+ * @param mongoClient - client mongo passed to avoid import of module
+ * @param res - response passed from express
+ * @param user - user to be created
  */
-export async function register(req, res) {
-   let newUser = req.body;
-
-   if (
-      !newUser.name ||
-      !newUser.email ||
-      !newUser.nickname ||
-      !newUser.password
-   ) {
-      res.status(400).send("Missing required fields");
+export async function register(res, user) {
+   if (user.name == undefined) {
+      res.status(400).send('Missing Name');
+      return;
+   }
+   if (user.nickname == undefined) {
+      res.status(400).send('Missing Nickname');
+      return;
+   }
+   if (user.email == undefined) {
+      res.status(400).send('Missing Email');
+      return;
+   }
+   if (user.password == undefined || user.password.length < 3) {
+      res.status(400).send('Password is missing or too short');
       return;
    }
 
-   newUser.password = hash(newUser.password);
+   user.password = hash(user.password);
 
-   const userCollection = await dbUserCollection();
    try {
-      let newUser = await userCollection.insertOne(newUser);
+      var collection = await dbUserCollection();
 
-      res.status(201).send("User registered successfully");
-      res.json(newUser);
-   } catch (error) {
-      res.status(500).send("Error registering user");
-   } finally {
-      userCollection.close();
+      // Check if email or nickname already exist in the database
+      const existingUser = await collection.findOne({
+         $or: [
+            { email: user.email },
+            { nickname: user.nickname }
+         ]
+      });
+
+      if (existingUser) {
+         res.status(400).send("User with the same email or nickname already exists!");
+         return;
+      }
+
+      collection.insertOne(user);
+      // risposta affermativa con un 200 onde evitare oggetti circolari
+      res.status(200).send();
+   } catch (e) {
+      if (e.code == 11000) {
+         res.status(400).send("User already exists!");
+         return;
+      }
+      res.status(500).send(`Generic Error: ${e}`);
    }
 }
+

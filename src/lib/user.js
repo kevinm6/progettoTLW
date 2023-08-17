@@ -1,7 +1,7 @@
 /* User lib functions to manage User, used like an interface module */
-import crypto from "crypto";
 import { ObjectId } from "mongodb";
 import { Db } from "./database.js";
+import { hash } from "./utils.js";
 
 
 /**
@@ -10,15 +10,6 @@ import { Db } from "./database.js";
 export const dbUserCollection = () => Db('users');
 
 
-/**
- * Get hash (md5) from current input.
- *
- * @param {string} input - input to be encrypted
- * @returns {string} hash of md5 algorithm applied to given input
- */
-function hash(input) {
-   return crypto.createHash('md5').update(input).digest('hex')
-}
 
 
 /*
@@ -95,7 +86,7 @@ export async function updateUser(res, id, updatedUser) {
          $set: updatedUser,
       }
 
-      var item = await dbUserCollection
+      var item = await dbUserCollection()
          .updateOne(filter, updatedUserToInsert);
       res.send(item)
    } catch (e) {
@@ -106,49 +97,6 @@ export async function updateUser(res, id, updatedUser) {
       res.status(500).send(`Generic Error: ${e}`)
    }
 }
-
-
-/**
- * Async function to add a new user, if doesn't exist
- *
- * @param mongoClient - client mongo passed to avoid import of module
- * @param res - response passed from express
- * @param user - user to be created
- */
-export async function addUser(res, user) {
-   if (user.name == undefined) {
-      res.status(400).send('Missing Name')
-      return
-   }
-   if (user.nickname == undefined) {
-      res.status(400).send('Missing Nickname')
-      return
-   }
-   if (user.email == undefined) {
-      res.status(400).send('Missing Email')
-      return
-   }
-   if (user.password == undefined || user.password.length < 3) {
-      res.status(400).send('Password is missing or too short')
-      return
-   }
-
-   user.password = hash(user.password)
-
-   try {
-      var items = await dbUserCollection()
-         .insertOne(user);
-
-      res.json(items)
-   } catch (e) {
-      if (e.code == 11000) {
-         res.status(400).send("User already exists!")
-         return
-      }
-      res.status(500).send(`Generic Error: ${e}`)
-   }
-}
-
 
 /**
  * Async function to delete a user

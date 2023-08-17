@@ -9,11 +9,10 @@ import {
 } from "swagger-ui-express";
 import 'dotenv/config'
 import { login } from "./src/lib/login.js";
-import { getUsers, getUser, addUser, updateUser, deleteUser } from "./src/lib/user.js";
+import { getUsers, getUser, updateUser, deleteUser } from "./src/lib/user.js";
 import { Db } from "./src/lib/database.js";
 import { join } from "path";
 import swaggerDocument from "./src/api/docs/swagger_out.json" assert { type: "json" };
-import { login } from "./src/lib/login.js";
 import { register } from "./src/lib/register.js";
 
 // Creazione di un'istanza di Express per l'applicazione
@@ -21,7 +20,16 @@ const app = express();
 
 // Middleware per il parsing dei dati JSON e abilitazione del CORS
 app.use(express.json());
-app.use(cors());
+const corsOptions = {
+   origin: 'http://localhost:3000', // Indirizzo del tuo frontend
+   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+   credentials: true, // Consenti l'invio dei cookie
+ };
+ 
+ // Usa il middleware cors
+ app.use(cors(corsOptions));
+ 
+//app.use(cors());
 
 
 // Middleware per servire la documentazione API tramite Swagger UI
@@ -64,7 +72,7 @@ app.delete("/users/:id", function (req, res) {
 // ------------------- AUTENTICAZIONE -------------------
 
 // Endpoint per ottenere la pagina di accesso
-app.get("/login", async (_, res) => {
+app.get("/login", async (req, res) => {
    res.sendFile(config.__dirname + "/src/html/login.html");
 });
 
@@ -77,9 +85,9 @@ app.get("/register", async (_, res) => {
    res.sendFile(config.__dirname + "/src/html/register.html");
 });
 
-app.post("/register", async (req, res) => {
-   register(req, res);
- });
+app.post("/register", function (req, res) {
+   register(res, req.body);
+});
 
 
 // ------------------- PAGINA PRINCIPALE -------------------

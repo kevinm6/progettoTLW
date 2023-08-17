@@ -16,20 +16,28 @@
     <div id="menu"></div>
     <div class="container p-3">
         <div class="input-group mb-3">
-            <input id="email" type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
-        </div>
-        <div class="input-group mb-3">
-            <input id="password1" type="password" class="form-control" placeholder="Password" aria-label="Username"
-                aria-describedby="basic-addon1">
-            <input id="password2" type="password" class="form-control" placeholder="Password" aria-label="Username"
+            <input id="email" type="email" class="form-control" placeholder="Email" aria-label="Email"
                 aria-describedby="basic-addon1">
         </div>
         <div class="input-group mb-3">
-            <input id="nome" type="text" class="form-control" placeholder="Nome" aria-label="Nome" aria-describedby="basic-addon1">
-            <input id="cognome" type="text" class="form-control" placeholder="Cognome" aria-label="Cognome" aria-describedby="basic-addon1">
+            <input id="nickname" type="text" class="form-control" placeholder="nickname" aria-label="nickname"
+                aria-describedby="basic-addon1">
         </div>
         <div class="input-group mb-3">
-            <input id="data_di_nascita" type="date" class="form-control" placeholder="Data di nascita" aria-label="Nome" aria-describedby="basic-addon1">
+            <input id="password1" type="password" class="form-control" placeholder="Password" aria-label="password"
+                aria-describedby="basic-addon1">
+            <input id="password2" type="password" class="form-control" placeholder="ripeti password"
+                aria-label="password" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <input id="nome" type="text" class="form-control" placeholder="Nome" aria-label="Nome"
+                aria-describedby="basic-addon1">
+            <input id="cognome" type="text" class="form-control" placeholder="Cognome" aria-label="Cognome"
+                aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <input id="data_di_nascita" type="date" class="form-control" placeholder="Data di nascita" aria-label="Nome"
+                aria-describedby="basic-addon1">
 
         </div>
         <div class="input-group mb-3">
@@ -67,49 +75,95 @@
             })
 
         function registrati() {
-            var email = document.getElementById('email')
-            var password1 = document.getElementById('password1')
-            var password2 = document.getElementById('password2')
-            var nome = document.getElementById('nome')
-            var cognome = document.getElementById('cognome')
-            var data_di_nascita = document.getElementById('data_di_nascita')
-            var generi = document.getElementById("generi")
+            var email = document.getElementById('email');
+            var nickname = document.getElementById('nickname');
+            var password1 = document.getElementById('password1');
+            var password2 = document.getElementById('password2');
+            var nome = document.getElementById('nome');
+            var cognome = document.getElementById('cognome');
+            var data_di_nascita = document.getElementById('data_di_nascita');
+            var generi = document.getElementById("generi");
 
+            // Controllo password
             if (password1.value != password2.value || password1.value.length < 7) {
-                password1.classList.add('border')
-                password1.classList.add('border-danger')
-                password2.classList.add('border')
-                password2.classList.add('border-danger')
+                password1.classList.add('border');
+                password1.classList.add('border-danger');
+                password2.classList.add('border');
+                password2.classList.add('border-danger');
+                alert("Le password devono coincidere ed essere lunghe almeno 7 caratteri!");
+                return;
             } else {
-                password1.classList.remove('border')
-                password1.classList.remove('border-danger')
-                password2.classList.remove('border')
-                password2.classList.remove('border-danger')
+                password1.classList.remove('border');
+                password1.classList.remove('border-danger');
+                password2.classList.remove('border');
+                password2.classList.remove('border-danger');
             }
 
+            // Controllo email con regexp
+            var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            if (!emailPattern.test(email.value)) {
+                email.classList.add('border');
+                email.classList.add('border-danger');
+                alert("Inserisci un indirizzo email valido!");
+                return;
+            } else {
+                email.classList.remove('border');
+                email.classList.remove('border-danger');
+            }
+
+            // Controllo nickname con lunghezza e regexp
+            var nicknamePattern = /^[a-zA-Z0-9_]{4,16}$/;
+            if (!nicknamePattern.test(nickname.value)) {
+                nickname.classList.add('border');
+                nickname.classList.add('border-danger');
+                alert("Il nickname deve avere tra 4 e 16 caratteri e contenere solo lettere, numeri e underscore!");
+                return;
+            } else {
+                nickname.classList.remove('border');
+                nickname.classList.remove('border-danger');
+            }
+
+            // Controllo altri campi
+            if (!nome.value) {
+                nome.classList.add('border');
+                nome.classList.add('border-danger');
+                alert("Inserisci il tuo nome!");
+                return;
+            } else {
+                nome.classList.remove('border');
+                nome.classList.remove('border-danger');
+            }
+
+            if (!cognome.value) {
+                cognome.classList.add('border');
+                cognome.classList.add('border-danger');
+                alert("Inserisci il tuo cognome!");
+                return;
+            } else {
+                cognome.classList.remove('border');
+                cognome.classList.remove('border-danger');
+            }
 
             //Altri controlli
             var generi_selezionati = document.querySelectorAll("#generi :checked");
-            //var generi_selezionati  = generi.selectedOptions
-
-            var generi_selezionati_values = []
-            for (i = 0; i < generi_selezionati.length; i++) {
-
-                generi_selezionati_values.push(generi_selezionati[i].value)
-
+            var generi_selezionati_values = [];
+            for (var i = 0; i < generi_selezionati.length; i++) {
+                generi_selezionati_values.push(generi_selezionati[i].value);
             }
 
             var data = {
                 name: nome.value,
+                nickname: nickname.value,
                 surname: cognome.value,
                 email: email.value,
                 password: password1.value,
                 date: data_di_nascita.value,
                 genres: generi_selezionati_values
+            };
 
-            }
-            console.log(data)
-            fetch("http://127.0.0.1:3100/users?apikey=123456", {
+            console.log(data);
+
+            fetch("http://localhost:3000/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -117,22 +171,17 @@
                 body: JSON.stringify(data)
             }).then(async response => {
                 if (response.ok) {
-                    window.location.href = "login.html?msg=Registrato"
-                } else {
-                    response.text().then(text =>
-                        alert(text)
-                    )
-                    var messaggio = await response.text()
-                    alert(messaggio)
-
+                    alert("Registrazione avvenuta con successo, verrai reindirizzato alla pagina di login");
+                    setTimeout(function () {
+                        window.location.href = "http://localhost:3000/login";
+                    }, 500); // Ritarda l'href di 0,5 secondi (500 millisecondi)
                 }
-
-            })
-
-
-
-
+                else {
+                    alert("Impossibile effettuare la registrazione: indirizzo email già in uso!");
+                }
+            });
         }
+
     </script>
 </body>
 
