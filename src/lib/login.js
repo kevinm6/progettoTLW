@@ -6,7 +6,7 @@
 
 // import { ObjectId } from "mongodb";
 import { getUsers, getUser, dbUserCollection } from "./user.js";
-
+import {hash} from "./utils.js";
 
 /**
  * Async function to get specific user from id
@@ -17,7 +17,6 @@ import { getUsers, getUser, dbUserCollection } from "./user.js";
  */
 export async function login(req, res) {
    let login = req.body;
-
    if (login.email == undefined) {
       res.status(400).send("Missing Email");
       return;
@@ -38,7 +37,7 @@ export async function login(req, res) {
       $and: [{ email: login.email }, { nickname: login.nickname } , { password: login.password }],
    };
    let loggedUser = await collection.findOne(filter);
-
+   console.log(loggedUser);
    if (loggedUser == null) {
       res.status(401).send("Unauthorized");
    } else {

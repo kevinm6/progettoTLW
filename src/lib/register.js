@@ -30,6 +30,7 @@ export async function register(res, user) {
    }
 
    user.password = hash(user.password);
+   console.log(user.password);
 
    try {
       var collection = await dbUserCollection();

@@ -14,7 +14,6 @@ import { Db } from "./src/lib/database.js";
 import { join } from "path";
 import swaggerDocument from "./src/api/docs/swagger_out.json" assert { type: "json" };
 import { register } from "./src/lib/register.js";
-
 // Creazione di un'istanza di Express per l'applicazione
 const app = express();
 
@@ -48,6 +47,7 @@ app.use(express.static(join(config.__dirname, "/src/static/")));
 app.get("/users/:id", async function (req, res) {
    getUser(req, res)
 });
+
 
 // Endpoint per ottenere la lista di tutti gli utenti
 app.get("/users", async function (_, res) {
@@ -89,6 +89,11 @@ app.post("/register", function (req, res) {
    register(res, req.body);
 });
 
+// ------------------- ENDPOINTS AUSILIARI -----------------
+
+//app.get("/getGenres", async function (req, res) {
+//   getGenres(req, res);
+//});
 
 // ------------------- PAGINA PRINCIPALE -------------------
 

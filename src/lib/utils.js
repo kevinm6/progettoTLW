@@ -6,7 +6,6 @@ import crypto from "crypto";
  * @param {string} input - input to be encrypted
  * @returns {string} hash of md5 algorithm applied to given input
  */
-export async function hash(input) {
-    return crypto.createHash('md5').update(input).digest('hex')
- }
- 
+export function hash(input) {
+    return crypto.createHash('md5').update(input).digest('hex');
+} 
