@@ -14,17 +14,17 @@
     <div id="menu"></div>
     <div class="container p-3">
         <div class="input-group mb-3">
-            <input id="email" type="email" class="form-control" placeholder="Email" aria-label="Email"
+            <input id="email" type="email" required="required" class="form-control" placeholder="Email" aria-label="Email"
                 aria-describedby="basic-addon1">
         </div>
         <div class="input-group mb-3">
-            <input id="nickname" type="text" class="form-control" placeholder="Nickname" aria-label="Nickname"
+            <input id="nickname" type="text" required="required" class="form-control" placeholder="Nickname" aria-label="Nickname"
                 aria-describedby="basic-addon1">
         </div>
         <div class="input-group mb-3">
-            <input id="password1" type="password" class="form-control" placeholder="Password" aria-label="Password"
+            <input id="password1" type="password" required="required" class="form-control" placeholder="Password" aria-label="Password"
                 aria-describedby="basic-addon1">
-            <input id="password2" type="password" class="form-control" placeholder="Repeat Password"
+            <input id="password2" type="password" required="required" class="form-control" placeholder="Repeat Password"
                 aria-label="Password" aria-describedby="basic-addon1">
         </div>
         <div class="input-group mb-3">
@@ -35,7 +35,7 @@
         </div>
         <div class="input-group mb-3">
             <input id="data_di_nascita" type="date" class="form-control" placeholder="Data di nascita"
-                aria-label="Data di nascita" aria-describedby="basic-addon1">
+                aria-label="Data di nascita" min="01-01-1900" aria-describedby="basic-addon1">
         </div>
         <label for="generi" class="form-label">Seleziona i generi musicali:</label>
         <div class="input-group mb-3">
@@ -55,7 +55,7 @@
     <script>
         const client_id = 'CLIENT_ID_OTTENUTO_DA_ENDPOINT_NOSTRO';
         const client_secret = 'CLIENT_SECRET_OTTENUTO_DA_ENDPOINT_NOSTRO';
-        
+
         // Funzione per ottenere il token di accesso
         async function getAccessToken() {
           const response = await fetch('https://accounts.spotify.com/api/token', {
@@ -66,30 +66,30 @@
             },
             body: 'grant_type=client_credentials'
           });
-        
+
           const data = await response.json();
           return data.access_token;
         }
-        
+
         // Funzione per ottenere i generi musicali da Spotify
         async function getSpotifyGenres() {
           const token = await getAccessToken();
-        
+
           const response = await fetch('https://api.spotify.com/v1/recommendations/available-genre-seeds', {
             headers: {
               'Authorization': 'Bearer ' + token
             }
           });
-        
+
           const data = await response.json();
           return data.genres;
         }
-        
+
         // Funzione per popolare il menu a tendina
         async function populateGenresDropdown() {
           const genres = await getSpotifyGenres();
           const generiDropdown = document.getElementById('generi');
-        
+
           genres.forEach(genre => {
             const option = document.createElement('option');
             option.value = genre;
@@ -97,7 +97,7 @@
             generiDropdown.appendChild(option);
           });
         }
-        
+
         // Chiama la funzione per popolare il menu a tendina
         populateGenresDropdown();
         </script>

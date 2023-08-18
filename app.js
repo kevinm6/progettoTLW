@@ -14,6 +14,7 @@ import { Db } from "./src/lib/database.js";
 import { join } from "path";
 import swaggerDocument from "./src/api/docs/swagger_out.json" assert { type: "json" };
 import { register } from "./src/lib/register.js";
+import generateSpotifyToken from "./src/lib/spotify/token.js";
 // Creazione di un'istanza di Express per l'applicazione
 const app = express();
 
@@ -24,10 +25,10 @@ const corsOptions = {
    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
    credentials: true, // Consenti l'invio dei cookie
  };
- 
+
  // Usa il middleware cors
  app.use(cors(corsOptions));
- 
+
 //app.use(cors());
 
 
@@ -106,6 +107,7 @@ app.get("/", async (_, res) => {
 
 // Avvio della connessione al Database
 export const db = Db();
+process.env.SPOTIFY_TOKEN = generateSpotifyToken();
 
 // Avvio del server
 app.listen(config.port, config.host, () => {
