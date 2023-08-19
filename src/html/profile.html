@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <div id="menu"></div>
+
+    <div class="container">
+        <div class="mb-3">
+            <label for="nickname" class="form-label">Nickname</label>
+            <div class="input-group">
+                <input id="nickname" type="text" class="form-control" readonly>
+                <button class="btn btn-outline-secondary" type="button" id="editNickname">
+                    <i class="bi bi-pencil"></i>
+                </button>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <div class="input-group">
+                <input id="email" type="email" class="form-control" readonly>
+                <button class="btn btn-outline-secondary" type="button" id="editEmail">
+                    <i class="bi bi-pencil"></i>
+                </button>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <div class="input-group">
+                <input id="password" type="password" class="form-control" readonly>
+                <button class="btn btn-outline-secondary" type="button" id="editPassword">
+                    <i class="bi bi-pencil"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <div class="input-group">
+                <input id="nome" type="text" class="form-control" readonly>
+                <button class="btn btn-outline-secondary" type="button" id="editName">
+                    <i class="bi bi-pencil"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="cognome" class="form-label">Cognome</label>
+            <div class="input-group">
+                <input id="cognome" type="text" class="form-control" readonly>
+                <button class="btn btn-outline-secondary" type="button" id="editSurname">
+                    <i class="bi bi-pencil"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="genres" class="form-label">Gusti Musicali</label>
+            <input id="genres" type="text" class="form-control" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="date" class="form-label">Età</label>
+            <input id="date" type="text" class="form-control" readonly>
+        </div>
+        <button class="btn btn-primary" onclick="logout()">Logout</button>
+        <button class="btn btn-primary" id="saveChangesButton" onclick="saveChanges()" disabled>Salva le modifiche</button>
+    </div>
+        
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./../lib/menu.js"></script>
+
+    <script>
+        // Funzione per abilitare la modifica di una textbox
+        function enableEdit(inputField) {
+            document.getElementById("saveChangesButton").disabled=false;
+            inputField.removeAttribute("readonly");
+            inputField.focus();
+            document.getElementById("saveChanges").classList.remove("d-none");
+        }
+
+        // Aggiungi eventi ai bottoni di modifica
+        document.getElementById("editNickname").addEventListener("click", function () {
+            enableEdit(document.getElementById("nickname"));
+        });
+
+        document.getElementById("editEmail").addEventListener("click", function () {
+            enableEdit(document.getElementById("email"));
+        });
+
+        document.getElementById("editPassword").addEventListener("click", function () {
+            enableEdit(document.getElementById("password"));
+        });
+        document.getElementById("editName").addEventListener("click", function () {
+            enableEdit(document.getElementById("nome"));
+        });
+        document.getElementById("editSurname").addEventListener("click", function () {
+            enableEdit(document.getElementById("cognome"));
+        });
+
+        // Funzione per salvare le modifiche
+
+        /*
+
+        TODO: CORREGGERE LA FUNZIONE SAVECHANGES E RICORDARE DI AGGIORNARE ANCHE POI I VALORI SALVATI IN LOCALSTORAGE ALTRIMENTI NON FUNZIONA PIU NULLA!
+        
+        */
+        function saveChanges() {
+            var updatedData = {
+                _id: localStorage.getItem("_id"),
+                email: document.getElementById("email").value,
+                nickname: document.getElementById("nickname").value,
+                password: document.getElementById("password").value
+
+            };
+
+            fetch(`http://localhost:3000/users/${updatedData._id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(updatedData)
+            }).then(response => {
+                if (response.ok) {
+                    alert("Modifiche salvate con successo!");
+                } else {
+                    throw new Error("Errore durante il salvataggio delle modifiche");
+                }
+            }).catch(error => {
+                console.error("Errore durante il salvataggio delle modifiche:", error);
+            });
+        }
+
+        // Aggiungi evento al bottone di salvataggio
+        document.getElementById("saveChanges").addEventListener("click", function () {
+            saveChanges();
+        });
+
+    </script>
+    <script>
+        function logout() {
+            localStorage.removeItem("nickname");
+            localStorage.removeItem("email");
+            localStorage.removeItem("password");
+            window.location.href = "http://localhost:3000/login";
+        }
+    </script>
+
+    <script>
+        // Verifica se l'utente è loggato
+        if (!localStorage.getItem("nickname") || !localStorage.getItem("email")) {
+            alert("Effettua il login per accedere al profilo");
+            window.location.href = "http://localhost:3000/login";
+        } else {
+            // Mostra i dati dell'utente nel profilo
+            document.getElementById("nickname").value = localStorage.getItem("nickname");
+            document.getElementById("email").value = localStorage.getItem("email");
+            document.getElementById("password").value = "********";
+
+            // Effettua una richiesta al tuo server per ottenere i dati aggiuntivi dell'utente
+            fetch("http://localhost:3000/authuser", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: localStorage.getItem("email"),
+                    nickname: localStorage.getItem("nickname"),
+                    _id: localStorage.getItem("_id") // invio dell'id al posto della password.
+                })
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error("Autenticazione non valida");
+                }
+            })
+                .then(data => {
+                    // Popola gli altri campi con i dati ricevuti dal server
+                    document.getElementById("nome").value = data.name;
+                    document.getElementById("cognome").value = data.surname;
+                    document.getElementById("genres").value = data.genres.join(", ");
+                    document.getElementById("date").value = data.date;
+                })
+                .catch(error => {
+                    console.error("Errore durante l'autenticazione:", error);
+                    alert("Errore durante l'autenticazione, rifare il login");
+                    localStorage.removeItem("nickname");
+                    localStorage.removeItem("email");
+                    localStorage.removeItem("password");
+                    window.location.href = "http://localhost:3000/login";
+                });
+        }
+    </script>
+
+</body>
+
+</html>
