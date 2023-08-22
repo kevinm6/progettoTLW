@@ -56,7 +56,7 @@ app.get("/users", async function (_, res) {
 
 // Endpoint per aggiornare i dettagli di un utente
 app.put("/users/:id", function (req, res) {
-   updateUser(res, req.params.id, req.body);
+   updateUser(res, req.body._id, req.body);
 });
 
 // Endpoint per eliminare un utente

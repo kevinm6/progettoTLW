@@ -89,7 +89,7 @@
             document.getElementById("saveChangesButton").disabled=false;
             inputField.removeAttribute("readonly");
             inputField.focus();
-            document.getElementById("saveChanges").classList.remove("d-none");
+            document.getElementById("saveChangesButton").classList.remove("d-none");
         }
 
         // Aggiungi eventi ai bottoni di modifica
@@ -119,14 +119,22 @@
         
         */
         function saveChanges() {
+            var useremail=document.getElementById("email").value;
+            var usernickname=document.getElementById("nickname").value;
+            var userpassword=document.getElementById("password").value;
+            var username=document.getElementById("nome").value;
+            var usersurname=document.getElementById("cognome").value;
+            var userid=localStorage.getItem("_id");
             var updatedData = {
-                _id: localStorage.getItem("_id"),
-                email: document.getElementById("email").value,
-                nickname: document.getElementById("nickname").value,
-                password: document.getElementById("password").value
+                _id: userid,
+                email: useremail,
+                name:username,
+                surname:usersurname,
+                nickname: usernickname,
+                password: userpassword
 
             };
-
+            console.log(updatedData);
             fetch(`http://localhost:3000/users/${updatedData._id}`, {
                 method: "PUT",
                 headers: {
@@ -136,18 +144,18 @@
             }).then(response => {
                 if (response.ok) {
                     alert("Modifiche salvate con successo!");
+                    localStorage.setItem("email",useremail);
+                    localStorage.setItem("nickname",usernickname);
+                    localStorage.setItem("_id",userid);
+                    window.location.href = "http://localhost:3000/profile";
                 } else {
                     throw new Error("Errore durante il salvataggio delle modifiche");
                 }
             }).catch(error => {
-                console.error("Errore durante il salvataggio delle modifiche:", error);
+                console.error("An error has occurred:", error);
             });
         }
 
-        // Aggiungi evento al bottone di salvataggio
-        document.getElementById("saveChanges").addEventListener("click", function () {
-            saveChanges();
-        });
 
     </script>
     <script>
@@ -168,7 +176,7 @@
             // Mostra i dati dell'utente nel profilo
             document.getElementById("nickname").value = localStorage.getItem("nickname");
             document.getElementById("email").value = localStorage.getItem("email");
-            document.getElementById("password").value = "********";
+            document.getElementById("password").value = "";
 
             // Effettua una richiesta al tuo server per ottenere i dati aggiuntivi dell'utente
             fetch("http://localhost:3000/authuser", {

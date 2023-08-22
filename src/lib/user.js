@@ -61,42 +61,48 @@ export async function getUsers(res) {
  * @param updateduser - user to be updated
  */
 export async function updateUser(res, id, updatedUser) {
+   console.log(id);
    if (updatedUser.name == undefined) {
-      res.status(400).send('Missing Name')
-      return
+      res.status(400).send('Missing Name');
+      return;
    }
    if (updatedUser.nickname == undefined) {
-      res.status(400).send('Missing Nickname')
-      return
+      res.status(400).send('Missing Nickname');
+      return;
    }
    if (updatedUser.email == undefined) {
-      res.status(400).send('Missing Email')
-      return
+      res.status(400).send('Missing Email');
+      return;
    }
-   if (updatedUser.password == undefined) {
-      res.status(400).send('Missing Password')
-      return
-   }
-   updatedUser.password = hash(updatedUser.password)
+
    try {
-
-      var filter = { _id: new ObjectId(id) }
-
+      var filter = { _id: new ObjectId(id) };
       var updatedUserToInsert = {
-         $set: updatedUser,
-      }
+         $set: {
+            name: updatedUser.name,
+            nickname: updatedUser.nickname,
+            email: updatedUser.email,
+            surname: updatedUser.surname,
+         },
+      };
 
-      var item = await dbUserCollection()
-         .updateOne(filter, updatedUserToInsert);
-      res.send(item)
+      if (updatedUser.password !== undefined && updatedUser.password !== "") {
+         updatedUserToInsert.$set.password = hash(updatedUser.password);
+      }
+      console.log(updatedUserToInsert);
+      var item = await dbUserCollection();
+      item.updateOne(filter, updatedUserToInsert);
+      console.log("OK");
+      res.status(200).send();
    } catch (e) {
       if (e.code == 11000) {
-         res.status(400).send("User already exists!")
-         return
+         res.status(400).send("User already exists!");
+         return;
       }
-      res.status(500).send(`Generic Error: ${e}`)
+      res.status(500).send(`Generic Error: ${e}`);
    }
 }
+
 
 /**
  * Async function to delete a user
