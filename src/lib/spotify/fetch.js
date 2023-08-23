@@ -3,7 +3,7 @@
  * with authorization token
  */
 
-import spotify from "../../config/prefs";
+import { config, spotify, mongodb } from '../../config/prefs.js';
 const BASE_URL = spotify.base_url
 console.log(BASE_URL)
 
@@ -15,13 +15,26 @@ console.log(BASE_URL)
    * @returns {Promise}
    */
 const fetchSpotify = async (URL, token) => {
-   return await fetch(URL, {
-      method: 'GET',
-      headers: {
-         Authorization: `Bearer ${token}`
+   try {
+      const response = await fetch(URL, {
+         method: 'GET',
+         headers: {
+            Authorization: `Bearer ${token}`
+         }
+      });
+
+      if (!response.ok) {
+         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-   })
+
+      const data = await response.json();
+      return data;
+   } catch (error) {
+      console.error('An error occurred:', error);
+      throw error; // Rilancia l'errore per gestirlo nel chiamante
+   }
 }
+
 
 /**
    * Query Spotify API to get tracks
@@ -64,11 +77,53 @@ const getArtists = async (token, searchQuery) => {
    * @param {string} token token to use for authorization
    * @returns {Promise}
    */
-const getGenres = async (token) => {
-   const url = `${BASE_URL}/recommendations?available-genre-seeds`
+const getGenres = async (res,token) => {
+   if (token == null) {
+      token = await getAccessToken();
+   }
+   const url = spotify.base_url+`/recommendations/available-genre-seeds`
 
-   fetchSpotify(url, token)
+   const ret=await fetchSpotify(url, token);
+   console.log(ret);
+   res.json(ret);
+   
 }
+
+
+/**
+ * Ottiene l'access token per l'autenticazione alle API di Spotify utilizzando il metodo client_credentials.
+ *
+ * @returns {Promise<string>} L'access token ottenuto dalla richiesta.
+ * @throws {Error} Se si verifica un errore durante la richiesta o la conversione JSON.
+ */
+const getAccessToken = async () => {
+   try {
+      // Ottiene le credenziali dal file di configurazione
+      const client_id = spotify.client_id;
+      const client_secret = spotify.client_secret;
+
+      // Effettua una richiesta POST per ottenere l'access token
+      const response = await fetch(spotify.token_url, {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + btoa(client_id + ':' + client_secret)
+         },
+         body: 'grant_type=client_credentials'
+      });
+
+      // Converte la risposta in formato JSON
+      const data = await response.json();
+
+      // Restituisce l'access token ottenuto
+      return data.access_token;
+   } catch (error) {
+      // Gestisce eventuali errori e li rilancia
+      console.error('An error occurred:', error);
+      throw error;
+   }
+}
+
 
 /**
    * Query Spotify API to get recommendations
@@ -96,7 +151,7 @@ const getAll = async (token, searchQuery) => {
 }
 
 
-module.exports = {
+export {
    BASE_URL,
    fetchSpotify,
    getAll,

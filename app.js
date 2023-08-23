@@ -14,6 +14,7 @@ import { Db } from "./src/lib/database.js";
 import { join } from "path";
 import swaggerDocument from "./src/api/docs/swagger_out.json" assert { type: "json" };
 import { register } from "./src/lib/register.js";
+import { getGenres } from "./src/lib/spotify/fetch.js"
 // Creazione di un'istanza di Express per l'applicazione
 const app = express();
 
@@ -94,9 +95,9 @@ app.post("/authuser", async (req, res) => {
 
 // ------------------- ENDPOINTS AUSILIARI -----------------
 
-//app.get("/getGenres", async function (req, res) {
-//   getGenres(req, res);
-//});
+app.get("/getGenres", async function (_, res) {
+   getGenres(res,null);
+});
 
 // ------------------- PAGINA PRINCIPALE -------------------
 
