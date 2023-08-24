@@ -6,8 +6,8 @@
 
 // import { ObjectId } from "mongodb";
 import { getUsers, getUser, dbUserCollection } from "./user.js";
-import {hash} from "./utils.js";
-
+import { hash } from "./utils.js";
+import { ObjectId } from "mongodb"
 /**
  * Async function to get specific user from id
  *
@@ -22,7 +22,7 @@ export async function login(req, res) {
       return;
    }
    if (login.nickname == undefined) {
-      res.status(400).send("Missing Email");
+      res.status(400).send("Missing Nickname");
       return;
    }
    if (login.password == undefined) {
@@ -34,38 +34,42 @@ export async function login(req, res) {
 
    let collection = await dbUserCollection();
    var filter = {
-      $and: [{ email: login.email }, { nickname: login.nickname } , { password: login.password }],
+      $and: [{ email: login.email }, { nickname: login.nickname }, { password: login.password }],
    };
    let loggedUser = await collection.findOne(filter);
-   console.log(loggedUser);
+   if (loggedUser == null) {
+      res.status(401).send("Unauthorized");
+   } else {
+      // Invia solo l'_id dell'utente
+      res.json({
+         _id: loggedUser._id,
+         nickname: loggedUser.nickname,
+         email: loggedUser.email
+      });
+   }
+}
+
+
+export async function authuser(req, res) {
+   let login = req.body;
+   console.log(login._id);
+   console.log(login.nickname);
+   console.log(login.email);
+   let collection = await dbUserCollection();
+
+   var filter = {
+      $and: [
+         { _id: new ObjectId(login._id) },
+         { email: login.email },
+         { nickname: login.nickname }
+      ],
+   };
+
+   let loggedUser = await collection.findOne(filter);
    if (loggedUser == null) {
       res.status(401).send("Unauthorized");
    } else {
       res.json(loggedUser);
    }
 }
-
-
-
-// function login() {
-//    var email = document.getElementById('email').value
-//    var nickname = document.getElementById('nickname').value
-//    var password = document.getElementById('password').value
-
-//    user = {
-//       email: email,
-//       nickname: nickname,
-//       password: password
-//    }
-
-//    fetch(`localhost:${config.port}/login`, {
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify(user)
-//    }).then(response => response.json())
-//       .then(logged_user => {
-//          localStorage.setItem("user", JSON.stringify(logged_user))
-//          window.location.href = "./../html/index.html"
-//       })
-// }
 
