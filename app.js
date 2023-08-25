@@ -15,7 +15,7 @@ import { join } from "path";
 import swaggerDocument from "./src/api/docs/swagger_out.json" assert { type: "json" };
 import { register } from "./src/lib/register.js";
 import { getGenres } from "./src/lib/spotify/fetch.js"
-import { generateSpotifyToken, scheduleRenewSpotifyDevToken } from "./src/lib/spotify/token.js"
+import { generateSpotifyToken } from "./src/lib/spotify/token.js"
 // Creazione di un'istanza di Express per l'applicazione
 const app = express();
 
@@ -104,7 +104,7 @@ app.post("/authuser", async (req, res) => {
 // ------------------- ENDPOINTS AUSILIARI -----------------
 
 app.get("/getGenres", async function (_, res) {
-   getGenres(res, null);
+   getGenres(res);
 });
 
 // ------------------- HOME PAGE -------------------
@@ -117,10 +117,6 @@ app.get("/", async (_, res) => {
 
 // Start Database connection
 export const db = Db();
-
-// Generate Spotify token for communication with API
-// The token will be renewed every hour
-process.env.SPOTIFY_TOKEN = generateSpotifyToken();
 
 // Avvio del server
 app.listen(config.port, config.host, () => {

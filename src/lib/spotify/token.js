@@ -17,18 +17,17 @@ import { spotify } from "../../config/prefs.js";
 let scheduled = false;
 export const generateSpotifyToken = async () => {
    console.log("Generating Spotify token...")
+   // NOTE: btoa function is deprecated
+   const basicAuth = new Buffer.from(`${spotify.client_id}:${spotify.client_secret}`).toString('base64');
+   const authOptions = {
+      method: "POST",
+      headers: {
+         "Authorization": `Basic ${basicAuth}`,
+         "Content-Type": 'application/x-www-form-urlencoded'
+      },
+      body: 'grant_type=client_credentials',
+   }
    try {
-      // NOTE: btoa function is deprecated
-      const basicAuth = new Buffer.from(`${spotify.client_id}:${spotify.client_secret}`).toString('base64')
-      const authOptions = {
-         method: "POST",
-         headers: {
-            "Authorization": `Basic ${basicAuth}`,
-            "Content-Type": "application/x-www-form-urlencoded"
-         },
-         body: 'grant_type=client_credentials',
-         json: true
-      }
 
       let response = await fetch(spotify.token_url, authOptions)
       const data = await response.json();
@@ -57,6 +56,7 @@ export const generateSpotifyToken = async () => {
  * https://developer.spotify.com/documentation/web-api/tutorials/client-credentials-flow
  */
 const scheduleRenewSpotifyDevToken = async () => {
+   console.log("⏱️S Scheduling Spotify Token");
    const anHourInMilliseconds = 3600000;
    setInterval(generateSpotifyToken, anHourInMilliseconds);
 }
