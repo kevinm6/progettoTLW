@@ -1,38 +1,63 @@
 /**
- * Generate Spotify token and access from other modules
+ * Generate Spotify token and access from API via client_credentials
  */
 import { spotify } from "../../config/prefs.js";
 
 /**
- * Generate a new Spotify API token
+ * Generate a new Spotify API token.
+ * The token is valid for 1 hour, so we need to renew it when it's expired.
+ *
  * @requires {spotify.client_id, spotify.client_secret}
- * @returns {string} token
+ * @return {Promise<string>} Access token given from request
+ * @throws {Error} if error occures with the request or json data conversion
+ *
+ * @see - Spotify Docs
+ * https://developer.spotify.com/documentation/web-api/tutorials/client-credentials-flow
  */
-const generateSpotifyToken = async () => {
-
+let scheduled = false;
+export const generateSpotifyToken = async () => {
    console.log("Generating Spotify token...")
+   try {
+      // NOTE: btoa function is deprecated
+      const basicAuth = new Buffer.from(`${spotify.client_id}:${spotify.client_secret}`).toString('base64')
+      const authOptions = {
+         method: "POST",
+         headers: {
+            "Authorization": `Basic ${basicAuth}`,
+            "Content-Type": "application/x-www-form-urlencoded"
+         },
+         body: 'grant_type=client_credentials',
+         json: true
+      }
 
-   const basicAuth = new Buffer.from(`${spotify.client_id}:${spotify.client_secret}`).toString('base64')
-   const authOptions = {
-      method: "POST",
-      headers: {
-         "Authorization": `Basic ${basicAuth}`,
-         "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: 'grant_type=client_credentials',
-      json: true
-   }
-   const res = await fetch(spotify.token_url, authOptions)
-      // TODO: manage error on creating token and create a timer for renew it
-      .then(response => response.json())
-      .then(data => {
-         var token = data.access_token;
-         process.env.SPOTIFY_TOKEN = token;
-         window.localStorage.setItem(access_token, token)
-      })
-   .catch(e => {
-         console.error(`Error: ${e}`)
-      });
+      let response = await fetch(spotify.token_url, authOptions)
+      const data = await response.json();
+      process.env.SPOTIFY_TOKEN = data.access_token;
+
+      if (!scheduled) {
+         scheduleRenewSpotifyDevToken();
+         scheduled = true;
+      }
+
+      return data.access_token;
+   } catch (error) {
+      console.error(`Generic error: ${error}`);
+      scheduled = false;
+      throw error;
+   };
 }
 
-export default generateSpotifyToken
+
+/**
+ * Schedule Spotify API generation token for renew it.
+ *
+ * @returns {string} token
+ *
+ * @see - Spotify Docs
+ * https://developer.spotify.com/documentation/web-api/tutorials/client-credentials-flow
+ */
+const scheduleRenewSpotifyDevToken = async () => {
+   const anHourInMilliseconds = 3600000;
+   setInterval(generateSpotifyToken, anHourInMilliseconds);
+}
+

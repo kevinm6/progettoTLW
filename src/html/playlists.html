@@ -20,35 +20,37 @@
                     <div class="col-12">
                         <h2 id="card-title"></h2>
                         <p id="card-date"></p>
-                    </div>
-                    <div class="col-12">
-                        <h3>Overview</h3>
-                        <p id="card-overview"></p>
+                    </div>"Missing Name");
+      return;
+   }
+   if (user.nickname == undefined) {
+      res.status(400).send("Missing Nickname");
+      return;
+   }
+   if (user.email == undefined) {
+      res.status(400).send("Missing Email");
+      return;
+   }
+   if (user.password == undefined || user.password.length < 3) {
+      res.status(400).send("Password is missing or too short");
+      return;
+   }
 
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row g-4 mt-2">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item"><button class="page-link" onclick="prevCast()">Previous</button></li>
-                    <li class="page-item"><button class="page-link" onclick="nextCast()">Next</button></li>
-                </ul>
-            </nav>
-        </div>
-        <div id="container-cast" class="row mt-2 row-cols-2
-        row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4">
-            <div class="col d-none" id="card-cast">
-                <div class="card">
-                    <img src="" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <p class="card-text "></p>
-                        <p class="card-text"><small class="text-body-secondary"></small>
+   user.password = hash(user.password);
+   console.log(user.password);
 
-                        </p>
-                    </div>
-                    <div class="card-footer">
+   try {
+      var userCollection = await dbUserCollection();
+
+      // Check if email or nickname already exist in the database
+      const existingUser = await userCollection.findOne({
+         $or: [{ email: user.email }, { nickname: user.nickname }],
+      });
+
+      if (existingUser) {
+         res.status(400).send(
+            "User with the same email or nickname already exists!",
+
                         <a href="#" class="btn btn-secondary">Scheda</a>
                     </div>
 

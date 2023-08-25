@@ -2,7 +2,7 @@
  * TODO: add description of module
  */
 import { dbUserCollection } from "./user.js";
-import {hash} from "./utils.js";
+import { hash } from "./utils.js";
 
 /**
  * Async function to add a new user, if it doesn't exist
@@ -10,6 +10,13 @@ import {hash} from "./utils.js";
  * @param mongoClient - client mongo passed to avoid import of module
  * @param res - response passed from express
  * @param user - user to be created
+ * @throws {400} missing name
+ * @throws {400} invalid nickname
+ * @throws {400} missing email
+ * @throws {400} invalid password
+ * @throws {500} generic error
+ * @return {200} success
+ *
  */
 export async function register(res, user) {
    if (user.name == undefined) {
@@ -33,14 +40,11 @@ export async function register(res, user) {
    console.log(user.password);
 
    try {
-      var collection = await dbUserCollection();
+      var userCollection = await dbUserCollection();
 
       // Check if email or nickname already exist in the database
-      const existingUser = await collection.findOne({
-         $or: [
-            { email: user.email },
-            { nickname: user.nickname }
-         ]
+      const existingUser = await userCollection.findOne({
+         $or: [ { email: user.email }, { nickname: user.nickname } ]
       });
 
       if (existingUser) {
@@ -48,7 +52,7 @@ export async function register(res, user) {
          return;
       }
 
-      collection.insertOne(user);
+      userCollection.insertOne(user);
       // risposta affermativa con un 200 onde evitare oggetti circolari
       res.status(200).send();
    } catch (e) {
@@ -60,3 +64,4 @@ export async function register(res, user) {
    }
 }
 
+// document.querySelector('select').addEventListener('focus', updateGenres);

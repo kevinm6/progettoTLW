@@ -24,13 +24,13 @@ export const Db = async (collection) => {
       let client = new MongoClient(mongodb.uri).db(mongodb.dbName);
       if (collection) {
          _db = client.collection(collection);
-         console.log(`✅ MongoDB connected successful (collection: ${collection})`)
+         console.log(`🟢 MongoDB connected successful (collection: ${collection})`)
       } else {
          _db = client;
-         console.log("✅ MongoDB connected successful")
+         console.log("🟢 MongoDB connected successful")
       }
    } catch (e) {
-      console.error(`⚠️ Error connection with MongoDB:\n\t${e.message}`);
+      console.error(`🔴 Error connection with MongoDB:\n\t${e.message}`);
       process.exit(1);
    }
    return _db

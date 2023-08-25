@@ -3,16 +3,16 @@
  * with authorization token
  */
 
-import { config, spotify, mongodb } from '../../config/prefs.js';
+import { spotify } from '../../config/prefs.js';
+import { generateSpotifyToken } from './token.js';
 const BASE_URL = spotify.base_url
-console.log(BASE_URL)
 
 /**
    * Wrapper function to query Spotify API,
    * fetching given URL with authorization token
-   * @param {string} URL to use for fetch
+   * @param {string} url to use for fetch
    * @param {string} token to be used for authorization
-   * @returns {Promise}
+   * @returns {Object}
    */
 const fetchSpotify = async (URL, token) => {
    try {
@@ -40,102 +40,72 @@ const fetchSpotify = async (URL, token) => {
    * Query Spotify API to get tracks
    * @param {string} URL used for fetch
    * @param {string} searchQuery token used for authorization
-   * @returns {Promise} fetchSpotify
+   * @returns {Object}
    */
 const getTrack = async (token, searchQuery) => {
    const url = `${BASE_URL}/search?q=${searchQuery}&type=track`
+   const track = await fetchSpotify(url, token);
 
-   fetchSpotify(url, token)
+   return track;
 }
+
 
 /**
    * Query Spotify API to get albums
    * @param {string} token token to use for authorization
    * @param {string} searchQuery name of the album
-   * @returns {Promise}
+   * @returns {Object}
    */
 const getAlbums = async (token, searchQuery) => {
    const url = `${BASE_URL}/search?q=${searchQuery}&type=album`
+   const albums = await fetchSpotify(url, token);
 
-   fetchSpotify(url, token)
+   return albums;
 }
 
 /**
-   * Query Spotify API to get artists
-   * @param {string} token token to use for authorization
-   * @param {string} searchQuery name of the artist
-   * @returns {Promise}
-   */
+  * Query Spotify API to get artists
+  * @param {string} token token to use for authorization
+  * @param {string} searchQuery name of the artist
+  * @returns {Object}
+  */
 const getArtists = async (token, searchQuery) => {
    const url = `${BASE_URL}/search?q=${searchQuery}&type=artist`
+   const artists = await fetchSpotify(url, token);
 
-   fetchSpotify(url, token)
+   return artists;
 }
 
 /**
-   * Fetch all genres available
-   * @param {string} token token to use for authorization
-   * @returns {Promise}
-   */
-const getGenres = async (res,token) => {
-   if (token == null) {
-      token = await getAccessToken();
+  * Fetch all genres available
+  * @param {string} token token to use for authorization
+                    from other modules
+  * @returns {Promise}
+  */
+const getGenres = async (res, token) => {
+   if (process.env.SPOTIFY_TOKEN == null) {
+      token = await generateSpotifyToken();
    }
    const url = spotify.base_url+`/recommendations/available-genre-seeds`
 
-   const ret=await fetchSpotify(url, token);
+   const ret = await fetchSpotify(url, token);
    console.log(ret);
    res.json(ret);
-   
 }
 
 
 /**
- * Ottiene l'access token per l'autenticazione alle API di Spotify utilizzando il metodo client_credentials.
- *
- * @returns {Promise<string>} L'access token ottenuto dalla richiesta.
- * @throws {Error} Se si verifica un errore durante la richiesta o la conversione JSON.
- */
-const getAccessToken = async () => {
-   try {
-      // Ottiene le credenziali dal file di configurazione
-      const client_id = spotify.client_id;
-      const client_secret = spotify.client_secret;
-
-      // Effettua una richiesta POST per ottenere l'access token
-      const response = await fetch(spotify.token_url, {
-         method: 'POST',
-         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Basic ' + btoa(client_id + ':' + client_secret)
-         },
-         body: 'grant_type=client_credentials'
-      });
-
-      // Converte la risposta in formato JSON
-      const data = await response.json();
-
-      // Restituisce l'access token ottenuto
-      return data.access_token;
-   } catch (error) {
-      // Gestisce eventuali errori e li rilancia
-      console.error('An error occurred:', error);
-      throw error;
-   }
-}
-
-
-/**
-   * Query Spotify API to get recommendations
-   * @param {string} token token to use for authorization
-   * @param {string} artists artist to be used as seed to get recommendations
-   * @param {string} genres genres to be used as seed to get recommendations
-   * @returns {Promise}
-   */
+  * Query Spotify API to get recommendations
+  * @param {string} token token to use for authorization
+  * @param {string} artists artist to be used as seed to get recommendations
+  * @param {string} genres genres to be used as seed to get recommendations
+  * @returns {Promise}
+  */
 const getRecommended = async (token, artists, genres) => {
    const url = `${BASE_URL}/recommendations?seed_artists=${artists}&seed_genres=${genres}`
+   const recommended = await fetchSpotify(url, token);
 
-   fetchSpotify(url, token)
+   return recommended
 }
 
 /**
@@ -146,8 +116,9 @@ const getRecommended = async (token, artists, genres) => {
    */
 const getAll = async (token, searchQuery) => {
    const url = `${BASE_URL}/search?q=${searchQuery}&type=album,artist,track`
+   const all = await fetchSpotify(url, token);
 
-   fetchSpotify(url, token)
+   return all
 }
 
 

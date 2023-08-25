@@ -1,6 +1,6 @@
 // Import dei moduli necessari utilizzando il sistema di moduli ES6
 
-import express from "express";
+import express, { response } from "express";
 import cors from "cors";
 import { config } from "./src/config/prefs.js";
 import {
@@ -15,6 +15,7 @@ import { join } from "path";
 import swaggerDocument from "./src/api/docs/swagger_out.json" assert { type: "json" };
 import { register } from "./src/lib/register.js";
 import { getGenres } from "./src/lib/spotify/fetch.js"
+import { generateSpotifyToken, scheduleRenewSpotifyDevToken } from "./src/lib/spotify/token.js"
 // Creazione di un'istanza di Express per l'applicazione
 const app = express();
 
@@ -77,7 +78,14 @@ app.post("/login", async (req, res) => {
    login(req, res);
 });
 
-app.get("/register", async (_, res) => {
+app.get("/register", async (req, res) => {
+   // let file = "/src/html/register.html";
+
+   // let genres = await getGenres(process.env.SPOTIFY_TOKEN)
+   // let g = await genres;
+   // console.log(g)
+   // genres.json()
+   // let r = await genres
    res.sendFile(config.__dirname + "/src/html/register.html");
 });
 
@@ -96,26 +104,27 @@ app.post("/authuser", async (req, res) => {
 // ------------------- ENDPOINTS AUSILIARI -----------------
 
 app.get("/getGenres", async function (_, res) {
-   getGenres(res,null);
+   getGenres(res, null);
 });
 
-// ------------------- PAGINA PRINCIPALE -------------------
+// ------------------- HOME PAGE -------------------
 
 // Endpoint per la pagina principale
 app.get("/", async (_, res) => {
-   res.sendFile(config.__dirname + "/src/html/index.html");
+   res.sendFile(config.__dirname + "/src/public/index.html");
 });
 
-// console.log(process.env)
 
-// Avvio della connessione al Database
+// Start Database connection
 export const db = Db();
+
+// Generate Spotify token for communication with API
+// The token will be renewed every hour
 process.env.SPOTIFY_TOKEN = generateSpotifyToken();
 
 // Avvio del server
 app.listen(config.port, config.host, () => {
-   console.log(`Server listening on port: ${config.port}`);
+   console.log(`🟢 Server listening on port: ${config.port}`);
 });
-
 
 export default app
