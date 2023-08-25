@@ -1,6 +1,6 @@
 // Import dei moduli necessari utilizzando il sistema di moduli ES6
 
-import express, { response } from "express";
+import express from "express";
 import cors from "cors";
 import { config } from "./src/config/prefs.js";
 import {
@@ -12,11 +12,10 @@ import { login,authuser } from "./src/lib/login.js";
 import { getUsers, getUser, updateUser, deleteUser } from "./src/lib/user.js";
 import { Db } from "./src/lib/database.js";
 import { join } from "path";
-import swaggerDocument from "./src/api/docs/swagger_out.json" assert { type: "json" };
+import swaggerDocument from "./src/api/docs/swagger_out.json" assert { type: 'json' };
 import { register } from "./src/lib/register.js";
 import { getGenres } from "./src/lib/spotify/fetch.js"
 import { getUserPlaylists } from "./src/lib/playlist.js";
-import { generateSpotifyToken } from "./src/lib/spotify/token.js"
 // Creazione di un'istanza di Express per l'applicazione
 const app = express();
 
@@ -41,52 +40,47 @@ app.use("/api-docs", swaggeruiServe, swaggeruiSetup(swaggerDocument));
 app.use(express.static(config.__dirname));
 app.use(express.static(join(config.__dirname, "/src/")));
 app.use(express.static(join(config.__dirname, "/src/config/")));
-app.use(express.static(join(config.__dirname, "/src/static/")));
+app.use(express.static(join(config.__dirname, "/src/public/")));
+app.use(express.static(join(config.__dirname, "/src/html/")));
 
 
-// ------------------- GESTIONE UTENTI -------------------
+// ------------------- USERS -------------------
 
-// Endpoint per ottenere i dettagli di un utente specifico
+// User specific Endpoint
 app.get("/users/:id", async function (req, res) {
    getUser(req, res)
 });
 
 
-// Endpoint per ottenere la lista di tutti gli utenti
+// Endpoint for all users
 app.get("/users", async function (_, res) {
    getUsers(res)
 });
 
-// Endpoint per aggiornare i dettagli di un utente
+// User update Endpoint
 app.put("/users/:id", function (req, res) {
    updateUser(res, req.body._id, req.body);
 });
 
-// Endpoint per eliminare un utente
+// User delete Endpoint
 app.delete("/users/:id", function (req, res) {
    deleteUser(res, req.params.id);
 });
 
-// ------------------- AUTENTICAZIONE e GESTIONE PROFILI-------------------
+// ------------------- AUTHENTICATION e PROFILE -------------------
 
-// Endpoint per ottenere la pagina di accesso
+// Login Endpoint
 app.get("/login", async (req, res) => {
    res.sendFile(config.__dirname + "/src/html/login.html");
 });
 
-// Endpoint per effettuare l'accesso
+// Login Endpoint
 app.post("/login", async (req, res) => {
    login(req, res);
 });
 
+// Register Endpoints
 app.get("/register", async (req, res) => {
-   // let file = "/src/html/register.html";
-
-   // let genres = await getGenres(process.env.SPOTIFY_TOKEN)
-   // let g = await genres;
-   // console.log(g)
-   // genres.json()
-   // let r = await genres
    res.sendFile(config.__dirname + "/src/html/register.html");
 });
 
@@ -103,21 +97,36 @@ app.post("/authuser", async (req, res) => {
 });
 
 
-//-------------------- GESTIONE PLAYLIST -------------------
+//-------------------- PLAYLIST -------------------
 app.get("/playlist", async (_, res) => {
    res.sendFile(config.__dirname + "/src/html/playlists.html");
 });
 app.get("/playlist/:id", async (req, res) => {
-   getUserPlaylists(res,req.params.id);
+   getUserPlaylists(res, req.params.id);
 });
 app.get("/createplaylist", async (req, res) => {
    res.sendFile(config.__dirname + "/src/html/createplaylist.html");
 });
-// ------------------- ENDPOINTS AUSILIARI -----------------
+
+
+//-------------------- COMMUNITY -------------------
+app.get("/community", async (_, res) => {
+   res.sendFile(config.__dirname + "/src/html/community.html");
+});
+app.get("/community/:id", async (req, res) => {
+   getUserCommunity(res, req);
+});
+app.get("/createcommunity", async (req, res) => {
+   res.sendFile(config.__dirname + "/src/html/createcommunity.html");
+});
+
+
+// ------------------- AUXILIAR ENDPOINTS -----------------
 
 app.get("/getGenres", async function (_, res) {
    getGenres(res);
 });
+
 
 // ------------------- HOME PAGE -------------------
 
@@ -127,10 +136,10 @@ app.get("/", async (_, res) => {
 });
 
 
-// Start Database connection
+// ------------------- DATABASE START -------------------
 export const db = Db();
 
-// Avvio del server
+// ------------------- SERVER START -------------------
 app.listen(config.port, config.host, () => {
    console.log(`🟢 Server listening on port: ${config.port}`);
 });

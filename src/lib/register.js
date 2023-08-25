@@ -5,6 +5,10 @@ import { dbUserCollection } from "./user.js";
 import { hash } from "./utils.js";
 
 /**
+ * TODO: add description below textboxes for valid fields (lenght of nickname, password lenght etc..)
+ */
+
+/**
  * Async function to add a new user, if it doesn't exist
  *
  * @param mongoClient - client mongo passed to avoid import of module
@@ -63,5 +67,3 @@ export async function register(res, user) {
       res.status(500).send(`Generic Error: ${e}`);
    }
 }
-
-// document.querySelector('select').addEventListener('focus', updateGenres);

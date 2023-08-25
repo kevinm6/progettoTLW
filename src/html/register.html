@@ -21,12 +21,14 @@
             <input id="nickname" type="text" required="required" class="form-control" placeholder="Nickname" aria-label="Nickname"
                 aria-describedby="basic-addon1">
         </div>
+         <p style="font-size: 80%; color: grey;">The nickname must be at least 4 char long and maximum 16.</p>
         <div class="input-group mb-3">
             <input id="password1" type="password" required="required" class="form-control" placeholder="Password" aria-label="Password"
                 aria-describedby="basic-addon1">
             <input id="password2" type="password" required="required" class="form-control" placeholder="Repeat Password"
                 aria-label="Password" aria-describedby="basic-addon1">
         </div>
+         <p style="font-size: 80%; color: grey;">The password must be at least 7 char long.</p>
         <div class="input-group mb-3">
             <input id="nome" type="text" class="form-control" placeholder="Nome" aria-label="Nome"
                 aria-describedby="basic-addon1">
@@ -51,12 +53,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
-    <script type="module" src="../lib/menu.js"></script>
-    <script type="module" src="../config/prefs.js"></script>
-    <script type="module" src="../lib/spotify/fetch.js"></script>
-    <script type="module" src="../lib/user.js"></script>
-    <script type="module" src="../lib/utils.js"></script>
-    <script type="module" src="../lib/register.js"></script>
+    <script type="module" src="scripts/menu.js"></script>
 
     <script>
 
@@ -226,7 +223,7 @@
                 genres: generi_selezionati_values // Includi l'array dei generi selezionati
             };
 
-            console.log(data);
+            // console.log(data);
 
             fetch("http://localhost:3000/register", {
                 method: "POST",

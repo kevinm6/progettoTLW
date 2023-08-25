@@ -17,12 +17,9 @@ import { ObjectId } from "mongodb"
  */
 export async function login(req, res) {
    let login = req.body;
-   if (login.email == undefined) {
-      res.status(400).send("Missing Email");
-      return;
-   }
-   if (login.nickname == undefined) {
-      res.status(400).send("Missing Nickname");
+   console.log(login)
+   if (login.email == undefined && login.nickname == undefined) {
+      res.status(400).send("Missing Nickname or Email");
       return;
    }
    if (login.password == undefined) {
@@ -34,7 +31,10 @@ export async function login(req, res) {
 
    let collection = await dbUserCollection();
    var filter = {
-      $and: [{ email: login.email }, { nickname: login.nickname }, { password: login.password }],
+      $or: [
+         { $and: [ { email: login.email }, { password: login.password } ] },
+         { $and: [ { nickname: login.nickname }, { password: login.password } ] },
+      ],
    };
    let loggedUser = await collection.findOne(filter);
    if (loggedUser == null) {
