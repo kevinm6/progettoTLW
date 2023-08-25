@@ -1,7 +1,7 @@
 const menuItems = [
     { label: "Home", link: "http://localhost:3000" },
     { label: "Ricerca", link: "../html/search.html" },
-    { label: "Playlists", link: "../html/playlist.html?id_user=502356" },
+    //{ label: "Playlists", link: "../html/playlist.html?id_user=502356" },
     { label: "Groups", link: "../html/groups.html?id_user=502356" },
     { label: "Community", link: "../html/community.html?id_user=502356" },
 ];
@@ -41,9 +41,10 @@ async function isUserLoggedIn() {
     const loggedin = await isUserLoggedIn();
     const loginLabel = loggedin ? "Profile" : "Login";
     const loginLink = loggedin ? "http://localhost:3000/profile" : "http://localhost:3000/login";
- 
+    const playlistlabel = loggedin ? "Playlist" : "";
+    const playlistlink = loggedin ? "http://localhost:3000/playlist" : "";
+    menuItems.push({ label: playlistlabel, link: playlistlink });
     menuItems.push({ label: loginLabel, link: loginLink });
- 
     var menuHTML = "";
  
     for (let i = 0; i < menuItems.length; i++) {

@@ -73,20 +73,20 @@
             <input id="date" type="text" class="form-control" readonly>
         </div>
         <button class="btn btn-primary" onclick="logout()">Logout</button>
-        <button class="btn btn-primary" id="saveChangesButton" onclick="saveChanges()" disabled>Salva le modifiche</button>
+        <button class="btn btn-primary" id="saveChangesButton" onclick="saveChanges()" disabled>Salva le
+            modifiche</button>
     </div>
-        
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
     <script type="text/javascript" src="./../lib/menu.js"></script>
+    <script src="src/html/scripts/scripts.js"></script>
 
     <script>
         // Funzione per abilitare la modifica di una textbox
         function enableEdit(inputField) {
-            document.getElementById("saveChangesButton").disabled=false;
+            document.getElementById("saveChangesButton").disabled = false;
             inputField.removeAttribute("readonly");
             inputField.focus();
             document.getElementById("saveChangesButton").classList.remove("d-none");
@@ -111,107 +111,29 @@
             enableEdit(document.getElementById("cognome"));
         });
 
-        // Funzione per salvare le modifiche
-
-        /*
-
-        TODO: CORREGGERE LA FUNZIONE SAVECHANGES E RICORDARE DI AGGIORNARE ANCHE POI I VALORI SALVATI IN LOCALSTORAGE ALTRIMENTI NON FUNZIONA PIU NULLA!
-        
-        */
-        function saveChanges() {
-            var useremail=document.getElementById("email").value;
-            var usernickname=document.getElementById("nickname").value;
-            var userpassword=document.getElementById("password").value;
-            var username=document.getElementById("nome").value;
-            var usersurname=document.getElementById("cognome").value;
-            var userid=localStorage.getItem("_id");
-            var updatedData = {
-                _id: userid,
-                email: useremail,
-                name:username,
-                surname:usersurname,
-                nickname: usernickname,
-                password: userpassword
-
-            };
-            console.log(updatedData);
-            fetch(`http://localhost:3000/users/${updatedData._id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(updatedData)
-            }).then(response => {
-                if (response.ok) {
-                    alert("Modifiche salvate con successo!");
-                    localStorage.setItem("email",useremail);
-                    localStorage.setItem("nickname",usernickname);
-                    localStorage.setItem("_id",userid);
-                    window.location.href = "http://localhost:3000/profile";
-                } else {
-                    throw new Error("Errore durante il salvataggio delle modifiche");
-                }
-            }).catch(error => {
-                console.error("An error has occurred:", error);
-            });
-        }
-
-
-    </script>
-    <script>
-        function logout() {
-            localStorage.removeItem("nickname");
-            localStorage.removeItem("email");
-            localStorage.removeItem("password");
-            window.location.href = "http://localhost:3000/login";
-        }
     </script>
 
     <script>
-        // Verifica se l'utente è loggato
-        if (!localStorage.getItem("nickname") || !localStorage.getItem("email")) {
-            alert("Effettua il login per accedere al profilo");
-            window.location.href = "http://localhost:3000/login";
-        } else {
-            // Mostra i dati dell'utente nel profilo
-            document.getElementById("nickname").value = localStorage.getItem("nickname");
-            document.getElementById("email").value = localStorage.getItem("email");
-            document.getElementById("password").value = "";
-
-            // Effettua una richiesta al tuo server per ottenere i dati aggiuntivi dell'utente
-            fetch("http://localhost:3000/authuser", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    email: localStorage.getItem("email"),
-                    nickname: localStorage.getItem("nickname"),
-                    _id: localStorage.getItem("_id") // invio dell'id al posto della password.
-                })
-            }).then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error("Autenticazione non valida");
-                }
-            })
-                .then(data => {
-                    // Popola gli altri campi con i dati ricevuti dal server
-                    document.getElementById("nome").value = data.name;
-                    document.getElementById("cognome").value = data.surname;
-                    document.getElementById("genres").value = data.genres.join(", ");
-                    document.getElementById("date").value = data.date;
-                })
-                .catch(error => {
+        async function authandpopulate() {
+            try {
+                const userData = await authenticateUser();
+                if (userData == "ERR") {
                     console.error("Errore durante l'autenticazione:", error);
                     alert("Errore durante l'autenticazione, rifare il login");
-                    localStorage.removeItem("nickname");
-                    localStorage.removeItem("email");
-                    localStorage.removeItem("password");
+                    logout();
+                    throw error;
+                } else if (userData == "ERR_NOT_LOGGED") {
+                    alert("Effettua il login per accedere al profilo");
                     window.location.href = "http://localhost:3000/login";
-                });
+                    throw new Error("Utente non loggato");
+                } else {
+                    populateUserProfile(userData);
+                }
+            } catch (error) {
+                console.error("Errore durante l'esecuzione:", error);
+            }
         }
+        authandpopulate();
     </script>
 
 </body>

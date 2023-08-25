@@ -1,75 +1,153 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Movie Demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
 </head>
 
 <body>
     <div id="menu"></div>
+
     <div class="container">
-        <div class="row mt-4">
-            <div class="col-12  col-md-5 "><img id="card-img" class="img-fluid rounded">
-            </div>
-            <div class="col-12  col-md-7">
-                <div class="row">
-                    <div class="col-12">
-                        <h2 id="card-title"></h2>
-                        <p id="card-date"></p>
-                    </div>"Missing Name");
-      return;
-   }
-   if (user.nickname == undefined) {
-      res.status(400).send("Missing Nickname");
-      return;
-   }
-   if (user.email == undefined) {
-      res.status(400).send("Missing Email");
-      return;
-   }
-   if (user.password == undefined || user.password.length < 3) {
-      res.status(400).send("Password is missing or too short");
-      return;
-   }
+        <h2>Le tue playlist</h2>
 
-   user.password = hash(user.password);
-   console.log(user.password);
+        <div class="row" id="playlistContainer">
+            <!-- Qui verranno aggiunte dinamicamente le card delle playlist -->
+        </div>
+         <button class="btn btn-primary" id="createPlaylistButton">Crea Playlist</button>
+    </div>
+    </div>
 
-   try {
-      var userCollection = await dbUserCollection();
 
-      // Check if email or nickname already exist in the database
-      const existingUser = await userCollection.findOne({
-         $or: [{ email: user.email }, { nickname: user.nickname }],
-      });
-
-      if (existingUser) {
-         res.status(400).send(
-            "User with the same email or nickname already exists!",
-
-                        <a href="#" class="btn btn-secondary">Scheda</a>
-                    </div>
-
+    <div class="modal fade" id="songsModal" tabindex="-1" aria-labelledby="songsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="songsModalLabel">Canzoni della Playlist</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Titolo</th>
+                                <th scope="col">Artista</th>
+                                <th scope="col">Durata</th>
+                            </tr>
+                        </thead>
+                        <tbody id="songsTableBody">
+                            <!-- Qui verranno aggiunte dinamicamente le righe delle canzoni -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
-
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
-        crossorigin="anonymous"></script>
-    <script src="menu.js"></script>
-    <script src="lib.js"></script>
+
+
+    <script type="text/javascript" src="./../lib/menu.js"></script>
+    <script src="src/html/scripts/scripts.js"></script>
     <script>
-        var id = new URLSearchParams(window.location.search).get('id_attore')
+        const createPlaylistButton = document.getElementById("createPlaylistButton");
+
+        createPlaylistButton.addEventListener("click", () => {
+            window.location.href = "http://localhost:3000/createplaylist";
+        });
+    </script>
+    <script>
+        async function authandpopulate() {
+            try {
+                const userData = await authenticateUser();
+                console.log(userData);
+                if (userData === "ERR") {
+                    console.error("Errore durante l'autenticazione:", error);
+                    alert("Errore durante l'autenticazione, rifare il login");
+                    logout();
+                    throw new Error("Errore durante l'autenticazione");
+                } else if (userData === "ERR_NOT_LOGGED") {
+                    alert("Effettua il login per accedere alle tue playlist");
+                    window.location.href = "http://localhost:3000/login";
+                    throw new Error("Utente non loggato");
+                } else {
+                    // Esegui altre azioni dopo l'autenticazione
+                    populatePlaylistCards(); // Popola le card delle playlist
+                }
+            } catch (error) {
+                console.error("Errore durante l'esecuzione:", error);
+            }
+        }
+
+        async function fetchPlaylists() {
+            try {
+                const userId = localStorage.getItem("_id");
+                const response = await fetch(`http://localhost:3000/playlist/${userId}`);
+                const playlistsData = await response.json();
+                return playlistsData;
+            } catch (error) {
+                console.error("Errore durante il recupero delle playlist:", error);
+                return [];
+            }
+        }
 
 
+        async function populatePlaylistCards() {
+            const playlistsData = await fetchPlaylists();
+            const playlistContainer = document.getElementById("playlistContainer");
+
+            playlistsData.forEach(playlist => {
+                //var stringified = JSON.stringify(playlist.songs).replace(/"/g, '&quot;');
+                var stringified = JSON.stringify(playlist.songs).replace(/"/g, '&quot;');
+                const card = `
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">${playlist.title}</h5>
+                                <p class="card-text">${playlist.description}</p>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
+                                    onclick="showSongs('${playlist._id}', ${stringified})">
+                                    Visualizza Canzoni
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                playlistContainer.innerHTML += card;
+            });
+        }
+
+        function showSongs(playlistId, songsJson) {
+            songsJson = (JSON.stringify(songsJson));
+            const songs = JSON.parse(songsJson);
+            const songsTableBody = document.getElementById("songsTableBody");
+            songsTableBody.innerHTML = ""; // Pulisce la tabella
+
+            songs.forEach(song => {
+                const row = `
+                <tr>
+                    <td>${song.title}</td>
+                    <td>${song.artist}</td>
+                    <td>${song.duration}</td>
+                </tr>
+            `;
+
+                songsTableBody.innerHTML += row;
+            });
+
+            const songsModal = new bootstrap.Modal(document.getElementById("songsModal"));
+            songsModal.show();
+        }
+        authandpopulate();
     </script>
 </body>
 

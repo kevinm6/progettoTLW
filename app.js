@@ -15,6 +15,7 @@ import { join } from "path";
 import swaggerDocument from "./src/api/docs/swagger_out.json" assert { type: "json" };
 import { register } from "./src/lib/register.js";
 import { getGenres } from "./src/lib/spotify/fetch.js"
+import { getUserPlaylists } from "./src/lib/playlist.js";
 import { generateSpotifyToken } from "./src/lib/spotify/token.js"
 // Creazione di un'istanza di Express per l'applicazione
 const app = express();
@@ -101,6 +102,17 @@ app.post("/authuser", async (req, res) => {
    authuser(req, res);
 });
 
+
+//-------------------- GESTIONE PLAYLIST -------------------
+app.get("/playlist", async (_, res) => {
+   res.sendFile(config.__dirname + "/src/html/playlists.html");
+});
+app.get("/playlist/:id", async (req, res) => {
+   getUserPlaylists(res,req.params.id);
+});
+app.get("/createplaylist", async (req, res) => {
+   res.sendFile(config.__dirname + "/src/html/createplaylist.html");
+});
 // ------------------- ENDPOINTS AUSILIARI -----------------
 
 app.get("/getGenres", async function (_, res) {

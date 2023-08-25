@@ -2,6 +2,26 @@
 
 import crypto from "crypto";
 import { config, mongodb } from "./../config/prefs.js";
+import {Db} from "./database.js";
+export const dbPlaylistCollection = () => Db('playlists');
+
+/**
+ * Retrieves playlists associated with a given owner_id and sends them in the response.
+ * @param {Object} res - The response object used to send the playlists.
+ * @param {string} owner_id - The ID of the owner whose playlists need to be fetched.
+ */
+export async function getUserPlaylists(res, owner_id) {
+    try {
+        const collection = await dbPlaylistCollection();
+        const playlists = await collection
+            .find({ owner_id })
+            .project({})
+            .toArray();
+        res.send(playlists);
+    } catch (error) {
+        res.status(500).send(`Error while fetching playlists: ${error.message}`);
+    }
+}
 
 /**
  * Async function to add song to playlist
