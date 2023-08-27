@@ -1,150 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-    crossorigin="anonymous"></script>
-</head>
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Community</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+      crossorigin="anonymous"></script>
+   </head>
 
-<body>
-    <div id="menu"></div>
+   <body>
+      <div id="menu"></div>
 
-    <div class="container">
-        <h2>Le tue community</h2>
+      <div class="container">
+         <h2 style="text-align: center">La tua Community</h2>
+         <div class="col-12">
+            <h2 id="community-title">TITLE</h2>
+            <p id="community-desc">DESCRIPTION</p>
+         </div>
 
-        <div class="row" id="communityContainer">
+         <div class="row" id="communityContainer">
             <!-- Qui verranno aggiunte dinamicamente le card delle community -->
-        </div>
+         </div>
          <button class="btn btn-primary" id="createPlaylistButton">Crea Community</button>
-    </div>
-    </div>
+      </div>
+
+     <div id="container-cast" class="row mt-2 row-cols-2
+        row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4">
+         <div class="col d-none" id="card-cast">
+             <div class="card">
+                 <img src="" class="card-img-top" alt="...">
+                 <div class="card-body">
+                     <p class="card-text "></p>
+                     <p class="card-text"><small class="text-body-secondary"></small>
+
+                     </p>
+                 </div>
+                 <div class="card-footer">
+                     <a href="#" class="btn btn-secondary">Scheda</a>
+                 </div>
+
+             </div>
+         </div>
+     </div>
 
 
-    <div class="modal fade" id="usersModal" tabindex="-1" aria-labelledby="usersModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="usersModalLabel">Utenti della Community</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Titolo</th>
-                                <th scope="col">Artista</th>
-                                <th scope="col">Durata</th>
-                            </tr>
-                        </thead>
-                        <tbody id="songsTableBody">
-                            <!-- Qui verranno aggiunte dinamicamente le righe delle canzoni -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+      <script type="module" src="src/html/scripts/menu.js"></script>
+      <script src="scripts/scripts.js"></script>
+      <script>
+         const createCommunityButton = document.getElementById("createPlaylistButton");
 
-
-
-    <script type="module" src="src/html/scripts/menu.js"></script>
-    <script src="src/html/scripts/scripts.js"></script>
-    <script>
-        const createCommunityButton = document.getElementById("createPlaylistButton");
-
-        createCommunityButton.addEventListener("click", () => {
+         createCommunityButton.addEventListener("click", () => {
             window.location.href = "http://localhost:3000/createcommunity";
-        });
-    </script>
-    <script>
-        async function authandpopulate() {
-            try {
-                const userData = await authenticateUser();
-                console.log(userData);
-                if (userData === "ERR") {
-                    console.error("Errore durante l'autenticazione:", error);
-                    alert("Errore durante l'autenticazione, rifare il login");
-                    logout();
-                    throw new Error("Errore durante l'autenticazione");
-                } else if (userData === "ERR_NOT_LOGGED") {
-                    alert("Effettua il login per accedere alle tue playlist");
-                    window.location.href = "http://localhost:3000/login";
-                    throw new Error("Utente non loggato");
-                } else {
-                    // Esegui altre azioni dopo l'autenticazione
-                    populateCommunityCards(); // Popola le card delle playlist
-                }
-            } catch (error) {
-                console.error("Errore durante l'esecuzione:", error);
+         });
+      </script>
+
+      <script>
+      async function authandpopulate() {
+         try {
+            const userData = await authenticateUser();
+            if (userData === "ERR") {
+               console.error("Errore durante l'autenticazione:", error);
+               alert("Errore durante l'autenticazione, rifare il login");
+               logout();
+               throw new Error("Errore durante l'autenticazione");
+            } else if (userData === "ERR_NOT_LOGGED") {
+               alert("Effettua il login per accedere alle tue playlist");
+               window.location.href = "http://localhost:3000/login";
+               throw new Error("Utente non loggato");
+            } else {
+               // Esegui altre azioni dopo l'autenticazione
+               populateCommunityCards(userData); // Popola le card dei membri della community
             }
-        }
+         } catch (error) {
+            console.error("Errore durante l'esecuzione:", error);
+         }
+      }
 
-        async function fetchCommunity() {
-            try {
-                // const userId = localStorage.getItem("_id");
-                const response = await fetch(`http://localhost:3000/users`);
-                const communityData = await response.json();
-                return communityData;
-            } catch (error) {
-                console.error("Errore durante il recupero delle community:", error);
-                return [];
-            }
-        }
+      async function fetchCommunityMembers(creatorId) {
+         try {
+            console.log(creatorId)
+            // const userId = localStorage.getItem("_id");
+            const response = await fetch(`http://localhost:3000/community/${creatorId}`);
+            const communityMembers = await response.json();
+            // console.log(communityMembers[0].members);
+            return communityMembers;
+         } catch (error) {
+            console.error("Errore durante il recupero delle community:", error);
+            return {};
+         }
+      }
 
-
-        async function populateCommunityCards() {
-            const communityData = await fetchCommunity();
-            const communityContainer = document.getElementById('communityContainer');
-
-            communityData.forEach(user => {
-                //var stringified = JSON.stringify(playlist.songs).replace(/"/g, '&quot;');
-                // var stringified = JSON.stringify(user.songs).replace(/"/g, '&quot;');
-                const card = `
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">${user.nickname}</h5>
-                            </div>
-                        </div>
-                    </div>
-                `;
-
-                communityContainer.innerHTML += card;
-            });
-        }
-
-        function showPlaylists(playlistId, songsJson) {
-            songsJson = (JSON.stringify(songsJson));
-            const songs = JSON.parse(songsJson);
-            const songsTableBody = document.getElementById("songsTableBody");
-            songsTableBody.innerHTML = ""; // Pulisce la tabella
-
-            songs.forEach(song => {
-                const row = `
-                <tr>
-                    <td>${song.title}</td>
-                    <td>${song.artist}</td>
-                    <td>${song.duration}</td>
-                </tr>
-            `;
-
-                songsTableBody.innerHTML += row;
+      async function fetchUsersAndUpdateCards(membersData) {
+         try {
+            membersData.forEach(async member => {
+               let res = await fetch(`http://localhost:3000/users/${member}`);
+               let memberInfo = await res.json()
+               // console.log(memberInfo, memberInfo[0].nickname)
+               const communityContainer = document.getElementById('communityContainer');
+               const card = `
+               <div class="col-md-4 mb-4">
+               <div class="card">
+               <div class="card-body">
+               <h5 class="card-title">${memberInfo[0].nickname}</h5>
+               </div>
+               </div>
+               </div>
+               `;
+               communityContainer.innerHTML += card;
+               // return memberInfo
             });
 
-            const songsModal = new bootstrap.Modal(document.getElementById("songsModal"));
-            songsModal.show();
-        }
-        authandpopulate();
-    </script>
-</body>
+         } catch (error) {
+            console.error("Errore durante il recupero degli utenti:", error);
+            return {};
+         }
+      }
+
+
+      async function populateCommunityCards(user) {
+         const communityData = await fetchCommunityMembers(user._id);
+         // console.log("Community Data: ", communityData[0].members);
+         const membersData = await fetchUsersAndUpdateCards(communityData[0].members);
+
+         const usersData = await (user._id);
+
+         communityData.forEach(user => {
+         });
+      }
+
+      authandpopulate();
+      </script>
+   </body>
 
 </html>
 

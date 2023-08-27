@@ -52,9 +52,9 @@ export async function login(req, res) {
 
 export async function authuser(req, res) {
    let login = req.body;
-   console.log(login._id);
-   console.log(login.nickname);
-   console.log(login.email);
+   // console.log(login._id);
+   // console.log(login.nickname);
+   // console.log(login.email);
    let collection = await dbUserCollection();
 
    var filter = {

@@ -85,7 +85,7 @@ const getGenres = async (res) => {
    const url = spotify.base_url+`/recommendations/available-genre-seeds`
 
    const ret = await fetchSpotify(url);
-   console.log(ret);
+   // console.log(ret);
    res.json(ret);
 }
 

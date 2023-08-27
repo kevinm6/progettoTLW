@@ -83,6 +83,6 @@ function saveChanges() {
 function logout() {
     localStorage.removeItem("nickname");
     localStorage.removeItem("email");
-    localStorage.removeItem("password");
+    localStorage.removeItem("_id");
     window.location.href = "http://localhost:3000/login";
 }

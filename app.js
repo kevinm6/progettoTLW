@@ -16,6 +16,7 @@ import swaggerDocument from "./src/api/docs/swagger_out.json" assert { type: 'js
 import { register } from "./src/lib/register.js";
 import { getGenres } from "./src/lib/spotify/fetch.js"
 import { getUserPlaylists } from "./src/lib/playlist.js";
+import { getMembersOfCommunity, getCommunity } from "./src/lib/community.js";
 // Creazione di un'istanza di Express per l'applicazione
 const app = express();
 
@@ -114,7 +115,7 @@ app.get("/community", async (_, res) => {
    res.sendFile(config.__dirname + "/src/html/community.html");
 });
 app.get("/community/:id", async (req, res) => {
-   getUserCommunity(res, req);
+   getCommunity(req, res);
 });
 app.get("/createcommunity", async (req, res) => {
    res.sendFile(config.__dirname + "/src/html/createcommunity.html");

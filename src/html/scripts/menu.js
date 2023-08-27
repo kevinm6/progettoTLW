@@ -1,9 +1,6 @@
 const menuItems = [
    { label: "Home", link: "http://localhost:3000" },
    { label: "Ricerca", link: "../html/search.html" },
-   //{ label: "Playlists", link: "../html/playlist.html?id_user=502356" },
-   // { label: "Groups", link: "../html/groups.html?id_user=502356" },
-   // { label: "Community", link: "../html/community.html?id_user=502356" },
 ];
 
 /**
@@ -39,24 +36,27 @@ async function isUserLoggedIn() {
 
 
 async function generateMenu() {
-   const loggedin = await isUserLoggedIn();
+   let loggedIn = await isUserLoggedIn();
 
    const profile = {
-      label: loggedin ? "Profile" : "Login",
-      link: loggedin ? "http://localhost:3000/profile" : "http://localhost:3000/login"
-   }
-   const playlist = {
-      label: loggedin ? "Playlist" : "",
-      link: loggedin ? "http://localhost:3000/playlist" : ""
+      label: loggedIn ? "Profile" : "Login",
+      link: loggedIn ? "http://localhost:3000/profile" : "http://localhost:3000/login"
    }
 
-   const community = {
-      label: loggedin ? "Community" : "",
-      link: loggedin ? "http://localhost:3000/community" : ""
+   if (loggedIn) {
+      console.log("Adding Items");
+      const playlist = {
+         label: "Playlist",
+         link: "http://localhost:3000/playlist"
+      }
+
+      const community = {
+         label: "Community",
+         link: "http://localhost:3000/community"
+      }
+      menuItems.push(playlist, community);
    }
 
-   menuItems.push(playlist);
-   menuItems.push(community);
    menuItems.push(profile);
 
    var menuHTML = "";
