@@ -14,7 +14,7 @@ import { Db } from "./src/lib/database.js";
 import { join } from "path";
 import swaggerDocument from "./src/api/docs/swagger_out.json" assert { type: 'json' };
 import { register } from "./src/lib/register.js";
-import { getGenres } from "./src/lib/spotify/fetch.js"
+import { getGenres, getRecommended, getTrack } from "./src/lib/spotify/fetch.js"
 import { getUserPlaylists } from "./src/lib/playlist.js";
 import { getMembersOfCommunity, getCommunity } from "./src/lib/community.js";
 // Creazione di un'istanza di Express per l'applicazione
@@ -45,7 +45,7 @@ app.use(express.static(join(config.__dirname, "/src/public/")));
 app.use(express.static(join(config.__dirname, "/src/html/")));
 
 
-// ------------------- USERS -------------------
+/* ------------------- USERS ------------------- */
 
 // User specific Endpoint
 app.get("/users/:id", async function (req, res) {
@@ -68,7 +68,7 @@ app.delete("/users/:id", function (req, res) {
    deleteUser(res, req.params.id);
 });
 
-// ------------------- AUTHENTICATION e PROFILE -------------------
+/* ------------------- AUTHENTICATION e PROFILE ------------------- */
 
 // Login Endpoint
 app.get("/login", async (req, res) => {
@@ -98,7 +98,22 @@ app.post("/authuser", async (req, res) => {
 });
 
 
-//-------------------- PLAYLIST -------------------
+/* ------------------- TRACKS ------------------- */
+app.get("/tracks", async function (_, res) {
+   res.sendFile(config.__dirname + "/src/html/tracks.html");
+})
+
+app.get("/tracks/:id", async function (req, res) {
+   if (req.params.id == 'null') {
+      getTrack(req.params.id, res);
+   } else {
+      getRecommended(req, res);
+   }
+})
+
+
+
+/* -------------------- PLAYLIST ------------------- */
 app.get("/playlist", async (_, res) => {
    res.sendFile(config.__dirname + "/src/html/playlists.html");
 });
@@ -110,7 +125,7 @@ app.get("/createplaylist", async (req, res) => {
 });
 
 
-//-------------------- COMMUNITY -------------------
+/* -------------------- COMMUNITY ------------------- */
 app.get("/community", async (_, res) => {
    res.sendFile(config.__dirname + "/src/html/community.html");
 });
@@ -122,14 +137,14 @@ app.get("/createcommunity", async (req, res) => {
 });
 
 
-// ------------------- AUXILIAR ENDPOINTS -----------------
+/* ------------------- AUXILIAR ENDPOINTS ----------------- */
 
 app.get("/getGenres", async function (_, res) {
    getGenres(res);
 });
 
 
-// ------------------- HOME PAGE -------------------
+/* ------------------- HOME PAGE ------------------- */
 
 // Endpoint per la pagina principale
 app.get("/", async (_, res) => {
@@ -137,10 +152,10 @@ app.get("/", async (_, res) => {
 });
 
 
-// ------------------- DATABASE START -------------------
+/* ------------------- DATABASE START ------------------- */
 export const db = Db();
 
-// ------------------- SERVER START -------------------
+/* ------------------- SERVER START ------------------- */
 app.listen(config.port, config.host, () => {
    console.log(`🟢 Server listening on port: ${config.port}`);
 });

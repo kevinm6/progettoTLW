@@ -1,6 +1,6 @@
 const menuItems = [
    { label: "Home", link: "http://localhost:3000" },
-   { label: "Ricerca", link: "../html/search.html" },
+   { label: "Explore", link: "../html/tracks.html" },
 ];
 
 /**
@@ -31,7 +31,8 @@ async function isUserLoggedIn() {
       })
    });
 
-   return response.ok
+   const ret = await response.ok;
+   return ret
 }
 
 
@@ -44,7 +45,6 @@ async function generateMenu() {
    }
 
    if (loggedIn) {
-      console.log("Adding Items");
       const playlist = {
          label: "Playlist",
          link: "http://localhost:3000/playlist"

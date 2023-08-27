@@ -46,6 +46,8 @@ const fetchSpotify = async (URL) => {
    * @returns {Object}
    */
 const getTrack = async (searchQuery) => {
+   console.log("Search-query:", searchQuery.id == null);
+
    const url = `${BASE_URL}/search?q=${searchQuery}&type=track`
    const track = await fetchSpotify(url);
 
@@ -97,6 +99,7 @@ const getGenres = async (res) => {
   * @returns {Promise}
   */
 const getRecommended = async (artists, genres) => {
+   console.log("Calling recommended");
    const url = `${BASE_URL}/recommendations?seed_artists=${artists}&seed_genres=${genres}`
    const recommended = await fetchSpotify(url);
 
