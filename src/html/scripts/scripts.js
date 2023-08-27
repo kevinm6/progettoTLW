@@ -86,3 +86,15 @@ function logout() {
     localStorage.removeItem("_id");
     window.location.href = "http://localhost:3000/login";
 }
+
+function msToTime(msStr) {
+    const padZero = (num) => (num < 10 ? "0" + num : num);
+
+    const totalMilliseconds = parseInt(msStr, 10);
+    const totalSeconds = Math.floor(totalMilliseconds / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    return `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+}

@@ -105,9 +105,9 @@ app.get("/tracks", async function (_, res) {
 
 app.get("/tracks/:id", async function (req, res) {
    if (req.params.id == 'null') {
-      getTrack(req.params.id, res);
+      getRecommended(req, res);   
    } else {
-      getRecommended(req, res);
+      getTrack(req.params.id, res);
    }
 })
 

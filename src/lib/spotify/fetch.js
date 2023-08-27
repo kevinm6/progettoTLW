@@ -45,13 +45,11 @@ const fetchSpotify = async (URL) => {
    * @param {string} searchQuery token used for authorization
    * @returns {Object}
    */
-const getTrack = async (searchQuery) => {
-   console.log("Search-query:", searchQuery.id == null);
-
+const getTrack = async (searchQuery,res) => {
+   console.log("Search-query:", searchQuery);
    const url = `${BASE_URL}/search?q=${searchQuery}&type=track`
    const track = await fetchSpotify(url);
-
-   return track;
+   res.json(track);
 }
 
 

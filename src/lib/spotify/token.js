@@ -32,6 +32,7 @@ export const generateSpotifyToken = async () => {
       let response = await fetch(spotify.token_url, authOptions)
       const data = await response.json();
       process.env.SPOTIFY_TOKEN = data.access_token;
+      console.log(data.access_token);
 
       if (!scheduled) {
          scheduleRenewSpotifyDevToken();
