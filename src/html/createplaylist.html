@@ -32,7 +32,6 @@
     <div class="container">
         <h2>Crea una nuova playlist</h2>
 
-        <form id="playlistForm">
             <div class="mb-3">
                 <label for="title" class="form-label">Titolo</label>
                 <input type="text" class="form-control" id="title" name="title" required>
@@ -53,8 +52,7 @@
 
             <div id="searchResults"></div>
 
-            <button type="submit" class="btn btn-primary">Crea Playlist</button>
-        </form>
+            <button type="submit" class="btn btn-primary" onclick="creaplaylist()">Crea Playlist</button>
 
 
     </div>
@@ -78,12 +76,13 @@
 
                         tracksData.tracks.items.forEach((track) => {
                             const artists = track.artists.map((artist) => artist.name).join(", ");
+                            var duration=msToTime(track.duration_ms);
                             const trackCard = `
                                 <div class="card mb-3">
                                     <div class="card-body">
                                         <h5 class="card-title">${track.name}</h5>
                                         <p class="card-text">Artisti: ${artists}</p>
-                                        <p class="card-text">Durata: ${msToTime(track.duration_ms)}</p>
+                                        <p class="card-text">Durata: ${duration}</p>
                                         <p class="card-text">Album: ${track.album.name}</p>
                                         <p class="card-text">Spotify ID: ${track.id}</p>
                                         <div class="audio-player">
@@ -92,7 +91,7 @@
                                                 Il tuo browser non supporta l'elemento audio.
                                             </audio>
                                         </div>
-                                        <button class="btn btn-success add-button add-track" data-id="${track.id}" data-title="${track.name}">
+                                        <button class="btn btn-success add-button add-track" data-id="${track.id}" data-title="${track.name}"data-artists="${artists}"data-duration="${duration}">
                                             Aggiungi
                                         </button>
                                     </div>
@@ -108,7 +107,9 @@
                                 event.preventDefault();
                                 const songId = event.target.getAttribute("data-id");
                                 const songTitle = event.target.getAttribute("data-title");
-                                addSelectedSong(songId, songTitle);
+                                const artist = event.target.getAttribute("data-artists");
+                                const duration=event.target.getAttribute("data-duration");
+                                addSelectedSong(songId, songTitle,artist,duration);
                             });
                         });
                     } catch (error) {
@@ -123,7 +124,7 @@
         const selectedSongsContainer = document.getElementById("selectedSongs");
 
         // Funzione per aggiungere una canzone selezionata
-        function addSelectedSong(songId, songTitle) {
+        function addSelectedSong(songId, songTitle,artist,duration) {
             // Verifica se l'elemento è già presente
             const existingElement = Array.from(selectedSongsContainer.children).find(element => {
                 return element.dataset.songId === songId;
@@ -134,6 +135,8 @@
                 const selectedSongDiv = document.createElement("div");
                 selectedSongDiv.classList.add("selected-song");
                 selectedSongDiv.dataset.songId = songId; // Imposta l'attributo personalizzato
+                selectedSongDiv.dataset.artist = artist;
+                selectedSongDiv.dataset.duration = duration;
 
                 const songTitleSpan = document.createElement("span");
                 songTitleSpan.textContent = songTitle;
@@ -150,7 +153,24 @@
                 selectedSongsContainer.appendChild(selectedSongDiv);
             }
         }
-
+        (async function auth() {
+            try {
+                const userData = await authenticateUser();
+                console.log(userData);
+                if (userData === "ERR") {
+                    console.error("Errore durante l'autenticazione:", error);
+                    alert("Errore durante l'autenticazione, rifare il login");
+                    logout();
+                    throw new Error("Errore durante l'autenticazione");
+                } else if (userData === "ERR_NOT_LOGGED") {
+                    alert("Effettua il login per creare una playlist");
+                    window.location.href = "http://localhost:3000/login";
+                    throw new Error("Utente non loggato");
+                }
+            } catch (error) {
+                console.error("Errore durante l'esecuzione:", error);
+            }
+        })()
 
     </script>
 

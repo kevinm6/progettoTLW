@@ -2,7 +2,7 @@
 
 import crypto from "crypto";
 import { config, mongodb } from "./../config/prefs.js";
-import {Db} from "./database.js";
+import { Db } from "./database.js";
 export const dbPlaylistCollection = () => Db('playlists');
 
 /**
@@ -11,16 +11,16 @@ export const dbPlaylistCollection = () => Db('playlists');
  * @param {string} owner_id - The ID of the owner whose playlists need to be fetched.
  */
 export async function getUserPlaylists(res, owner_id) {
-    try {
-        const collection = await dbPlaylistCollection();
-        const playlists = await collection
-            .find({ owner_id })
-            .project({})
-            .toArray();
-        res.send(playlists);
-    } catch (error) {
-        res.status(500).send(`Error while fetching playlists: ${error.message}`);
-    }
+  try {
+    const collection = await dbPlaylistCollection();
+    const playlists = await collection
+      .find({ owner_id })
+      .project({})
+      .toArray();
+    res.send(playlists);
+  } catch (error) {
+    res.status(500).send(`Error while fetching playlists: ${error.message}`);
+  }
 }
 
 /**
@@ -80,5 +80,44 @@ export async function removeSongFromPlaylist(mongoClient, res, playlist_id, trac
     res.send(item)
   } catch (e) {
     res.status(500).send(`Errore generico: ${e}`)
+  }
+}
+
+export async function createplaylist(res, playlist) {
+  if (playlist.title === undefined) {
+    res.status(400).send('Missing playlist title');
+    return;
+  }
+  if (playlist.description === undefined) {
+    res.status(400).send('Missing playlist description');
+    return;
+  }
+  if (playlist.tags === undefined) {
+    res.status(400).send('Missing playlist tags');
+    return;
+  }
+  if (playlist.songs === undefined) {
+    res.status(400).send('Missing playlist songs');
+    return;
+  }
+  if (playlist.owner_id === undefined) {
+    res.status(400).send('Missing playlist owner');
+    return;
+  }
+
+  try {
+    var playlistCollection = await dbPlaylistCollection();
+
+    await playlistCollection.insertOne(playlist); // Changed userCollection to playlistCollection
+
+    // Risposta affermativa con uno status 200 per evitare oggetti circolari
+    res.status(200).send();
+    console.log("[",playlist.owner_id,"]Playlist Created");
+  } catch (e) {
+    if (e.code === 11000) {
+      res.status(400).send("An error occurred!");
+      return;
+    }
+    res.status(500).send(`Generic Error: ${e}`);
   }
 }

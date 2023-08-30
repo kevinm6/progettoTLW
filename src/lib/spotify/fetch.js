@@ -46,7 +46,6 @@ const fetchSpotify = async (URL) => {
    * @returns {Object}
    */
 const getTrack = async (searchQuery,res) => {
-   console.log("Search-query:", searchQuery);
    const url = `${BASE_URL}/search?q=${searchQuery}&type=track`
    const track = await fetchSpotify(url);
    res.json(track);
