@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Movie Demo</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+         integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+   </head>
+
+   <body>
+      <div id="menu"></div>
+      <div class="container">
+         <div class="row g-4 mt-4 p-4">
+            <nav aria-label="Page navigation example">
+               <ul class="pagination">
+                  <li class="page-item"><button class="page-link" onclick="prev()">Previous</button></li>
+
+                  <li class="page-item"><button class="page-link" onclick="next()">Next</button></li>
+               </ul>
+            </nav>
+         </div>
+         <div id="container-film" class="row g-4 mt-2 p-4">
+            <div id="card-film" class="col-3 d-none">
+               <div class="card h-100" style="width: 18rem;">
+                  <img class="card-img-top" alt="...">
+                  <div class="card-body">
+                     <h5 class="card-title"></h5>
+                     <p class="card-text"></p>
+
+                  </div>
+                  <div class="card-footer">
+                     <p class="card-text">
+                        <small class="text-body-secondary"></small>
+                     </p>
+                     <div class="container">
+                        <!-- Trigger the modal with a button -->
+                        <button type="button" class="btn btn-info btn-lg" data-bs-toggle="modal" data-target="#trackModal">TrackInfo</button>
+
+                        <!-- Modal -->
+                         <div class="modal fade" id="trackModal" tabindex="-1" aria-labelledby="trackModalLabel" aria-hidden="true">
+                             <div class="modal-dialog modal-dialog-centered modal-lg">
+                              <!-- Modal content -->
+                                 <div class="modal-content">
+                                     <div class="modal-header">
+                                         <h5 class="modal-title" id="trackModalLabel">Info of Track</h5>
+                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                     </div>
+                                     <div class="modal-body" id="trackInfoContent">
+                                       <img class="img-responsive" style="margin:0 auto;" alt="">
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                  </div>
+               </div>
+
+            </div>
+         </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+      crossorigin="anonymous"></script>
+      <script src="scripts/menu.js"></script>
+      <script src="scripts/scripts.js"></script>
+
+      <script>
+
+      function populateTracks(data) {
+         /* TODO: rename appropriately cards and so on */
+
+         let recommendedTracks = data.tracks.items;
+
+         let card = document.getElementById("card-film")
+         let container = document.getElementById("container-film")
+         container.innerHTML = ""
+         container.append(card)
+
+         let artistsName = (artists) => {
+            return artists.map((artist) => artist.name).join(", ");
+         }
+
+         for (var i in recommendedTracks) {
+            let clone = card.cloneNode(true)
+
+            clone.id = 'card-film-' + i;
+            clone.getElementsByClassName('card-title')[0].innerHTML = recommendedTracks[i].name;
+
+            clone.getElementsByClassName('card-text')[0].innerHTML = artistsName(recommendedTracks[i].artists);
+
+            clone.getElementsByClassName('card-img-top')[0].src = recommendedTracks[i].album.images[0].url;
+
+            clone.getElementsByClassName('text-body-secondary')[0].innerHTML = msToTime(recommendedTracks[i].duration_ms);
+
+            clone.getElementsByClassName('img-responsive')[0].src = recommendedTracks[i].album.images[0].url;
+
+           // <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
+            clone.getElementsByClassName('btn')[0].setAttribute('data-bs-toggle', "modal"+i);
+            clone.getElementsByClassName('btn')[0].setAttribute('data-bs-target', "#trackModal"+recommendedTracks[i].id);
+            clone.getElementsByClassName('btn')[0].setAttribute('onClick', `showTrackInfo('${recommendedTracks[i].id}')` );
+
+            clone.getElementsByClassName('modal-body')[0].innerHTML += showTrackInfo(recommendedTracks[i]);
+
+            clone.classList.remove('d-none')
+
+            card.after(clone)
+          }
+
+      }
+
+
+      /* This anonymous function is evalutated automatically */
+      (function getTracks() {
+         const searchQuery = document.getElementById('search_query');
+
+         fetch(`http://localhost:3000/search?q=${searchQuery}&type=track`)
+            .then(response => {
+               if (!response.ok) {
+                  response.json().then(data => alert(data.status_message))
+                  return
+               }
+               response.json().then(data => populateTracks(data))
+            })
+            .catch(error => alert(error))
+      })();
+
+
+
+     function showTrackInfo(trackData) {
+         // const trackInfo = document.getElementById('track_info');
+         // trackInfo.innerHTML = ""; // Pulisce la tabella
+
+         return `
+             <tr>
+                 <td>${trackData.title}</td>
+                 <td>${trackData.artist}</td>
+                 <td>${trackData.duration}</td>
+             </tr>
+         `;
+
+         // const songsModal = new bootstrap.Modal(document.getElementById("songsModal"));
+         // console.log("SONGSMODAL: ", songsModal);
+         // songsModal.show();
+     }
+      </script>
+
+   </body>
+
+</html>
+

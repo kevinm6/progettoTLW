@@ -42,13 +42,33 @@ const fetchSpotify = async (URL) => {
 /**
    * Query Spotify API to get tracks
    * @param {string} URL used for fetch
+   * @param {string} track token used for authorization
+   * @returns {Object}
+   */
+const getTrack = async (track, res) => {
+   // TODO: add manage for multiple tracks fetch via Spotify API
+   // see -> https://developer.spotify.com/documentation/web-api/reference/get-several-tracks
+   console.log("TRACK: ", track);
+   // return;
+   const url = `${BASE_URL}/tracks/${track}`
+   const trackResult = await fetchSpotify(url);
+   res.json(trackResult);
+}
+
+
+/**
+   * Query Spotify API to get tracks
+   * @param {string} URL used for fetch
    * @param {string} searchQuery token used for authorization
    * @returns {Object}
    */
-const getTrack = async (searchQuery,res) => {
-   const url = `${BASE_URL}/search?q=${searchQuery}&type=track`
-   const track = await fetchSpotify(url);
-   res.json(track);
+const search = async (searchQuery, res) => {
+   let query = searchQuery.q != null ? searchQuery.q : "";
+   console.log(query);
+   let type = searchQuery.type;
+   const url = `${BASE_URL}/search?q=${query}&type=${type}`;
+   const trackResult = await fetchSpotify(url);
+   res.json(trackResult);
 }
 
 
@@ -69,10 +89,16 @@ const getAlbums = async (searchQuery) => {
   * @param {string} searchQuery name of the artist
   * @returns {Object}
   */
-const getArtists = async (searchQuery) => {
-   const url = `${BASE_URL}/search?q=${searchQuery}&type=artist`
-   const artists = await fetchSpotify(url);
+const getArtists = async (multiple, searchQuery, res) => {
+   let url = `${BASE_URL}`
+   if (multiple) {
+      url += `artists?ids=${searchQuery}`
+   } else {
+     url += `/search?q=${searchQuery}&type=artist`
+   }
 
+   const artists = await fetchSpotify(url);
+   res.json(artists);
    return artists;
 }
 
@@ -95,12 +121,15 @@ const getGenres = async (res) => {
   * @param {string} genres genres to be used as seed to get recommendations
   * @returns {Promise}
   */
-const getRecommended = async (artists, genres) => {
-   console.log("Calling recommended");
-   const url = `${BASE_URL}/recommendations?seed_artists=${artists}&seed_genres=${genres}`
+const getRecommended = async (genres, res) => {
+   console.log("Genres: ", genres);
+
+   const url = `${BASE_URL}/recommendations?seed_genres=${genres}`
+   console.log("URL: ", url);
    const recommended = await fetchSpotify(url);
 
-   return recommended
+   res.json(recommended);
+   // return recommended
 }
 
 /**
@@ -120,6 +149,7 @@ export {
    BASE_URL,
    fetchSpotify,
    getAll,
+   search,
    getTrack,
    getAlbums,
    getArtists,

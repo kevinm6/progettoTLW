@@ -16,7 +16,6 @@ import { spotify } from "../../config/prefs.js";
  */
 let scheduled = false;
 export const generateSpotifyToken = async () => {
-   console.log("Generating Spotify token...")
    // NOTE: btoa function is deprecated
    const basicAuth = new Buffer.from(`${spotify.client_id}:${spotify.client_secret}`).toString('base64');
    const authOptions = {
@@ -28,11 +27,12 @@ export const generateSpotifyToken = async () => {
       body: 'grant_type=client_credentials',
    }
    try {
+      console.log("📡 Generating Spotify token...")
 
       let response = await fetch(spotify.token_url, authOptions)
       const data = await response.json();
       process.env.SPOTIFY_TOKEN = data.access_token;
-      console.log(data.access_token);
+      // console.log(data.access_token);
 
       if (!scheduled) {
          scheduleRenewSpotifyDevToken();

@@ -41,13 +41,6 @@ const mongodb = {
    database: process.env.DATABASE,
    dbName: process.env.DB_NAME,
    uri: process.env.DB_URI,
-   // TODO: others to be added when decided how manage data in Mongo
-   collections: {
-      users: "users",
-      community: "community",
-      playlists: "playlists",
-      tracks: "tracks"
-   }
 };
 
 /**

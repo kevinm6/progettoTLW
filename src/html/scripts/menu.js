@@ -1,6 +1,6 @@
 const menuItems = [
    { label: "Home", link: "http://localhost:3000" },
-   { label: "Explore", link: "../html/tracks.html" },
+   { label: "Explore", link: "../html/explore.html" },
 ];
 
 /**

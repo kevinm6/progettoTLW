@@ -14,7 +14,7 @@ import { Db } from "./src/lib/database.js";
 import { join } from "path";
 import swaggerDocument from "./src/api/docs/swagger_out.json" assert { type: 'json' };
 import { register } from "./src/lib/register.js";
-import { getGenres, getRecommended, getTrack } from "./src/lib/spotify/fetch.js"
+import { search, getGenres, getRecommended, getTrack } from "./src/lib/spotify/fetch.js"
 import { getUserPlaylists,createplaylist } from "./src/lib/playlist.js";
 import { getMembersOfCommunity, getCommunity } from "./src/lib/community.js";
 // Creazione di un'istanza di Express per l'applicazione
@@ -30,8 +30,6 @@ const corsOptions = {
 
  // Usa il middleware cors
  app.use(cors(corsOptions));
-
-//app.use(cors());
 
 
 // Middleware per servire la documentazione API tramite Swagger UI
@@ -89,7 +87,7 @@ app.post("/register", function (req, res) {
    register(res, req.body);
 });
 
-app.get("/profile", async function (req, res) {
+app.get("/profile", async function (_, res) {
    res.sendFile(config.__dirname + "/src/html/profile.html");
 });
 
@@ -99,18 +97,39 @@ app.post("/authuser", async (req, res) => {
 
 
 /* ------------------- TRACKS ------------------- */
-app.get("/tracks", async function (_, res) {
-   res.sendFile(config.__dirname + "/src/html/tracks.html");
+app.get("/search", async function (req, res) {
+   search(req.query, res);
+})
+
+
+/* ------------------- TRACKS ------------------- */
+app.get("/tracks", async function (req, res) {
+   getRecommended(req.params, res);
 })
 
 app.get("/tracks/:id", async function (req, res) {
-   if (req.params.id == 'null') {
-      getRecommended(req, res);   
-   } else {
-      getTrack(req.params.id, res);
-   }
+   getTrack(req.params.id, res);
 })
 
+
+/* ------------------- ARTISTS ------------------- */
+// app.get("/artists", async function (req, res) {
+//    res.sendFile(config.__dirname + "/src/html/artists.html");
+// })
+
+app.get("/artist/:id", async function (req, res) {
+   getArtists(false, req.params.id, res);
+})
+
+app.get("/artists/:id", async function (req, res) {
+   getArtists(true, req.params.id, res);
+})
+
+
+/* ------------------- EXPLORE ------------------- */
+app.get("/explore", async function (_, res) {
+   res.sendFile(config.__dirname + "/src/html/explore.html");
+})
 
 
 /* -------------------- PLAYLIST ------------------- */
@@ -162,4 +181,4 @@ app.listen(config.port, config.host, () => {
    console.log(`🟢 Server listening on port: ${config.port}`);
 });
 
-export default app
+// export default app
