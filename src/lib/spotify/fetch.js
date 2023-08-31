@@ -64,7 +64,7 @@ const getTrack = async (track, res) => {
    */
 const search = async (searchQuery, res) => {
    let query = searchQuery.q != null ? searchQuery.q : "";
-   console.log(query);
+   // console.log(query);
    let type = searchQuery.type;
    const url = `${BASE_URL}/search?q=${query}&type=${type}`;
    const trackResult = await fetchSpotify(url);

@@ -34,25 +34,23 @@
                      <p class="card-text">
                         <small class="text-body-secondary"></small>
                      </p>
-                     <div class="container">
-                        <!-- Trigger the modal with a button -->
-                        <button type="button" class="btn btn-info btn-lg" data-bs-toggle="modal" data-target="#trackModal">TrackInfo</button>
+                     <!-- Trigger the modal with a button -->
+                     <button type="button" class="btn btn-info btn-lg">Info</button>
 
-                        <!-- Modal -->
-                         <div class="modal fade" id="trackModal" tabindex="-1" aria-labelledby="trackModalLabel" aria-hidden="true">
-                             <div class="modal-dialog modal-dialog-centered modal-lg">
-                              <!-- Modal content -->
-                                 <div class="modal-content">
-                                     <div class="modal-header">
-                                         <h5 class="modal-title" id="trackModalLabel">Info of Track</h5>
-                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                     </div>
-                                     <div class="modal-body" id="trackInfoContent">
-                                       <img class="img-responsive" style="margin:0 auto;" alt="">
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
+                     <!-- Modal -->
+                     <div class="modal fade" id="trackModal" tabindex="-1" aria-labelledby="trackModalLabel" aria-hidden='true'>
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                           <!-- Modal content -->
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <h5 class="modal-title text-center" id="trackModalLabel"></h5>
+                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body" id="trackModalBody">
+                                 <img class="img-responsive" style="margin:0 auto;" alt="">
+                              </div>
+                           </div>
+                        </div>
                      </div>
                   </div>
                </div>
@@ -83,31 +81,40 @@
             return artists.map((artist) => artist.name).join(", ");
          }
 
-         for (var i in recommendedTracks) {
+         for (let i in recommendedTracks) {
             let clone = card.cloneNode(true)
 
             clone.id = 'card-film-' + i;
+            let trackId = recommendedTracks[i].id;
+
+            let title = recommendedTracks[i].name;
             clone.getElementsByClassName('card-title')[0].innerHTML = recommendedTracks[i].name;
 
-            clone.getElementsByClassName('card-text')[0].innerHTML = artistsName(recommendedTracks[i].artists);
+            let artists = artistsName(recommendedTracks[i].artists);
+            clone.getElementsByClassName('card-text')[0].innerHTML = artists;
 
-            clone.getElementsByClassName('card-img-top')[0].src = recommendedTracks[i].album.images[0].url;
+            let imgUrl = recommendedTracks[i].album.images[0].url;
+            clone.getElementsByClassName('card-img-top')[0].src = imgUrl;
 
-            clone.getElementsByClassName('text-body-secondary')[0].innerHTML = msToTime(recommendedTracks[i].duration_ms);
+            let durationTime = msToTime(recommendedTracks[i].duration_ms);
+            clone.getElementsByClassName('text-body-secondary')[0].innerHTML = durationTime;
 
-            clone.getElementsByClassName('img-responsive')[0].src = recommendedTracks[i].album.images[0].url;
+            clone.getElementsByClassName('img-responsive')[0].src = imgUrl;
 
-           // <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
-            clone.getElementsByClassName('btn')[0].setAttribute('data-bs-toggle', "modal"+i);
-            clone.getElementsByClassName('btn')[0].setAttribute('data-bs-target', "#trackModal"+recommendedTracks[i].id);
-            clone.getElementsByClassName('btn')[0].setAttribute('onClick', `showTrackInfo('${recommendedTracks[i].id}')` );
+            clone.getElementsByClassName('modal')[0].setAttribute('id', 'trackModal' + trackId);
+            clone.getElementsByClassName('modal-title')[0].setAttribute('id', 'trackModalLabel' + trackId);
+            clone.getElementsByClassName('modal-body')[0].setAttribute('id', 'trackModalBody' + trackId);
 
-            clone.getElementsByClassName('modal-body')[0].innerHTML += showTrackInfo(recommendedTracks[i]);
+            clone.getElementsByClassName('btn-close')[0].setAttribute('data-dismiss', 'trackModal' + trackId);
 
-            clone.classList.remove('d-none')
+            clone.getElementsByClassName('btn')[0].setAttribute('data-bs-toggle', 'modal');
+            clone.getElementsByClassName('btn')[0].setAttribute('data-bs-target', '#trackModal' + trackId);
+            clone.getElementsByClassName('btn')[0].setAttribute('onClick', `showTrackInfo('${trackId}', '${title}', '${artists}', '${durationTime}')`);
 
-            card.after(clone)
-          }
+            clone.classList.remove('d-none');
+
+            card.after(clone);
+         }
 
       }
 
@@ -129,22 +136,12 @@
 
 
 
-     function showTrackInfo(trackData) {
-         // const trackInfo = document.getElementById('track_info');
-         // trackInfo.innerHTML = ""; // Pulisce la tabella
-
-         return `
-             <tr>
-                 <td>${trackData.title}</td>
-                 <td>${trackData.artist}</td>
-                 <td>${trackData.duration}</td>
-             </tr>
-         `;
-
-         // const songsModal = new bootstrap.Modal(document.getElementById("songsModal"));
-         // console.log("SONGSMODAL: ", songsModal);
-         // songsModal.show();
-     }
+      function showTrackInfo(id, title, artist, body) {
+         let modalLabel = document.getElementById('trackModalLabel' + id);
+         modalLabel.innerHTML = `
+<h2>${artist}: ${title}</h2>
+<h4 style="color: grey">${body}</h4>`;
+      }
       </script>
 
    </body>
