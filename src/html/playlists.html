@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,22 +9,17 @@
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-    crossorigin="anonymous"></script>
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
     <style>
     </style>
-    
 </head>
-
 <body>
     <div id="menu"></div>
-
     <div class="container">
         <h2>Le tue playlist</h2>
-
         <div class="row" id="playlistContainer">
             <!-- Qui verranno aggiunte dinamicamente le card delle playlist -->
-            
         </div>
         <div class="row" id="addplaylist">
             <div class="col-md-4 mb-4">
@@ -37,12 +31,8 @@
                     </div>
                 </div>
             </div>
-            
-        </div>      
-
+        </div>
     </div>
-
-
     <div class="modal fade" id="songsModal" tabindex="-1" aria-labelledby="songsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -67,14 +57,11 @@
             </div>
         </div>
     </div>
-
-
-
     <script type="module" src="src/html/scripts/menu.js"></script>
-    <script src="src/html/scripts/scripts.js"></script>
+    <script src="./scripts/scripts.js"></script>
+    <script src="./scripts/playlists.js"></script>
     <script>
         const createPlaylistButton = document.getElementById("createPlaylistButton");
-
         createPlaylistButton.addEventListener("click", () => {
             window.location.href = "http://localhost:3000/createplaylist";
         });
@@ -100,66 +87,6 @@
             } catch (error) {
                 console.error("Errore durante l'esecuzione:", error);
             }
-        }
-
-        async function fetchPlaylists() {
-            try {
-                const userId = localStorage.getItem("_id");
-                const response = await fetch(`http://localhost:3000/playlist/${userId}`);
-                const playlistsData = await response.json();
-                return playlistsData;
-            } catch (error) {
-                console.error("Errore durante il recupero delle playlist:", error);
-                return [];
-            }
-        }
-
-
-        async function populatePlaylistCards() {
-            const playlistsData = await fetchPlaylists();
-            const playlistContainer = document.getElementById("playlistContainer");
-
-            playlistsData.forEach(playlist => {
-                //var stringified = JSON.stringify(playlist.songs).replace(/"/g, '&quot;');
-                var stringified = JSON.stringify(playlist.songs).replace(/"/g, '&quot;');
-                const card = `
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <h5 class="card-title">${playlist.title}</h5>
-                                <p class="card-text">${playlist.description}</p>
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
-                                    onclick="showSongs('${playlist._id}', ${stringified})">
-                                    Visualizza Canzoni
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `; 
-                playlistContainer.innerHTML += card;
-            });
-        }
-
-        function showSongs(playlistId, songsJson) {
-            songsJson = (JSON.stringify(songsJson));
-            const songs = JSON.parse(songsJson);
-            const songsTableBody = document.getElementById("songsTableBody");
-            songsTableBody.innerHTML = ""; // Pulisce la tabella
-
-            songs.forEach(song => {
-                const row = `
-                <tr>
-                    <td>${song.title}</td>
-                    <td>${song.artist}</td>
-                    <td>${song.duration}</td>
-                </tr>
-            `;
-
-                songsTableBody.innerHTML += row;
-            });
-
-            const songsModal = new bootstrap.Modal(document.getElementById("songsModal"));
-            songsModal.show();
         }
         authandpopulate();
     </script>

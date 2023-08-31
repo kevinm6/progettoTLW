@@ -1,5 +1,3 @@
-// profile.js
-
 function populateUserProfile(userData) {
     // Mostra i dati dell'utente nel profilo
     document.getElementById("nickname").value = userData.nickname;

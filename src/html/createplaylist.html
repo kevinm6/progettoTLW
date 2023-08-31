@@ -8,7 +8,7 @@
     <title>Crea Playlist</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <script src="src/html/scripts/createplaylist.js"></script>
+
     <style>
         .remove-button {
             font-size: 12px;
@@ -17,13 +17,14 @@
             border: none;
             padding: 0;
         }
+
         .custom-audio-player {
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 10px;
-    margin-top: 10px;
-}
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 
@@ -33,39 +34,83 @@
     <div class="container">
         <h2>Crea una nuova playlist</h2>
 
-            <div class="mb-3">
-                <label for="title" class="form-label">Titolo</label>
-                <input type="text" class="form-control" id="title" name="title" required>
-            </div>
-            <div class="mb-3">
-                <label for="description" class="form-label">Descrizione</label>
-                <input type="text" class="form-control" id="description" name="description" required>
-            </div>
-            <div class="mb-3">
-                <label for="tags" class="form-label">Tags (separati da virgola)</label>
-                <textarea class="form-control" id="tags" name="tags" rows="3" required></textarea>
-            </div>
-            <div class="mb-3">
-                <input type="text" id="searchInput" class="form-control mt-4" placeholder="Cerca canzoni">
-            </div>
-            <div id="selectedSongs" class="mt-3">
-            </div>
+        <div class="mb-3">
+            <label for="title" class="form-label">Titolo</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Descrizione</label>
+            <input type="text" class="form-control" id="description" name="description" required>
+        </div>
+        <div class="mb-3">
+            <label for="tags" class="form-label">Tags (separati da virgola)</label>
+            <textarea class="form-control" id="tags" name="tags" rows="3" required></textarea>
+        </div>
+        <div class="mb-3">
+            <input type="text" id="searchInput" class="form-control mt-4" placeholder="Cerca canzoni">
+        </div>
+        <div id="selectedSongs" class="mt-3">
+        </div>
 
-            <div id="searchResults"></div>
+        <div id="searchResults"></div>
 
-            <button type="submit" class="btn btn-primary" onclick="creaplaylist()">Crea Playlist</button>
+        <button type="submit" class="btn btn-primary" onclick="creaplaylist()">Crea Playlist</button>
 
 
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="src/html/scripts/menu.js"></script>
-    <script src="src/html/scripts/scripts.js"></script>
-
+    <script src="./scripts/scripts.js"></script>
+    <script src="./scripts/createplaylist.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            generateCards();
+            const searchInput = document.getElementById("searchInput");
+            const searchResults = document.getElementById("searchResults");
+
+            searchInput.addEventListener("input", async () => {
+                const searchTerm = searchInput.value.trim();
+                if (searchTerm.length > 0) {
+                    try {
+                        const response = await fetch(`http://localhost:3000/search?q=${searchTerm}&type=track`);
+                        const tracksData = await response.json();
+                        searchResults.innerHTML = "";
+                        tracksData.tracks.items.forEach((track) => {
+                            const artists = track.artists.map((artist) => artist.name).join(", ");
+                            var duration = msToTime(track.duration_ms);
+                            //genera la card
+                            var trackCard=generateCards(track.name,artists,duration,track.album.name,track.id,track.preview_url)
+                            searchResults.insertAdjacentHTML("beforeend", trackCard);
+                        });
+                        aggiungiButtonManager();
+                    } catch (error) {
+                        console.error("Errore durante la ricerca delle tracce:", error);
+                    }
+                } else {
+                    // Clear search results if search input is empty
+                    searchResults.innerHTML = "";
+                }
+            });
         });
+        async function auth() {
+            try {
+                const userData = await authenticateUser();
+                console.log(userData);
+                if (userData === "ERR") {
+                    console.error("Errore durante l'autenticazione:", error);
+                    alert("Errore durante l'autenticazione, rifare il login");
+                    logout();
+                    throw new Error("Errore durante l'autenticazione");
+                } else if (userData === "ERR_NOT_LOGGED") {
+                    alert("Effettua il login per creare una playlist");
+                    window.location.href = "http://localhost:3000/login";
+                    throw new Error("Utente non loggato");
+                }
+            } catch (error) {
+                console.error("Errore durante l'esecuzione:", error);
+            }
+        }
+
         auth();
     </script>
 
