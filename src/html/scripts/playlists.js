@@ -2,7 +2,7 @@
 async function fetchPlaylists() {
     try {
         const userId = localStorage.getItem("_id");
-        const response = await fetch(`http://localhost:3000/playlist/${userId}`);
+        const response = await fetch(`/playlist/${userId}`);
         const playlistsData = await response.json();
         return playlistsData;
     } catch (error) {
@@ -32,7 +32,7 @@ async function populatePlaylistCards() {
                     </div>
                 </div>
             </div>
-        `; 
+        `;
         playlistContainer.innerHTML += card;
     });
 }

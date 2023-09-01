@@ -25,7 +25,7 @@
             <div class="col-md-4 mb-4">
                 <div class="card h-100 border border-dashed">
                     <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                        <a href="http://localhost:3000/createplaylist" class="btn btn-link">
+                        <a href="/createplaylist" class="btn btn-link">
                             <i class="bi bi-plus-circle" style="font-size: 3rem;"></i>
                         </a>
                     </div>
@@ -58,14 +58,14 @@
         </div>
     </div>
     <script type="module" src="src/html/scripts/menu.js"></script>
-    <script src="./scripts/scripts.js"></script>
-    <script src="./scripts/playlists.js"></script>
-    <script>
-        const createPlaylistButton = document.getElementById("createPlaylistButton");
-        createPlaylistButton.addEventListener("click", () => {
-            window.location.href = "http://localhost:3000/createplaylist";
-        });
-    </script>
+    <script src="scripts/scripts.js"></script>
+    <script src="scripts/playlists.js"></script>
+    <!-- <script> -->
+    <!--     const createPlaylistButton = document.getElementById("createPlaylistButton"); -->
+    <!--     createPlaylistButton.addEventListener("click", () => { -->
+    <!--         window.location.href = "/createplaylist"; -->
+    <!--     }); -->
+    <!-- </script> -->
     <script>
         async function authandpopulate() {
             try {

@@ -17,7 +17,7 @@ async function authenticateUser() {
     }
 
     try {
-        const response = await fetch("http://localhost:3000/authuser", {
+        const response = await fetch('/authuser', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -57,7 +57,7 @@ function saveChanges() {
 
     };
     console.log(updatedData);
-    fetch(`http://localhost:3000/users/${updatedData._id}`, {
+    fetch(`/users/${updatedData._id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -125,7 +125,7 @@ function creaplaylist() {
     console.log(playlistData);
 
     // Effettua la richiesta POST all'endpoint
-    fetch("http://localhost:3000/createplaylist", {
+    fetch('/createplaylist', {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

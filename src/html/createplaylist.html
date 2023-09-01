@@ -72,7 +72,7 @@
                 const searchTerm = searchInput.value.trim();
                 if (searchTerm.length > 0) {
                     try {
-                        const response = await fetch(`http://localhost:3000/search?q=${searchTerm}&type=track`);
+                        const response = await fetch(`/search?q=${searchTerm}&type=track`);
                         const tracksData = await response.json();
                         searchResults.innerHTML = "";
                         tracksData.tracks.items.forEach((track) => {

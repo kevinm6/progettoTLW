@@ -1,5 +1,5 @@
 const menuItems = [
-   { label: "Home", link: "http://localhost:3000" },
+   { label: "Home", link: "/#" },
    { label: "Explore", link: "../html/explore.html" },
 ];
 
@@ -19,7 +19,7 @@ async function isUserLoggedIn() {
       return false;
 
 
-   const response = await fetch("http://localhost:3000/authuser", {
+   const response = await fetch('/authuser', {
       method: "POST",
       headers: {
          "Content-Type": "application/json"
@@ -40,19 +40,19 @@ async function generateMenu() {
    let loggedIn = await isUserLoggedIn();
 
    const profile = {
-      label: loggedIn ? "Profile" : "Login",
-      link: loggedIn ? "http://localhost:3000/profile" : "http://localhost:3000/login"
+      label: loggedIn ? 'Profile' : 'Login',
+      link: loggedIn ? '/profile' : '/login'
    }
 
    if (loggedIn) {
       const playlist = {
-         label: "Playlist",
-         link: "http://localhost:3000/playlist"
+         label: 'Playlist',
+         link: '/playlist'
       }
 
       const community = {
-         label: "Community",
-         link: "http://localhost:3000/community"
+         label: 'Community',
+         link: '/community'
       }
       menuItems.push(playlist, community);
    }

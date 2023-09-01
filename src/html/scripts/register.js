@@ -3,7 +3,7 @@
 /** function to obtain genres from spotify by calling endpoint */
 async function getSpotifyGenres() {
     try {
-       const response = await fetch('http://localhost:3000/getGenres', {
+       const response = await fetch('/getGenres', {
           method: 'GET',
           headers: {
              'Content-Type': 'application/json'
@@ -160,7 +160,7 @@ async function getSpotifyGenres() {
 
     // console.log(data);
 
-    fetch("http://localhost:3000/register", {
+    fetch('/register', {
        method: "POST",
        headers: {
           "Content-Type": "application/json"

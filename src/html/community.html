@@ -56,7 +56,7 @@
          const createCommunityButton = document.getElementById("createPlaylistButton");
 
          createCommunityButton.addEventListener("click", () => {
-            window.location.href = "http://localhost:3000/createcommunity";
+            window.location.href = '/createcommunity';
          });
       </script>
 
@@ -71,7 +71,7 @@
                throw new Error("Errore durante l'autenticazione");
             } else if (userData === "ERR_NOT_LOGGED") {
                alert("Effettua il login per accedere alle tue playlist");
-               window.location.href = "http://localhost:3000/login";
+               window.location.href = '/login';
                throw new Error("Utente non loggato");
             } else {
                // Esegui altre azioni dopo l'autenticazione
@@ -86,7 +86,7 @@
          try {
             console.log(creatorId)
             // const userId = localStorage.getItem("_id");
-            const response = await fetch(`http://localhost:3000/community/${creatorId}`);
+            const response = await fetch(`/community/${creatorId}`);
             const communityMembers = await response.json();
             // console.log(communityMembers[0].members);
             return communityMembers;
@@ -99,7 +99,7 @@
       async function fetchUsersAndUpdateCards(membersData) {
          try {
             membersData.forEach(async member => {
-               let res = await fetch(`http://localhost:3000/users/${member}`);
+               let res = await fetch(`/users/${member}`);
                let memberInfo = await res.json()
                // console.log(memberInfo, memberInfo[0].nickname)
                const communityContainer = document.getElementById('communityContainer');
