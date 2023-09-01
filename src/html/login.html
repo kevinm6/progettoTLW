@@ -31,92 +31,15 @@
       integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
       crossorigin="anonymous"></script>
       <script src="scripts/menu.js"></script>
+      <script src="scripts/login.js"></script>
       <script>
+          checkUserLogged();
+         /* This code assigns an event handler to the "Enter" key press (key code 13) on the keyboard
+            when the user is within the input element with the ID "password."
+            When the "Enter" key is pressed (key code 13), the "login()" function is called. */
       document.getElementById('password').onkeydown = function(e) {
          if (e.keyCode == 13) login();
-      }
-
-      function login() {
-         var nicknameOrEmail = document.getElementById('nicknameOrEmail');
-         var password = document.getElementById('password');
-
-         // Rimuovi eventuali classi di errore preesistenti
-         nicknameOrEmail.classList.remove('border', 'border-danger');
-         password.classList.remove('border', 'border-danger');
-
-         // Verifica validità mail || nickname
-         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-         const isValidEmail = emailRegex.test(nicknameOrEmail.value);
-
-         if (!isValidEmail && (
-            !nicknameOrEmail.value ||
-               nicknameOrEmail.value.length < 4 ||
-               nicknameOrEmail.value.length > 16)) {
-
-            nicknameOrEmail.classList.add('border', 'border-danger');
-            alert("Inserisci il nickname o un indirizzo email valido!");
-            return;
-         }
-
-         // Verifica validità password
-         if (!password.value || password.value.length < 7) {
-            password.classList.add('border', 'border-danger');
-            alert("La password deve avere almeno 7 caratteri!");
-            return;
-         }
-
-         var data = {
-            email: isValidEmail ? nicknameOrEmail.value : undefined,
-            nickname: !isValidEmail ? nicknameOrEmail.value : undefined,
-            password: password.value
-         };
-
-         // Effettua la richiesta POST al server
-         fetch("/login", {
-            method: "POST",
-            headers: {
-               "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-         }).then(response => {
-               if (response.ok) {
-                  response.json().then(responseData => {
-                     let container = document.getElementsByClassName('container')[0];
-                     console.log(container);
-
-                     container.innerHTML += `
-                     <div class="alert alert-success" role="alert" aria-hidden="true">
-                       <h4 class="alert-heading">Loggato con successo!</h4>
-                     </div>`
-
-                     // TODO:  think about save an object in localStorage instead of 3/4 keys
-
-                     // Save user_id in localStorage
-                     localStorage.setItem("_id", responseData._id);
-                     // Save user credentials in LocalStorage
-                     localStorage.setItem("email", responseData.email);
-                     localStorage.setItem("nickname", responseData.nickname);
-                     // Reindirizza alla pagina di login
-                     setTimeout(() => { window.location.href = '/login' }, 2000);
-                  });
-               } else {
-                  alert("Credenziali non valide o inesistenti!");
-               }
-            });
-      }
-
+      } 
       </script>
-      <script>
-      // Check if user is logged in
-      var email = localStorage.getItem("email");
-      var nickname = localStorage.getItem("nickname");
-
-      if (email && nickname) {
-         // User is logged, bring him to profile page
-         window.location.href = "/profile";
-      }
-      </script>
-
    </body>
-
 </html>

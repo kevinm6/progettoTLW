@@ -12,11 +12,14 @@ import { login,authuser } from "./src/lib/login.js";
 import { getUsers, getUser, updateUser, deleteUser } from "./src/lib/user.js";
 import { Db } from "./src/lib/database.js";
 import { join } from "path";
-import swaggerDocument from "./src/api/docs/swagger_out.json" assert { type: 'json' };
 import { register } from "./src/lib/register.js";
 import { search, getGenres, getRecommended, getTrack } from "./src/lib/spotify/fetch.js"
 import { getUserPlaylists,createplaylist } from "./src/lib/playlist.js";
 import { getMembersOfCommunity, getCommunity } from "./src/lib/community.js";
+
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './src/api/docs/swagger_output.json'assert { type: 'json' };; // Specifica il percorso al tuo file Swagger JSON generato
+
 // Creazione di un'istanza di Express per l'applicazione
 const app = express();
 
@@ -33,7 +36,7 @@ const corsOptions = {
 
 
 // Middleware per servire la documentazione API tramite Swagger UI
-app.use("/api-docs", swaggeruiServe, swaggeruiSetup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Middleware per servire file statici
 app.use(express.static(config.__dirname));
