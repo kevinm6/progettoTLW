@@ -11,6 +11,23 @@
 
    <body>
       <div id="menu"></div>
+      <!-- Search Box -->
+      <div class="container">
+         <form>
+            <div class="dropdown">
+               <div class="input-group">
+                  <input type="text" id="search-input" class="form-control w-auto" placeholder="Search">
+                  <select class="form-select" id="search-filter" aria-label="Filter select">
+                    <i class="glyphicon glyphicon-search"></i>
+                    <option selected>Track</option>
+                    <option value="Artist">Artist</option>
+                    <option value="Album">Album</option>
+                  </select>
+               </div>
+            </div>
+         </form>
+      </div>
+
       <div class="container">
          <div class="row g-4 mt-4 p-4">
             <nav aria-label="Page navigation example">
@@ -21,6 +38,7 @@
                </ul>
             </nav>
          </div>
+
          <div id="container-track" class="row g-4 mt-2 p-4">
             <div id="card-track" class="col-3 d-none">
                <div class="card h-100" style="width: 18rem;">
@@ -81,6 +99,46 @@
             })
             .catch(error => alert(error))
       })();
+
+
+
+      function showTrackInfo(id, title, artist, body) {
+         let modalLabel = document.getElementById('trackModalLabel' + id);
+         modalLabel.innerHTML = `
+<h2>${artist}: ${title}</h2>
+<h4 style="color: grey">${body}</h4>`;
+      }
+
+
+      /* Manage search input */
+      var timeoutId;
+      const inputId = document.getElementById('search-input');
+      const dropdownId = document.getElementById('search-filter');
+      console.log(dropdownId);
+
+      inputId.addEventListener('input', function(ev) {
+         if (ev.keyCode == 13) evaluateSearchInput(dropdownId.value, inputId.value);
+         clearTimeout(timeoutId);
+         timeoutId = setTimeout(() => {
+            evaluateSearchInput(dropdownId.value, inputId.value)
+         }, 2000);
+      })
+
+      /* TODO: think about wrapping in same function with explore.html:141 */
+      function evaluateSearchInput(type, query) {
+         console.log(type, query)
+         let filterType = type.toLowerCase();
+         fetch(`/search?q=${query}&type=${filterType}`)
+            .then(response => {
+               if (!response.ok) {
+                  response.json().then(data => alert(data.status_message))
+                  return
+               }
+               response.json().then(data => populateTracks(data))
+            })
+            .catch(error => alert(error))
+      }
+
       </script>
 
    </body>
