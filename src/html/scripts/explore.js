@@ -1,57 +1,170 @@
-function populateTracks(data) {
-    /* TODO: rename appropriately cards and so on */
+let hasImages = (item) => Object.values(item).length > 0;
 
-    let recommendedTracks = data.tracks.items;
 
-    let card = document.getElementById("card-track")
-    let container = document.getElementById("container-track")
-    container.innerHTML = ""
-    container.append(card)
+function populateCards(data) {
+   // console.log(data)
 
-    let artistsName = (artists) => {
-       return artists.map((artist) => artist.name).join(", ");
-    }
+   let fetchedItems = () => {
+      if (data.tracks?.items !== undefined) {
+         return data.tracks?.items
+      } else if (data.artists?.items !== undefined) {
+         return data.artists?.items
+      } else if (data.albums?.items !== undefined) {
+         return data.albums?.items
+      }
+   };
 
-    for (let i in recommendedTracks) {
-       let clone = card.cloneNode(true)
+   let card = document.getElementById("card-track")
+   let container = document.getElementById("container-track")
+   container.innerHTML = ""
+   container.append(card)
 
-       clone.id = 'card-track-' + i;
-       let trackId = recommendedTracks[i].id;
+   let getItemInfo = (item) => {
+      // console.log(item);
+      let itemInfo = {};
+      switch (item.type) {
+         case 'track':
+            console.log("Track: ", item);
+            itemInfo.name = item.name;
+            itemInfo.cardText = (Object.values(item.artists).lenght > 1) ? item.artists.map((artist) => {artist.name }).join(", ") : item.artists[0].name;
+            itemInfo.secondBodyText = (Object.values(item.duration_ms) > 0) ?  msToTime(item.duration_ms) : "";
 
-       let title = recommendedTracks[i].name;
-       clone.getElementsByClassName('card-title')[0].innerHTML = recommendedTracks[i].name;
+            if (hasImages(item.album.images)) {
+               itemInfo.img = item.album.images[0].url;
+            } else {
+               itemInfo.img = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+            }
 
-       let artists = artistsName(recommendedTracks[i].artists);
-       clone.getElementsByClassName('card-text')[0].innerHTML = artists;
+            itemInfo.audioSrc = item.preview_url != null ? item.preview_url : "";
+            break;
 
-       let imgUrl = recommendedTracks[i].album.images[0].url;
-       clone.getElementsByClassName('card-img-top')[0].src = imgUrl;
+         case 'artist':
+            console.log("Artist: ", item);
+            itemInfo.name = item.name;
+            itemInfo.cardText = item.genres?.map((genre) =>  genre).join(", ");
+            itemInfo.secondBodyText = (Object.values(item.popularity) > 0) ? `Popularity: ${item.popularity}` : "";
 
-       let durationTime = msToTime(recommendedTracks[i].duration_ms);
-       clone.getElementsByClassName('text-body-secondary')[0].innerHTML = durationTime;
+            if (hasImages(item.images)) {
+               itemInfo.img = item.images[0].url;
+            } else {
+               itemInfo.img = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+            }
+            break;
 
-       clone.getElementsByClassName('img-responsive')[0].src = imgUrl;
+         case 'album':
+            console.log("Album: ", item);
+            itemInfo.name = item.name;
+            itemInfo.cardText = item.artists?.map((artist) =>  artist.name).join(", ");
+            itemInfo.secondBodyText =(Object.values(item.release_date) !== "") ? `Release Date: ${item.release_date}` : "";
 
-       clone.getElementsByClassName('modal')[0].setAttribute('id', 'trackModal' + trackId);
-       clone.getElementsByClassName('modal-title')[0].setAttribute('id', 'trackModalLabel' + trackId);
-       clone.getElementsByClassName('modal-body')[0].setAttribute('id', 'trackModalBody' + trackId);
+            if (hasImages(item.images)) {
+               itemInfo.img = item.images[0].url;
+            } else {
+               itemInfo.img = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+            }
+            break;
 
-       clone.getElementsByClassName('btn-close')[0].setAttribute('data-dismiss', 'trackModal' + trackId);
+         default: return "";
+      }
+      return itemInfo;
+   }
 
-       clone.getElementsByClassName('btn')[0].setAttribute('data-bs-toggle', 'modal');
-       clone.getElementsByClassName('btn')[0].setAttribute('data-bs-target', '#trackModal' + trackId);
-       clone.getElementsByClassName('btn')[0].setAttribute('onClick', `showTrackInfo('${trackId}', '${title}', '${artists}', '${durationTime}')`);
+   let getOtherInfo = (item) => {
+      let returnValue = "";
+      // console.log(item);
+      if ('duration_ms' in item) {
+         returnValue = (Object.values(item.duration_ms) != 0) ?  msToTime(item.duration_ms) : "";
+      } else if ('popularity' in item) {
+         returnValue = (Object.values(item.popularity) !== 0) ? `Popularity: ${item.popularity}` : "";
+      }
+      return returnValue;
+   }
 
-       clone.classList.remove('d-none');
+   for (let i in fetchedItems()) {
+      let currentItem = fetchedItems()[i];
+      // console.log(currentItem);
+      let itemInfo = getItemInfo(currentItem);
 
-       card.after(clone);
-    }
+      let clone = card.cloneNode(true)
+      clone.id = 'card-track-' + i;
+      let trackId = currentItem.id;
 
- }
+      clone.getElementsByClassName('card-title')[0].innerHTML = itemInfo.name;
 
- function showTrackInfo(id, title, artist, body) {
-    let modalLabel = document.getElementById('trackModalLabel' + id);
-    modalLabel.innerHTML = `
-            <h2>${artist}: ${title}</h2>
-            <h4 style="color: grey">${body}</h4>`;
- }
+      clone.getElementsByClassName('card-text')[0].innerHTML = itemInfo.cardText;
+
+      clone.getElementsByClassName('card-img-top')[0].src = itemInfo.img;
+
+      // let otherInfo = getOtherInfo(currentItem);
+      // let durationTime = msToTime(currentItem.duration_ms);
+      clone.getElementsByClassName('text-body-secondary')[0].innerHTML = itemInfo.secondBodyText;
+
+      clone.getElementsByClassName('img-responsive')[0].src = itemInfo.img;
+
+      clone.getElementsByClassName('modal')[0].setAttribute('id', 'trackModal' + trackId);
+      clone.getElementsByClassName('modal-title')[0].setAttribute('id', 'trackModalLabel' + trackId);
+      clone.getElementsByClassName('modal-footer')[0].setAttribute('id', 'trackModalFooter' + trackId);
+
+      clone.getElementsByClassName('btn-close')[0].setAttribute('data-dismiss', 'trackModal' + trackId);
+
+      clone.getElementsByClassName('btn')[0].setAttribute('data-toggle', 'modal');
+      clone.getElementsByClassName('btn')[0].setAttribute('data-target', '#trackModal' + trackId);
+      clone.getElementsByClassName('btn')[0].setAttribute('onClick',
+         `showTrackInfo('${trackId}', '${itemInfo.name}', '${itemInfo.cardText}', '${itemInfo.secondBodyText}', '${itemInfo.audioSrc}')`
+      );
+
+      clone.classList.remove('d-none');
+
+      card.after(clone);
+      // Debugging: limit to 4 elements
+      // if (i == 3) break;
+   }
+
+}
+
+function showTrackInfo(id, title, artist, duration, preview_url) {
+   console.log("itemInfo: ", artist)
+
+   const modal = new bootstrap.Modal(document.getElementById('trackModal' + id));
+
+   let modalLabel = document.getElementById('trackModalLabel' + id);
+   modalLabel.innerHTML = `
+<h2>${artist}: ${title}</h2>
+<h4 style="color: grey">${duration}</h4>`;
+
+   if (preview_url !== "") {
+      let modalFooter = document.getElementById('trackModalFooter' + id);
+      modalFooter.innerHTML = `
+<div class="audio-player">
+   <audio controls class="custom-audio-player">
+      <source src="${preview_url}" type="audio/mpeg">
+         Il tuo browser non supporta l'elemento audio.
+   </audio>
+</div>
+`;
+   }
+   modal.show();
+}
+
+function getItems(type, query) {
+   try {
+      fetch(`/search?q=${query}&type=${type}`)
+         .then(response => {
+            if (!response.ok) {
+               response.json().then(data => console.error(data.status_message))
+               return
+            }
+            response.json().then(data => {
+               // console.log(data);
+               populateCards(data);
+            })
+         })
+   } catch (err) {
+      console.error(err)
+      // retry if fetch error
+      setTimeout(() => {
+         getItems(type, query);
+      }, 1000);
+   }
+
+};

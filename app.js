@@ -45,7 +45,6 @@ app.use(express.static(join(config.__dirname, "/src/config/")));
 app.use(express.static(join(config.__dirname, "/src/public/")));
 app.use(express.static(join(config.__dirname, "/src/html/")));
 
-
 /* ------------------- USERS ------------------- */
 
 // User specific Endpoint
