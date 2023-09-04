@@ -2,7 +2,9 @@ let hasImages = (item) => Object.values(item).length > 0;
 
 
 function populateCards(data) {
-   // console.log(data)
+   // TODO:
+   //    - add always more item + button "more"
+   //    - refactor?
 
    let fetchedItems = () => {
       if (data.tracks?.items !== undefined) {
@@ -22,9 +24,11 @@ function populateCards(data) {
    let getItemInfo = (item) => {
       // console.log(item);
       let itemInfo = {};
+      itemInfo.id = item.id;
+
       switch (item.type) {
          case 'track':
-            console.log("Track: ", item);
+            // console.log("Track: ", item);
             itemInfo.name = item.name;
             itemInfo.cardText = (Object.values(item.artists).lenght > 1) ? item.artists.map((artist) => {artist.name }).join(", ") : item.artists[0].name;
             itemInfo.secondBodyText = (Object.values(item.duration_ms) > 0) ?  msToTime(item.duration_ms) : "";
@@ -39,7 +43,7 @@ function populateCards(data) {
             break;
 
          case 'artist':
-            console.log("Artist: ", item);
+            // console.log("Artist: ", item);
             itemInfo.name = item.name;
             itemInfo.cardText = item.genres?.map((genre) =>  genre).join(", ");
             itemInfo.secondBodyText = (Object.values(item.popularity) > 0) ? `Popularity: ${item.popularity}` : "";
@@ -52,7 +56,7 @@ function populateCards(data) {
             break;
 
          case 'album':
-            console.log("Album: ", item);
+            // console.log("Album: ", item);
             itemInfo.name = item.name;
             itemInfo.cardText = item.artists?.map((artist) =>  artist.name).join(", ");
             itemInfo.secondBodyText =(Object.values(item.release_date) !== "") ? `Release Date: ${item.release_date}` : "";
@@ -64,21 +68,11 @@ function populateCards(data) {
             }
             break;
 
-         default: return "";
+         default: return null;
       }
       return itemInfo;
    }
 
-   let getOtherInfo = (item) => {
-      let returnValue = "";
-      // console.log(item);
-      if ('duration_ms' in item) {
-         returnValue = (Object.values(item.duration_ms) != 0) ?  msToTime(item.duration_ms) : "";
-      } else if ('popularity' in item) {
-         returnValue = (Object.values(item.popularity) !== 0) ? `Popularity: ${item.popularity}` : "";
-      }
-      return returnValue;
-   }
 
    for (let i in fetchedItems()) {
       let currentItem = fetchedItems()[i];
@@ -95,8 +89,6 @@ function populateCards(data) {
 
       clone.getElementsByClassName('card-img-top')[0].src = itemInfo.img;
 
-      // let otherInfo = getOtherInfo(currentItem);
-      // let durationTime = msToTime(currentItem.duration_ms);
       clone.getElementsByClassName('text-body-secondary')[0].innerHTML = itemInfo.secondBodyText;
 
       clone.getElementsByClassName('img-responsive')[0].src = itemInfo.img;
@@ -109,9 +101,9 @@ function populateCards(data) {
 
       clone.getElementsByClassName('btn')[0].setAttribute('data-toggle', 'modal');
       clone.getElementsByClassName('btn')[0].setAttribute('data-target', '#trackModal' + trackId);
-      clone.getElementsByClassName('btn')[0].setAttribute('onClick',
-         `showTrackInfo('${trackId}', '${itemInfo.name}', '${itemInfo.cardText}', '${itemInfo.secondBodyText}', '${itemInfo.audioSrc}')`
-      );
+
+      let itemToPass = JSON.stringify(itemInfo);
+      clone.getElementsByClassName('btn')[0].setAttribute('onClick', `showTrackInfo(${itemToPass})`);
 
       clone.classList.remove('d-none');
 
@@ -122,27 +114,44 @@ function populateCards(data) {
 
 }
 
-function showTrackInfo(id, title, artist, duration, preview_url) {
-   console.log("itemInfo: ", artist)
+function showTrackInfo(info) {
+   let string = JSON.stringify(info);
+   let item = JSON.parse(string);
 
-   const modal = new bootstrap.Modal(document.getElementById('trackModal' + id));
+   if (!item.id) {
+      alert("Error getting information about selected item.\nRetry.");
+      return;
+   }
 
-   let modalLabel = document.getElementById('trackModalLabel' + id);
-   modalLabel.innerHTML = `
-<h2>${artist}: ${title}</h2>
-<h4 style="color: grey">${duration}</h4>`;
+   const modal = new bootstrap.Modal(document.getElementById('trackModal' + item.id));
+   let modalLabel = document.getElementById('trackModalLabel' + item.id);
 
-   if (preview_url !== "") {
-      let modalFooter = document.getElementById('trackModalFooter' + id);
+   let cardText = item.cardText || null;
+   if (cardText) {
+      modalLabel.innerHTML = `
+<h2>${item.cardText}: ${item.name}</h2>
+<h4 style="color: grey">${item.secondBodyText}</h4>
+`;
+   } else {
+      modalLabel.innerHTML = `
+<h2>${item.name}</h2>
+<h4 style="color: grey">${item.secondBodyText}</h4>
+`;
+   }
+
+   let hasPreviewUrl = item.audioSrc || null;
+   if (hasPreviewUrl) {
+      let modalFooter = document.getElementById('trackModalFooter' + item.id);
       modalFooter.innerHTML = `
 <div class="audio-player">
    <audio controls class="custom-audio-player">
-      <source src="${preview_url}" type="audio/mpeg">
+      <source src=${hasPreviewUrl} type="audio/mpeg">
          Il tuo browser non supporta l'elemento audio.
    </audio>
 </div>
 `;
    }
+
    modal.show();
 }
 

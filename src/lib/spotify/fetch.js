@@ -48,8 +48,7 @@ const fetchSpotify = async (URL) => {
 const getTrack = async (track, res) => {
    // TODO: add manage for multiple tracks fetch via Spotify API
    // see -> https://developer.spotify.com/documentation/web-api/reference/get-several-tracks
-   console.log("TRACK: ", track);
-   // return;
+   // console.log("TRACK: ", track);
    const url = `${BASE_URL}/tracks/${track}`
    const trackResult = await fetchSpotify(url);
    res.json(trackResult);
@@ -64,7 +63,8 @@ const getTrack = async (track, res) => {
    */
 const search = async (searchQuery, res) => {
    let typeLower = searchQuery.type.toLowerCase();
-   let query = searchQuery.q === "" ? null : searchQuery.q;
+   // set query to null if is empty string
+   let query = searchQuery.q || null;
 
    const url = `${BASE_URL}/search?q=${query}&type=${typeLower}`;
    const trackResult = await fetchSpotify(url);
