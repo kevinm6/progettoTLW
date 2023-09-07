@@ -45,71 +45,217 @@ app.use(express.static(join(config.__dirname, "/src/config/")));
 app.use(express.static(join(config.__dirname, "/src/public/")));
 app.use(express.static(join(config.__dirname, "/src/html/")));
 
+
+
+/* -------------------- FETCH ------------------- */
+app.get("/playlist", async (_, res) => {
+   // #swagger.tags = ['fetch']
+   // #swagger.description = 'Endpoint that allows to fetch the playlists.html file'
+   res.sendFile(config.__dirname + "/src/html/playlists.html");
+});
+// Login Endpoint
+app.get("/login", async (req, res) => {
+   // #swagger.tags = ['fetch']
+   // #swagger.description = 'Endpoint that allows to fetch the login page'
+   res.sendFile(config.__dirname + "/src/html/login.html");
+});
+// Register Endpoints
+app.get("/register", async (req, res) => {
+   // #swagger.tags = ['fetch']
+   // #swagger.description = 'Endpoint that allows to fetch the register page'
+   res.sendFile(config.__dirname + "/src/html/register.html");
+});
+app.get("/explore", async function (_, res) {
+   // #swagger.tags = ['fetch']
+   // #swagger.description = 'Endpoint that allows to fetch the explore.html file'
+   res.sendFile(config.__dirname + "/src/html/explore.html");
+});
+app.get("/createplaylist", async (req, res) => {
+   // #swagger.tags = ['fetch']
+   // #swagger.description = 'Endpoint that allows to obtain createplaylist.html page'
+   res.sendFile(config.__dirname + "/src/html/createplaylist.html");
+});
+app.get("/community", async (_, res) => {
+   // #swagger.tags = ['fetch']
+   // #swagger.description = 'Endpoint that allows to obtain community.html page'
+   res.sendFile(config.__dirname + "/src/html/community.html");
+});
+app.get("/createcommunity", async (req, res) => {
+   // #swagger.tags = ['fetch']
+   // #swagger.description = 'Endpoint that allows to obtain createcommunity.html page'
+   res.sendFile(config.__dirname + "/src/html/createcommunity.html");
+});
+// Endpoint per la pagina principale
+app.get("/", async (_, res) => {
+   // #swagger.tags = ['fetch']
+   // #swagger.description = 'Endpoint that allows to obtain index.html page'
+   res.sendFile(config.__dirname + "/src/public/index.html");
+});
+
+app.get("/profile", async function (_, res) {
+   // #swagger.tags = ['fetch']
+   // #swagger.description = 'Endpoint that allows to fetch the profile page'
+   res.sendFile(config.__dirname + "/src/html/profile.html");
+});
+
 /* ------------------- USERS ------------------- */
 
 // User specific Endpoint
 app.get("/users/:id", async function (req, res) {
+   // #swagger.tags = ['users']
+   // #swagger.description = 'Endpoint that allows to obtain a specific user given its _id'
+   // #swagger.parameters['id'] = { description: 'User ID to fetch.' }
+   /* #swagger.responses[200] = { 
+         schema: { $ref: "#/definitions/user" },
+         description: 'user found.' 
+      } */
    getUser(req, res)
 });
 
 
 // Endpoint for all users
 app.get("/users", async function (_, res) {
+   // #swagger.tags = ['users']
+   // #swagger.description = 'Endpoint that allows to fetch all users from the database'
+   /* #swagger.responses[200] = { 
+         description: 'List of users.' 
+      } */
    getUsers(res)
 });
 
 // User update Endpoint
 app.put("/users/:id", function (req, res) {
+   // #swagger.tags = ['users']
+   // #swagger.description = 'Endpoint that allows to update of a specific user given its _id and the new Data'
+   // #swagger.parameters['id'] = { description: 'User ID to be updated.' }
+
+   /* #swagger.parameters['body'] = {
+	      in: 'body',
+         description: 'Body that contains updated data to be sent to the DB.',
+         type: 'object',
+         schema: { $ref: "#/definitions/updateuser" }
+      } 
+*/
+      
+   /* #swagger.responses[200] = { 
+         description: 'user updated.' 
+      } 
+      #swagger.responses[400] = { 
+         description: 'Missing name / nickname / email / User already exists' 
+      } 
+      #swagger.responses[500] = { 
+         description: 'Generic error' 
+      } 
+      */
    updateUser(res, req.body._id, req.body);
 });
 
 // User delete Endpoint
 app.delete("/users/:id", function (req, res) {
+   // #swagger.tags = ['users']
+   // #swagger.description = 'Endpoint that allows to delete a specific user from the database'
+   // #swagger.parameters['id'] = { description: 'User ID to be deleted.' }
+   /* #swagger.responses[200] = { 
+         description: 'user found.' 
+      } 
+      #swagger.responses[200] = { 
+         description: 'User delted succesfully' 
+      }
+      #swagger.responses[400] = { 
+         description: 'User does not exist' 
+      }
+      */
    deleteUser(res, req.params.id);
 });
 
-/* ------------------- AUTHENTICATION e PROFILE ------------------- */
 
-// Login Endpoint
-app.get("/login", async (req, res) => {
-   res.sendFile(config.__dirname + "/src/html/login.html");
-});
-
+/* ------------------- AUTHENTICATION ------- ------------------- */
 // Login Endpoint
 app.post("/login", async (req, res) => {
+   // #swagger.tags = ['auth']
+   // #swagger.description = 'Endpoint that allows to check if user's login data is correct and valid for logging in the application'
+   /* #swagger.parameters['body'] = {
+	      in: 'body',
+         description: 'Body to validate login.',
+         type: 'object',
+         schema: { $ref: "#/definitions/loginrequest" }
+      } 
+*/
+   /* #swagger.responses[200] = { 
+         description: 'user found.' 
+      } 
+      #swagger.responses[200] = { 
+         schema: { $ref: "#/definitions/loggeduser" },
+         description: 'User login data is valid' 
+      }
+      #swagger.responses[401] = { 
+         description: 'User not authorized' 
+      }
+      */
    login(req, res);
 });
 
-// Register Endpoints
-app.get("/register", async (req, res) => {
-   res.sendFile(config.__dirname + "/src/html/register.html");
-});
+
 
 app.post("/register", function (req, res) {
+   // #swagger.tags = ['auth']
+   // #swagger.description = 'Endpoint that allows to register a new user in the database'
+   /* #swagger.parameters['body'] = {
+	      in: 'body',
+         description: 'Body to be registered in the DB.',
+         type: 'object',
+         schema: { $ref: "#/definitions/registerrequest" }
+      } 
+*/
+   /* #swagger.responses[200] = { 
+         description: 'succesfully registered.' 
+      } 
+      #swagger.responses[400] = { 
+         description: 'User already exists' 
+      }
+      #swagger.responses[500] = { 
+         description: 'Generic error' 
+      }
+      */
    register(res, req.body);
 });
 
-app.get("/profile", async function (_, res) {
-   res.sendFile(config.__dirname + "/src/html/profile.html");
-});
-
 app.post("/authuser", async (req, res) => {
+   // #swagger.tags = ['auth']
+   // #swagger.description = 'Endpoint that allows to verify if user tuple of _id, email and nickname are valid in the database.'   
+   /* #swagger.parameters['body'] = {
+	      in: 'body',
+         description: 'tuple used for verification',
+         type: 'object',
+         schema: { $ref: "#/definitions/authuser" }
+      } 
+*/
+   /* #swagger.responses[200] = { 
+         schema: { $ref: "#/definitions/user"},
+         description: 'succesfully authorized.' 
+      } 
+      #swagger.responses[401] = { 
+         description: 'Unauthorized' 
+      }
+      */   
    authuser(req, res);
 });
 
-
 /* ------------------- TRACKS ------------------- */
 app.get("/search", async function (req, res) {
+   // #swagger.tags = ['tracks']
+   // #swagger.description = 'ADD DESCRIPTION'
    search(req.query, res);
 })
-
-
-/* ------------------- TRACKS ------------------- */
 app.get("/tracks", async function (req, res) {
+   // #swagger.tags = ['tracks']
+   // #swagger.description = 'ADD DESCRIPTION'
    getRecommended(req.params, res);
 })
 
 app.get("/tracks/:id", async function (req, res) {
+   // #swagger.tags = ['tracks']
+   // #swagger.description = 'ADD DESCRIPTION'
    getTrack(req.params.id, res);
 })
 
@@ -120,65 +266,57 @@ app.get("/tracks/:id", async function (req, res) {
 // })
 
 app.get("/artist/:id", async function (req, res) {
+   // #swagger.tags = ['artists']
+   // #swagger.description = 'ADD DESCRIPTION'
    getArtists(false, req.params.id, res);
 })
 
 app.get("/artists/:id", async function (req, res) {
+   // #swagger.tags = ['artists']
+   // #swagger.description = 'ADD DESCRIPTION'
    getArtists(true, req.params.id, res);
 })
 
 
 /* ------------------- EXPLORE ------------------- */
-app.get("/explore", async function (_, res) {
-   res.sendFile(config.__dirname + "/src/html/explore.html");
-})
+
 
 
 /* -------------------- PLAYLIST ------------------- */
-app.get("/playlist", async (_, res) => {
-   res.sendFile(config.__dirname + "/src/html/playlists.html");
-});
+
 app.get("/playlist/:id", async (req, res) => {
+   // #swagger.tags = ['playlist']
+   // #swagger.description = 'Endpoint that allows to obtain user's playlists'
    getUserPlaylists(res, req.params.id);
 });
-app.get("/createplaylist", async (req, res) => {
-   res.sendFile(config.__dirname + "/src/html/createplaylist.html");
-});
+
 app.post("/createplaylist", function (req, res) {
+   // #swagger.tags = ['playlist']
+   // #swagger.description = 'Endpoint that allows to create a new playlist'
    createplaylist(res, req.body);
 });
 
 /* -------------------- COMMUNITY ------------------- */
-app.get("/community", async (_, res) => {
-   res.sendFile(config.__dirname + "/src/html/community.html");
-});
+
 app.get("/community/:id", async (req, res) => {
+   // #swagger.tags = ['community']
+   // #swagger.description = 'ADD DESCRIPTION'
    getCommunity(req, res);
 });
-app.get("/createcommunity", async (req, res) => {
-   res.sendFile(config.__dirname + "/src/html/createcommunity.html");
-});
 
 
-/* ------------------- AUXILIAR ENDPOINTS ----------------- */
+/* ------------------- MISC ENDPOINTS ----------------- */
 
 app.get("/getGenres", async function (_, res) {
+   // #swagger.tags = ['misc']
+   // #swagger.description = 'Endpoint that allows to fetch all genres from spotify's APIs'
    getGenres(res);
 });
 
 
-/* ------------------- HOME PAGE ------------------- */
 
-// Endpoint per la pagina principale
-app.get("/", async (_, res) => {
-   res.sendFile(config.__dirname + "/src/public/index.html");
-});
-
-
-/* ------------------- DATABASE START ------------------- */
+/* ------------------- DB AND SERVER START ------------------- */
 export const db = Db();
-
-/* ------------------- SERVER START ------------------- */
 app.listen(config.port, config.host, () => {
    console.log(`🟢 Server listening on port: ${config.port}`);
 });

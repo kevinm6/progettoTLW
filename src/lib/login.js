@@ -40,7 +40,6 @@ export async function login(req, res) {
    if (loggedUser == null) {
       res.status(401).send("Unauthorized");
    } else {
-      // Invia solo l'_id dell'utente
       res.json({
          _id: loggedUser._id,
          nickname: loggedUser.nickname,

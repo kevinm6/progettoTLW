@@ -123,10 +123,10 @@ export async function deleteUser(res, id) {
       var items = await dbUserCollection()
          .deleteOne(user);
 
-      res.json(items)
+      res.status(200).send();
    } catch (e) {
       if (e.code == 11000) {
-         res.status(400).send("User already exists!");
+         res.status(400).send("User Doesn't exist!");
          return
       }
       res.status(500).send(`Generic Error: ${e}`)

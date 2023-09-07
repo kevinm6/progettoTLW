@@ -9,28 +9,46 @@
   "basePath": "/",
   "tags": [
     {
-      "name": "User",
-      "description": "Endpoints"
+      "name": "fetch",
+      "description": "Endpoints for fetching and searching content."
+    },
+    {
+      "name": "users",
+      "description": "Endpoints for the management of user data and related operations."
+    },
+    {
+      "name": "auth",
+      "description": "Endpoints related to authentication and user authorization."
+    },
+    {
+      "name": "playlist",
+      "description": "Endpoints for the orchestration of playlists."
+    },
+    {
+      "name": "community",
+      "description": "Endpoints for managing community-related data and interactions."
+    },
+    {
+      "name": "tracks",
+      "description": "Endpoints for retrieving and managing track information."
+    },
+    {
+      "name": "misc",
+      "description": "Miscellaneous endpoints catering to various operations."
+    },
+    {
+      "name": "artists",
+      "description": "Endpoints for retrieving and managing artist-related information."
     }
   ],
   "schemes": [
-    "http",
-    "https"
+    "http"
   ],
   "securityDefinitions": {
     "api_key": {
       "type": "apiKey",
       "name": "api_key",
       "in": "header"
-    },
-    "petstore_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "https://petstore.swagger.io/oauth/authorize",
-      "flow": "implicit",
-      "scopes": {
-        "read_pets": "read your pets",
-        "write_pets": "modify pets in your account"
-      }
     }
   },
   "consumes": [
@@ -40,81 +58,25 @@
     "application/json"
   ],
   "paths": {
-    "/users/{id}": {
+    "/playlist": {
       "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
+        "tags": [
+          "fetch"
         ],
+        "description": "Endpoint that allows to fetch the playlists.html file",
         "responses": {
           "200": {
             "description": "OK"
-          }
-        }
-      },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "_id": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/users": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
           }
         }
       }
     },
     "/login": {
       "get": {
-        "description": "",
+        "tags": [
+          "fetch"
+        ],
+        "description": "Endpoint that allows to fetch the login page",
         "responses": {
           "200": {
             "description": "OK"
@@ -122,43 +84,42 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "auth"
+        ],
+        "description": "Endpoint that allows to check if user",
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "description": "Body to validate login.",
             "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "example": "any"
-                },
-                "nickname": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/loginrequest"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "User login data is valid",
+            "schema": {
+              "$ref": "#/definitions/loggeduser"
+            }
           },
           "400": {
             "description": "Bad Request"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "User not authorized"
           }
         }
       }
     },
     "/register": {
       "get": {
-        "description": "",
+        "tags": [
+          "fetch"
+        ],
+        "description": "Endpoint that allows to fetch the register page",
         "responses": {
           "200": {
             "description": "OK"
@@ -166,7 +127,63 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "auth"
+        ],
+        "description": "Endpoint that allows to register a new user in the database",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Body to be registered in the DB.",
+            "schema": {
+              "$ref": "#/definitions/registerrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "succesfully registered."
+          },
+          "400": {
+            "description": "User already exists"
+          },
+          "500": {
+            "description": "Generic error"
+          }
+        }
+      }
+    },
+    "/explore": {
+      "get": {
+        "tags": [
+          "fetch"
+        ],
+        "description": "Endpoint that allows to fetch the explore.html file",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/createplaylist": {
+      "get": {
+        "tags": [
+          "fetch"
+        ],
+        "description": "Endpoint that allows to obtain createplaylist.html page",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "playlist"
+        ],
+        "description": "Endpoint that allows to create a new playlist",
         "responses": {
           "default": {
             "description": ""
@@ -174,9 +191,12 @@
         }
       }
     },
-    "/profile": {
+    "/community": {
       "get": {
-        "description": "",
+        "tags": [
+          "fetch"
+        ],
+        "description": "Endpoint that allows to obtain community.html page",
         "responses": {
           "200": {
             "description": "OK"
@@ -184,32 +204,162 @@
         }
       }
     },
-    "/authuser": {
-      "post": {
-        "description": "",
+    "/createcommunity": {
+      "get": {
+        "tags": [
+          "fetch"
+        ],
+        "description": "Endpoint that allows to obtain createcommunity.html page",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": [
+          "fetch"
+        ],
+        "description": "Endpoint that allows to obtain index.html page",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/profile": {
+      "get": {
+        "tags": [
+          "fetch"
+        ],
+        "description": "Endpoint that allows to fetch the profile page",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "description": "Endpoint that allows to obtain a specific user given its _id",
         "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User ID to fetch."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user found.",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "description": "Endpoint that allows to update of a specific user given its _id and the new Data",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User ID to be updated."
+          },
           {
             "name": "body",
             "in": "body",
+            "description": "Body that contains updated data to be sent to the DB.",
             "schema": {
-              "type": "object",
-              "properties": {
-                "_id": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "nickname": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/updateuser"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "user updated."
+          },
+          "400": {
+            "description": "Missing name / nickname / email / User already exists"
+          },
+          "500": {
+            "description": "Generic error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "description": "Endpoint that allows to delete a specific user from the database",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User ID to be deleted."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User delted succesfully"
+          },
+          "400": {
+            "description": "User does not exist"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "description": "Endpoint that allows to fetch all users from the database",
+        "responses": {
+          "200": {
+            "description": "List of users."
+          }
+        }
+      }
+    },
+    "/authuser": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "description": "Endpoint that allows to verify if user tuple of _id, email and nickname are valid in the database.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "tuple used for verification",
+            "schema": {
+              "$ref": "#/definitions/authuser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "succesfully authorized.",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
           },
           "401": {
             "description": "Unauthorized"
@@ -219,7 +369,10 @@
     },
     "/search": {
       "get": {
-        "description": "",
+        "tags": [
+          "tracks"
+        ],
+        "description": "ADD DESCRIPTION",
         "responses": {
           "default": {
             "description": ""
@@ -229,7 +382,10 @@
     },
     "/tracks": {
       "get": {
-        "description": "",
+        "tags": [
+          "tracks"
+        ],
+        "description": "ADD DESCRIPTION",
         "responses": {
           "default": {
             "description": ""
@@ -239,7 +395,10 @@
     },
     "/tracks/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "tracks"
+        ],
+        "description": "ADD DESCRIPTION",
         "parameters": [
           {
             "name": "id",
@@ -257,7 +416,10 @@
     },
     "/artist/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "artists"
+        ],
+        "description": "ADD DESCRIPTION",
         "parameters": [
           {
             "name": "id",
@@ -275,7 +437,10 @@
     },
     "/artists/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "artists"
+        ],
+        "description": "ADD DESCRIPTION",
         "parameters": [
           {
             "name": "id",
@@ -287,33 +452,16 @@
         "responses": {
           "default": {
             "description": ""
-          }
-        }
-      }
-    },
-    "/explore": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/playlist": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       }
     },
     "/playlist/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "playlist"
+        ],
+        "description": "Endpoint that allows to obtain user",
         "parameters": [
           {
             "name": "id",
@@ -325,41 +473,16 @@
         "responses": {
           "default": {
             "description": ""
-          }
-        }
-      }
-    },
-    "/createplaylist": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "post": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/community": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       }
     },
     "/community/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "community"
+        ],
+        "description": "ADD DESCRIPTION",
         "parameters": [
           {
             "name": "id",
@@ -368,16 +491,6 @@
             "type": "string"
           }
         ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/createcommunity": {
-      "get": {
-        "description": "",
         "responses": {
           "200": {
             "description": "OK"
@@ -387,78 +500,160 @@
     },
     "/getGenres": {
       "get": {
-        "description": "",
+        "tags": [
+          "misc"
+        ],
+        "description": "Endpoint that allows to fetch all genres from spotify",
         "responses": {
           "default": {
             "description": ""
           }
         }
       }
-    },
-    "/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
     }
   },
   "definitions": {
-    "User": {
+    "user": {
       "type": "object",
       "properties": {
+        "_id": {
+          "type": "string",
+          "example": "ObjectId('64df73b31e5eda5eb868ddcd')"
+        },
         "name": {
           "type": "string",
-          "example": "Jhon Doe"
+          "example": "Joe"
         },
-        "age": {
-          "type": "number",
-          "example": 29
+        "nickname": {
+          "type": "string",
+          "example": "joedough"
         },
-        "parents": {
+        "surname": {
+          "type": "string",
+          "example": "Joe"
+        },
+        "email": {
+          "type": "string",
+          "example": "joedough@example.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "md5 hashed password"
+        },
+        "date": {
+          "type": "string",
+          "example": "2001-09-11"
+        },
+        "genres": {
           "type": "object",
           "properties": {
-            "father": {
+            "0": {
               "type": "string",
-              "example": "Simon Doe"
+              "example": "pop"
             },
-            "mother": {
+            "1": {
               "type": "string",
-              "example": "Marie Doe"
+              "example": "rock"
+            },
+            "2": {
+              "type": "string",
+              "example": "metal"
+            }
+          }
+        }
+      }
+    },
+    "playlists": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "ObjectId('64e748f0cb18ad90657b9043')"
+        },
+        "owner_id": {
+          "type": "string",
+          "example": "64df73b31e5eda5eb868ddcd"
+        },
+        "title": {
+          "type": "string",
+          "example": "Example Playlist"
+        },
+        "description": {
+          "type": "string",
+          "example": "Description of playlist"
+        },
+        "public": {
+          "type": "boolean",
+          "example": true
+        },
+        "tags": {
+          "type": "object",
+          "properties": {
+            "0": {
+              "type": "string",
+              "example": "chill"
+            },
+            "1": {
+              "type": "string",
+              "example": "relax"
+            },
+            "2": {
+              "type": "string",
+              "example": "vibes"
             }
           }
         },
-        "diplomas": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "school": {
-                "type": "string",
-                "example": "XYZ University"
-              },
-              "year": {
-                "type": "number",
-                "example": 2020
-              },
-              "completed": {
-                "type": "boolean",
-                "example": true
-              },
-              "internship": {
-                "type": "object",
-                "properties": {
-                  "hours": {
-                    "type": "number",
-                    "example": 290
-                  },
-                  "location": {
-                    "type": "string",
-                    "example": "XYZ Company"
-                  }
+        "songs": {
+          "type": "object",
+          "properties": {
+            "0": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Song 1"
+                },
+                "artist": {
+                  "type": "string",
+                  "example": "Artist1, Artist2, Artist3"
+                },
+                "duraion": {
+                  "type": "string",
+                  "example": "00:01:11"
+                }
+              }
+            },
+            "1": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Song 2"
+                },
+                "artist": {
+                  "type": "string",
+                  "example": "Artist1, Artist2, Artist3"
+                },
+                "duraion": {
+                  "type": "string",
+                  "example": "00:02:22"
+                }
+              }
+            },
+            "2": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Song 3"
+                },
+                "artist": {
+                  "type": "string",
+                  "example": "Artist1, Artist2, Artist3"
+                },
+                "duraion": {
+                  "type": "string",
+                  "example": "00:03:33"
                 }
               }
             }
@@ -466,25 +661,122 @@
         }
       }
     },
-    "AddUser": {
+    "updateuser": {
       "type": "object",
       "properties": {
         "name": {
           "type": "string",
-          "example": "Jhon Doe"
+          "example": "Jhon"
         },
-        "age": {
-          "type": "number",
-          "example": 29
-        },
-        "about": {
+        "nickname": {
           "type": "string",
-          "example": ""
+          "example": "johndough"
+        },
+        "email": {
+          "type": "string",
+          "example": "johndough@example.com"
+        },
+        "surname": {
+          "type": "string",
+          "example": "Dough"
         }
       },
       "required": [
         "name",
-        "age"
+        "nickname",
+        "email",
+        "surname"
+      ]
+    },
+    "loggeduser": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "64df73b31e5eda5eb868ddcd"
+        },
+        "nickname": {
+          "type": "string",
+          "example": "johndough"
+        },
+        "email": {
+          "type": "string",
+          "example": "johndough@gmail.com"
+        }
+      },
+      "required": [
+        "_id",
+        "nickname",
+        "email"
+      ]
+    },
+    "loginrequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "johndough@gmail.com"
+        },
+        "nickname": {
+          "type": "string",
+          "example": "johndough"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        }
+      },
+      "required": [
+        "password"
+      ]
+    },
+    "registerrequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "John"
+        },
+        "nickname": {
+          "type": "string",
+          "example": "johndough"
+        },
+        "email": {
+          "type": "string",
+          "example": "johndough@example.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        }
+      },
+      "required": [
+        "name",
+        "nickname",
+        "email",
+        "password"
+      ]
+    },
+    "authuser": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "64df73b31e5eda5eb868ddcd"
+        },
+        "nickname": {
+          "type": "string",
+          "example": "johndough"
+        },
+        "email": {
+          "type": "string",
+          "example": "johndough@gmail.com"
+        }
+      },
+      "required": [
+        "_id",
+        "nickname",
+        "email"
       ]
     }
   }

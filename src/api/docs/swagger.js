@@ -13,55 +13,123 @@ const doc = {
    },
    host: "localhost:3000",
    basePath: "/",
-   schemes: ['http', 'https'],
+   schemes: ['http'],
    consumes: ['application/json'],
    produces: ['application/json'],
    tags: [
-       {
-           "name": "User",
-           "description": "Endpoints"
-       }
-   ],
+      {
+         "name": "fetch",
+         "description": "Endpoints for fetching and searching content."
+      },
+      {
+          "name": "users",
+          "description": "Endpoints for the management of user data and related operations."
+      },
+      {
+         "name": "auth",
+         "description": "Endpoints related to authentication and user authorization."
+      },
+      {
+         "name": "playlist",
+         "description": "Endpoints for the orchestration of playlists."
+      },
+      {
+         "name": "community",
+         "description": "Endpoints for managing community-related data and interactions."
+      },
+      {
+         "name": "tracks",
+         "description": "Endpoints for retrieving and managing track information."
+      },
+      {
+          "name": "misc",
+          "description": "Miscellaneous endpoints catering to various operations."
+      },
+      {
+         "name": "artists",
+         "description": "Endpoints for retrieving and managing artist-related information."
+     }
+     
+
+  ]
+  ,
    securityDefinitions: {
        api_key: {
            type: "apiKey",
            name: "api_key",
            in: "header"
-       },
-       petstore_auth: {
-           type: "oauth2",
-           authorizationUrl: "https://petstore.swagger.io/oauth/authorize",
-           flow: "implicit",
-           scopes: {
-               read_pets: "read your pets",
-               write_pets: "modify pets in your account"
-           }
        }
    },
    definitions: {
-       User: {
-           name: "Jhon Doe",
-           age: 29,
-           parents: {
-               father: "Simon Doe",
-               mother: "Marie Doe"
-           },
-           diplomas: [
-               {
-                   school: "XYZ University",
-                   year: 2020,
-                   completed: true,
-                   internship: {
-                       hours: 290,
-                       location: "XYZ Company"
-                   }
-               }
-           ]
+       user: {
+           _id: "ObjectId('64df73b31e5eda5eb868ddcd')",
+           name: "Joe",
+           nickname: "joedough",
+           surname: "Joe",
+           email: "joedough@example.com",
+           password: "md5 hashed password",
+           date: "2001-09-11",
+           genres: {
+               0: "pop",
+               1: "rock",
+               2: "metal"
+           }
        },
-       AddUser: {
-           $name: "Jhon Doe",
-           $age: 29,
-           about: ""
+       playlists: {
+         _id: "ObjectId('64e748f0cb18ad90657b9043')",
+         owner_id: "64df73b31e5eda5eb868ddcd",
+         title: "Example Playlist",
+         description: "Description of playlist",
+         public: true,
+         tags: {
+             0: "chill",
+             1: "relax",
+             2: "vibes"
+         },
+         songs: {
+            0:{
+               title: "Song 1",
+               artist: "Artist1, Artist2, Artist3",
+               duraion: "00:01:11"
+            },
+            1:{
+               title: "Song 2",
+               artist: "Artist1, Artist2, Artist3",
+               duraion: "00:02:22"
+            },
+            2:{
+               title: "Song 3",
+               artist: "Artist1, Artist2, Artist3",
+               duraion: "00:03:33"
+            }
+         }
+     },
+       updateuser: {
+           $name: "Jhon",
+           $nickname: "johndough",
+           $email: "johndough@example.com",
+           $surname: "Dough"
+       },
+       loggeduser: {
+            $_id: "64df73b31e5eda5eb868ddcd",
+            $nickname:"johndough",
+            $email: "johndough@gmail.com"
+       },
+       loginrequest: {
+         email: "johndough@gmail.com",
+         nickname:"johndough",        
+         $password: "password"  
+       },
+       registerrequest: {
+         $name: "John",
+         $nickname: "johndough",
+         $email: "johndough@example.com",
+         $password: "password"
+       },
+       authuser:{
+         $_id: "64df73b31e5eda5eb868ddcd",
+         $nickname: "johndough",
+         $email: "johndough@gmail.com"
        }
    }
 }
