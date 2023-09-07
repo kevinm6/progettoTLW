@@ -102,7 +102,8 @@ const doc = {
                artist: "Artist1, Artist2, Artist3",
                duraion: "00:03:33"
             }
-         }
+         },
+         private: true
      },
        updateuser: {
            $name: "Jhon",

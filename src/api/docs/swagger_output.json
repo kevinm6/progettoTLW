@@ -184,9 +184,25 @@
           "playlist"
         ],
         "description": "Endpoint that allows to create a new playlist",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "tuple used for verification",
+            "schema": {
+              "$ref": "#/definitions/playlists"
+            }
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "playlist created."
+          },
+          "400": {
+            "description": "Error while creating the playlist or missing parameter"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
@@ -467,12 +483,16 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Id of the user we want to fetch playlists of."
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "list of playlists"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
@@ -658,6 +678,10 @@
               }
             }
           }
+        },
+        "private": {
+          "type": "boolean",
+          "example": true
         }
       }
     },

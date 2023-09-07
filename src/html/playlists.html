@@ -12,6 +12,11 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
     <style>
+        .custom-modal-xl .modal-dialog {
+            max-width: 90%;
+            margin: 1rem auto; 
+        }
+
     </style>
 </head>
 <body>
@@ -33,7 +38,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="songsModal" tabindex="-1" aria-labelledby="songsModalLabel" aria-hidden="true">
+    <div class="modal fade custom-modal-xl" id="songsModal" tabindex="-1" aria-labelledby="songsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -44,13 +49,16 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Titolo</th>
-                                <th scope="col">Artista</th>
-                                <th scope="col">Durata</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Artists</th>
+                                <th scope="col">Album</th>
+                                <th scope="col">Genres</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col">Year</th>
                             </tr>
                         </thead>
                         <tbody id="songsTableBody">
-                            <!-- Qui verranno aggiunte dinamicamente le righe delle canzoni -->
+                            <!-- Songs will be added here dinamically -->
                         </tbody>
                     </table>
                 </div>

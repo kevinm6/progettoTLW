@@ -23,12 +23,17 @@ async function populatePlaylistCards() {
             <div class="col-md-4 mb-4">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h5 class="card-title">${playlist.title}</h5>
+                        <h5 class="card-title">${playlist.title}${playlist.private ? '<i class="bi bi-lock-fill text-success"></i>' : ''}</h5>
                         <p class="card-text">${playlist.description}</p>
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
                             onclick="showSongs('${playlist._id}', ${stringified})">
-                            Visualizza Canzoni
+                            View Songs
                         </button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
+                            onclick="">
+                            Edit playlist
+                        </button>
+                        
                     </div>
                 </div>
             </div>
@@ -44,11 +49,15 @@ function showSongs(playlistId, songsJson) {
     songsTableBody.innerHTML = ""; // Pulisce la tabella
 
     songs.forEach(song => {
+        console.log(song);
         const row = `
         <tr>
             <td>${song.title}</td>
             <td>${song.artist}</td>
+            <td>${song.album}</td>
+            <td></td>
             <td>${song.duration}</td>
+            <td>${song.year}</td>
         </tr>
     `;
 

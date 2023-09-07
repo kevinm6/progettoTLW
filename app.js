@@ -287,12 +287,37 @@ app.get("/artists/:id", async function (req, res) {
 app.get("/playlist/:id", async (req, res) => {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to obtain user's playlists'
+   // #swagger.parameters['id'] = { description: 'Id of the user we want to fetch playlists of.' }
+   /* #swagger.responses[200] = { 
+         description: 'list of playlists' 
+      } 
+      #swagger.responses[500] = { 
+         description: 'Server error' 
+      }
+      */  
    getUserPlaylists(res, req.params.id);
 });
 
 app.post("/createplaylist", function (req, res) {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to create a new playlist'
+   /* #swagger.parameters['body'] = {
+	      in: 'body',
+         description: 'tuple used for verification',
+         type: 'object',
+         schema: { $ref: "#/definitions/playlists" }
+      } 
+*/
+   /* #swagger.responses[200] = { 
+         description: 'playlist created.' 
+      } 
+      #swagger.responses[400] = { 
+         description: 'Error while creating the playlist or missing parameter' 
+      }
+      #swagger.responses[500] = { 
+         description: 'Server error' 
+      }
+      */  
    createplaylist(res, req.body);
 });
 

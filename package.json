@@ -1,6 +1,6 @@
 {
    "scripts": {
-      "start": "nodemon app.js",
+      "start": "node src/api/docs/swagger.js && nodemon app.js ",
       "test": "echo \"ERROR: no test specified\" && exit 1"
    },
    "homepage": "https://kevinm6.github.io/progettoTLW",
