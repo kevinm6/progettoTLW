@@ -16,16 +16,12 @@ let _db;
  * ```
  */
 export const Db = async (collection) => {
-   // console.log(collection, collection == undefined)
-   if(_db && ! collection == undefined) {
-      return _db;
-   }
    try {
-      let client = new MongoClient(mongodb.uri).db(mongodb.dbName);
-      if (collection) {
+      const client = new MongoClient(mongodb.uri).db(mongodb.dbName);
+      if (collection && _db != client.collection(collection)) {
          _db = client.collection(collection);
          console.log(`🗂️ MongoDB connected to collection < ${collection} >`)
-      } else {
+      } else if (!collection && _db != client) {
          _db = client;
          console.log("✅ MongoDB connected successful")
       }

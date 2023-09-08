@@ -1,17 +1,70 @@
 let hasImages = (item) => Object.values(item).length > 0;
 
 
+let getItemInfo = (item) => {
+   // console.log(item);
+   let itemInfo = {};
+   itemInfo.id = item.id;
+
+   switch (item.type) {
+      case 'track':
+         // console.log("Track: ", item);
+         itemInfo.name = item.name;
+         itemInfo.cardText = (Object.values(item.artists).lenght > 1) ? item.artists.map((artist) => {artist.name }).join(", ") : item.artists[0].name;
+         itemInfo.secondBodyText = (Object.values(item.duration_ms) > 0) ?  msToTime(item.duration_ms) : "";
+
+         if (hasImages(item.album.images)) {
+            itemInfo.img = item.album.images[0].url;
+         } else {
+            itemInfo.img = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+         }
+
+         itemInfo.audioSrc = item.preview_url != null ? item.preview_url : "";
+         break;
+
+      case 'artist':
+         // console.log("Artist: ", item);
+         itemInfo.name = item.name;
+         itemInfo.cardText = item.genres?.map((genre) =>  genre).join(", ");
+         itemInfo.secondBodyText = (Object.values(item.popularity) > 0) ? `Popularity: ${item.popularity}` : "";
+
+         if (hasImages(item.images)) {
+            itemInfo.img = item.images[0].url;
+         } else {
+            itemInfo.img = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+         }
+         break;
+
+      case 'album':
+         // console.log("Album: ", item);
+         itemInfo.name = item.name;
+         itemInfo.cardText = item.artists?.map((artist) =>  artist.name).join(", ");
+         itemInfo.secondBodyText =(Object.values(item.release_date) !== "") ? `Release Date: ${item.release_date}` : "";
+
+         if (hasImages(item.images)) {
+            itemInfo.img = item.images[0].url;
+         } else {
+            itemInfo.img = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+         }
+         break;
+
+      default: return null;
+   }
+   return itemInfo;
+}
+
 function populateCards(data) {
    // TODO:
    //    - add always more item + button "more"
+   //       - see offset || previous -> https://developer.spotify.com/documentation/web-api/reference/search
    //    - refactor?
 
    let fetchedItems = () => {
-      if (data.tracks?.items !== undefined) {
+      if (data.tracks?.items != undefined) {
          return data.tracks?.items
-      } else if (data.artists?.items !== undefined) {
+      } else if (data.artists?.items != undefined) {
          return data.artists?.items
-      } else if (data.albums?.items !== undefined) {
+      } else if (data.albums?.items != undefined) {
          return data.albums?.items
       }
    };
@@ -20,59 +73,6 @@ function populateCards(data) {
    let container = document.getElementById("container-track")
    container.innerHTML = ""
    container.append(card)
-
-   let getItemInfo = (item) => {
-      // console.log(item);
-      let itemInfo = {};
-      itemInfo.id = item.id;
-
-      switch (item.type) {
-         case 'track':
-            // console.log("Track: ", item);
-            itemInfo.name = item.name;
-            itemInfo.cardText = (Object.values(item.artists).lenght > 1) ? item.artists.map((artist) => {artist.name }).join(", ") : item.artists[0].name;
-            itemInfo.secondBodyText = (Object.values(item.duration_ms) > 0) ?  msToTime(item.duration_ms) : "";
-
-            if (hasImages(item.album.images)) {
-               itemInfo.img = item.album.images[0].url;
-            } else {
-               itemInfo.img = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
-            }
-
-            itemInfo.audioSrc = item.preview_url != null ? item.preview_url : "";
-            break;
-
-         case 'artist':
-            // console.log("Artist: ", item);
-            itemInfo.name = item.name;
-            itemInfo.cardText = item.genres?.map((genre) =>  genre).join(", ");
-            itemInfo.secondBodyText = (Object.values(item.popularity) > 0) ? `Popularity: ${item.popularity}` : "";
-
-            if (hasImages(item.images)) {
-               itemInfo.img = item.images[0].url;
-            } else {
-               itemInfo.img = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
-            }
-            break;
-
-         case 'album':
-            // console.log("Album: ", item);
-            itemInfo.name = item.name;
-            itemInfo.cardText = item.artists?.map((artist) =>  artist.name).join(", ");
-            itemInfo.secondBodyText =(Object.values(item.release_date) !== "") ? `Release Date: ${item.release_date}` : "";
-
-            if (hasImages(item.images)) {
-               itemInfo.img = item.images[0].url;
-            } else {
-               itemInfo.img = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
-            }
-            break;
-
-         default: return null;
-      }
-      return itemInfo;
-   }
-
 
    for (let i in fetchedItems()) {
       let currentItem = fetchedItems()[i];

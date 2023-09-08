@@ -15,7 +15,7 @@ import { join } from "path";
 import { register } from "./src/lib/register.js";
 import { search, getGenres, getRecommended, getTrack } from "./src/lib/spotify/fetch.js"
 import { getUserPlaylists,createplaylist } from "./src/lib/playlist.js";
-import { getMembersOfCommunity, getCommunity } from "./src/lib/community.js";
+import * as community from "./src/lib/community.js";
 
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './src/api/docs/swagger_output.json'assert { type: 'json' };; // Specifica il percorso al tuo file Swagger JSON generato
@@ -105,9 +105,9 @@ app.get("/users/:id", async function (req, res) {
    // #swagger.tags = ['users']
    // #swagger.description = 'Endpoint that allows to obtain a specific user given its _id'
    // #swagger.parameters['id'] = { description: 'User ID to fetch.' }
-   /* #swagger.responses[200] = { 
+   /* #swagger.responses[200] = {
          schema: { $ref: "#/definitions/user" },
-         description: 'user found.' 
+         description: 'user found.'
       } */
    getUser(req, res)
 });
@@ -117,8 +117,8 @@ app.get("/users/:id", async function (req, res) {
 app.get("/users", async function (_, res) {
    // #swagger.tags = ['users']
    // #swagger.description = 'Endpoint that allows to fetch all users from the database'
-   /* #swagger.responses[200] = { 
-         description: 'List of users.' 
+   /* #swagger.responses[200] = {
+         description: 'List of users.'
       } */
    getUsers(res)
 });
@@ -134,18 +134,18 @@ app.put("/users/:id", function (req, res) {
          description: 'Body that contains updated data to be sent to the DB.',
          type: 'object',
          schema: { $ref: "#/definitions/updateuser" }
-      } 
+      }
 */
-      
-   /* #swagger.responses[200] = { 
-         description: 'user updated.' 
-      } 
-      #swagger.responses[400] = { 
-         description: 'Missing name / nickname / email / User already exists' 
-      } 
-      #swagger.responses[500] = { 
-         description: 'Generic error' 
-      } 
+
+   /* #swagger.responses[200] = {
+         description: 'user updated.'
+      }
+      #swagger.responses[400] = {
+         description: 'Missing name / nickname / email / User already exists'
+      }
+      #swagger.responses[500] = {
+         description: 'Generic error'
+      }
       */
    updateUser(res, req.body._id, req.body);
 });
@@ -155,14 +155,14 @@ app.delete("/users/:id", function (req, res) {
    // #swagger.tags = ['users']
    // #swagger.description = 'Endpoint that allows to delete a specific user from the database'
    // #swagger.parameters['id'] = { description: 'User ID to be deleted.' }
-   /* #swagger.responses[200] = { 
-         description: 'user found.' 
-      } 
-      #swagger.responses[200] = { 
-         description: 'User delted succesfully' 
+   /* #swagger.responses[200] = {
+         description: 'user found.'
       }
-      #swagger.responses[400] = { 
-         description: 'User does not exist' 
+      #swagger.responses[200] = {
+         description: 'User delted succesfully'
+      }
+      #swagger.responses[400] = {
+         description: 'User does not exist'
       }
       */
    deleteUser(res, req.params.id);
@@ -179,17 +179,17 @@ app.post("/login", async (req, res) => {
          description: 'Body to validate login.',
          type: 'object',
          schema: { $ref: "#/definitions/loginrequest" }
-      } 
-*/
-   /* #swagger.responses[200] = { 
-         description: 'user found.' 
-      } 
-      #swagger.responses[200] = { 
-         schema: { $ref: "#/definitions/loggeduser" },
-         description: 'User login data is valid' 
       }
-      #swagger.responses[401] = { 
-         description: 'User not authorized' 
+*/
+   /* #swagger.responses[200] = {
+         description: 'user found.'
+      }
+      #swagger.responses[200] = {
+         schema: { $ref: "#/definitions/loggeduser" },
+         description: 'User login data is valid'
+      }
+      #swagger.responses[401] = {
+         description: 'User not authorized'
       }
       */
    login(req, res);
@@ -205,16 +205,16 @@ app.post("/register", function (req, res) {
          description: 'Body to be registered in the DB.',
          type: 'object',
          schema: { $ref: "#/definitions/registerrequest" }
-      } 
-*/
-   /* #swagger.responses[200] = { 
-         description: 'succesfully registered.' 
-      } 
-      #swagger.responses[400] = { 
-         description: 'User already exists' 
       }
-      #swagger.responses[500] = { 
-         description: 'Generic error' 
+*/
+   /* #swagger.responses[200] = {
+         description: 'succesfully registered.'
+      }
+      #swagger.responses[400] = {
+         description: 'User already exists'
+      }
+      #swagger.responses[500] = {
+         description: 'Generic error'
       }
       */
    register(res, req.body);
@@ -222,22 +222,22 @@ app.post("/register", function (req, res) {
 
 app.post("/authuser", async (req, res) => {
    // #swagger.tags = ['auth']
-   // #swagger.description = 'Endpoint that allows to verify if user tuple of _id, email and nickname are valid in the database.'   
+   // #swagger.description = 'Endpoint that allows to verify if user tuple of _id, email and nickname are valid in the database.'
    /* #swagger.parameters['body'] = {
 	      in: 'body',
          description: 'tuple used for verification',
          type: 'object',
          schema: { $ref: "#/definitions/authuser" }
-      } 
-*/
-   /* #swagger.responses[200] = { 
-         schema: { $ref: "#/definitions/user"},
-         description: 'succesfully authorized.' 
-      } 
-      #swagger.responses[401] = { 
-         description: 'Unauthorized' 
       }
-      */   
+*/
+   /* #swagger.responses[200] = {
+         schema: { $ref: "#/definitions/user"},
+         description: 'succesfully authorized.'
+      }
+      #swagger.responses[401] = {
+         description: 'Unauthorized'
+      }
+      */
    authuser(req, res);
 });
 
@@ -288,13 +288,13 @@ app.get("/playlist/:id", async (req, res) => {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to obtain user's playlists'
    // #swagger.parameters['id'] = { description: 'Id of the user we want to fetch playlists of.' }
-   /* #swagger.responses[200] = { 
-         description: 'list of playlists' 
-      } 
-      #swagger.responses[500] = { 
-         description: 'Server error' 
+   /* #swagger.responses[200] = {
+         description: 'list of playlists'
       }
-      */  
+      #swagger.responses[500] = {
+         description: 'Server error'
+      }
+      */
    getUserPlaylists(res, req.params.id);
 });
 
@@ -306,27 +306,38 @@ app.post("/createplaylist", function (req, res) {
          description: 'tuple used for verification',
          type: 'object',
          schema: { $ref: "#/definitions/playlists" }
-      } 
+      }
 */
-   /* #swagger.responses[200] = { 
-         description: 'playlist created.' 
-      } 
-      #swagger.responses[400] = { 
-         description: 'Error while creating the playlist or missing parameter' 
+   /* #swagger.responses[200] = {
+         description: 'playlist created.'
       }
-      #swagger.responses[500] = { 
-         description: 'Server error' 
+      #swagger.responses[400] = {
+         description: 'Error while creating the playlist or missing parameter'
       }
-      */  
+      #swagger.responses[500] = {
+         description: 'Server error'
+      }
+      */
    createplaylist(res, req.body);
 });
 
 /* -------------------- COMMUNITY ------------------- */
 
 app.get("/community/:id", async (req, res) => {
+   let id = req.params.id;
    // #swagger.tags = ['community']
    // #swagger.description = 'ADD DESCRIPTION'
-   getCommunity(req, res);
+   community.getCommunity(id, res);
+});
+app.put("/community/:id", async (req, res) => {
+   community.updateCommunity(req, res);
+});
+app.delete("/community/:id", async (req, res) => {
+   community.deleteCommunity(req, res)
+});
+
+app.post("/createcommunity", async (req, res) => {
+   community.createCommunity(req, res);
 });
 
 

@@ -17,64 +17,65 @@
    <body>
       <div id="menu"></div>
 
-      <div class="container">
-         <h2 style="text-align: center">La tua Community</h2>
+      <div id='community-container' class="container">
+         <h2 style="text-align: center">Community</h2>
+         <!-- The buttons are probably to be placed on the right -->
+         <div>
+            <button style="vertical-align: right;; position:absolute;right:2%;" class="btn btn-primary" id="communityGeneralButton">Edit Community</button>
+            <button style="background-color:red;position:absolute;right:11%;" class="btn btn-primary" id="deletePlaylistButton" disabled>Delete Community</button>
+         </div>
          <div class="col-12">
-            <h2 id="community-title">TITLE</h2>
-            <p id="community-desc">DESCRIPTION</p>
+            <h2 id="community-title"></h2>
+            <h4 id="community-desc"></h4>
          </div>
 
-         <div class="row" id="communityContainer">
+         <div class="row" id="membersContainer">
             <!-- Qui verranno aggiunte dinamicamente le card delle community -->
          </div>
-         <button class="btn btn-primary" id="createPlaylistButton">Crea Community</button>
       </div>
 
-     <div id="container-cast" class="row mt-2 row-cols-2
-        row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4">
+      <div id="container-cast" class="row mt-2 row-cols-2
+         row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4">
          <div class="col d-none" id="card-cast">
-             <div class="card">
-                 <img src="" class="card-img-top" alt="...">
-                 <div class="card-body">
-                     <p class="card-text "></p>
-                     <p class="card-text"><small class="text-body-secondary"></small>
+            <div class="card">
+               <img src="" class="card-img-top" alt="...">
+               <div class="card-body">
+                  <p class="card-text "></p>
+                  <p class="card-text"><small class="text-body-secondary"></small>
 
-                     </p>
-                 </div>
-                 <div class="card-footer">
-                     <a href="#" class="btn btn-secondary">Scheda</a>
-                 </div>
+                  </p>
+               </div>
+               <div class="card-footer">
+                  <a href="#" class="btn btn-secondary">Scheda</a>
+               </div>
 
-             </div>
+            </div>
          </div>
-     </div>
+      </div>
 
 
-      <script type="module" src="src/html/scripts/menu.js"></script>
+      <script src="scripts/menu.js"></script>
       <script src="scripts/scripts.js"></script>
+      <script src="scripts/community.js"></script>
       <script>
-         const createCommunityButton = document.getElementById("createPlaylistButton");
+      let user = null;
+      let community = null;
+      // Set ui
 
-         createCommunityButton.addEventListener("click", () => {
-            window.location.href = '/createcommunity';
-         });
-      </script>
-
-      <script>
       async function authandpopulate() {
          try {
             const userData = await authenticateUser();
             if (userData === "ERR") {
-               console.error("Errore durante l'autenticazione:", error);
-               alert("Errore durante l'autenticazione, rifare il login");
+               console.error("Error during authentication:", error);
+               alert("Error during authentication, try again!");
                logout();
                throw new Error("Errore durante l'autenticazione");
             } else if (userData === "ERR_NOT_LOGGED") {
-               alert("Effettua il login per accedere alle tue playlist");
+               alert("Login to access your community.");
                window.location.href = '/login';
                throw new Error("Utente non loggato");
             } else {
-               // Esegui altre azioni dopo l'autenticazione
+               user = userData;
                populateCommunityCards(userData); // Popola le card dei membri della community
             }
          } catch (error) {
@@ -84,9 +85,16 @@
 
       async function fetchCommunityMembers(creatorId) {
          try {
-            console.log(creatorId)
+            // console.log(creatorId)
             // const userId = localStorage.getItem("_id");
             const response = await fetch(`/community/${creatorId}`);
+            // console.log("RESPONSE: ", response == false, response);
+            if (response.redirected) {
+               console.log("REDIRECT ??");
+               window.location.assign(response.url ?? '/createcommunity');
+               return response;
+            }
+
             const communityMembers = await response.json();
             // console.log(communityMembers[0].members);
             return communityMembers;
@@ -96,23 +104,26 @@
          }
       }
 
+
       async function fetchUsersAndUpdateCards(membersData) {
+         // TODO: needs button to add users to community
+         if (membersData.lenght == null) return;
          try {
             membersData.forEach(async member => {
                let res = await fetch(`/users/${member}`);
                let memberInfo = await res.json()
                // console.log(memberInfo, memberInfo[0].nickname)
-               const communityContainer = document.getElementById('communityContainer');
+               const membersContainer = document.getElementById('membersContainer');
                const card = `
-               <div class="col-md-4 mb-4">
-               <div class="card">
-               <div class="card-body">
-               <h5 class="card-title">${memberInfo[0].nickname}</h5>
-               </div>
-               </div>
-               </div>
-               `;
-               communityContainer.innerHTML += card;
+<div class="col-md-4 mb-4">
+<div class="card">
+<div class="card-body">
+<h5 class="card-title">${memberInfo[0].nickname}</h5>
+</div>
+</div>
+</div>
+`;
+               membersContainer.innerHTML += card;
                // return memberInfo
             });
 
@@ -125,16 +136,82 @@
 
       async function populateCommunityCards(user) {
          const communityData = await fetchCommunityMembers(user._id);
-         // console.log("Community Data: ", communityData[0].members);
-         const membersData = await fetchUsersAndUpdateCards(communityData[0].members);
+         if (!communityData.redirected) {
+            community = communityData;
+            handleUI(communityData);
+            // console.log("CommunityData: ", communityData);
+            const membersData = await fetchUsersAndUpdateCards(communityData.members);
+            return;
+         }
 
-         const usersData = await (user._id);
-
-         communityData.forEach(user => {
-         });
+         console.log(communityData.redirected);
       }
 
       authandpopulate();
+
+      function handleUI() {
+         // console.log(community);
+         const communityContainer = document.getElementById('community-container');
+         communityContainer.innerHTML += `
+<div class="col-12">
+<h2>${community.name}</h2>
+<h4>${community.desc}</h4>
+</div>`
+
+         if (community.creatorId == user._id) {
+            const createCommunityButton = document.getElementById("communityGeneralButton");
+            createCommunityButton.disabled = false;
+
+            createCommunityButton.addEventListener("click", () => {
+               // TODO: manage edit of community:
+               //        - add/remove members
+               //        - add/remove playlist
+               editCommunity(community);
+               // window.location.href = '/createcommunity';
+            });
+
+            const deleteCommunityButton = document.getElementById("deletePlaylistButton");
+            deleteCommunityButton.disabled = false;
+
+            deleteCommunityButton.addEventListener("click", () => {
+               // console.log(user);
+               if (window.confirm("Do you really want to delete this community?")) {
+                  try {
+                     fetch(`/community/${user.id}`, {
+                        method: 'DELETE',
+                        headers: {
+                           'Content-Type': 'application/json;charset=utf-8'
+                        },
+                        body: JSON.stringify({ creatorId: user._id})
+                     }).then(response => {
+                           console.log(response.json());
+                           alert(response);
+                           if (response.ok) {
+                              window.location.href = '/community';
+                           }
+                           // fetch(`/community/${user.id}`)
+                           // authandpopulate()
+                        })
+                  } catch (err) {
+                     console.error(err)
+                  }
+               }
+            });
+
+         }
+      }
+
+
+
+
+
+
+
+
+      // TODO: fetch user playlist and add manage button to make it visible or not
+      //
+      // async function getUserPlaylists(user) {
+      // }
       </script>
    </body>
 

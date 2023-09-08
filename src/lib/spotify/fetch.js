@@ -67,8 +67,10 @@ const search = async (searchQuery, res) => {
    let query = searchQuery.q || null;
 
    const url = `${BASE_URL}/search?q=${query}&type=${typeLower}`;
-   const trackResult = await fetchSpotify(url);
-   res.json(trackResult);
+   const searchResult = await fetchSpotify(url);
+
+   res.json(searchResult);
+   return searchResult;
 }
 
 
@@ -94,7 +96,7 @@ const getArtists = async (multiple, searchQuery, res) => {
    if (multiple) {
       url += `artists?ids=${searchQuery}`
    } else {
-     url += `/search?q=${searchQuery}&type=artist`
+     url += `/artists/${searchQuery}`
    }
 
    const artists = await fetchSpotify(url);

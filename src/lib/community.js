@@ -8,7 +8,7 @@ import { dbUserCollection } from "./user.js";
 /**
  * Community Collection from MongoDB
  */
-export const dbCommunityCollection = () => Db('community');
+export const dbCommunityCollection = async () => await Db('community');
 
 
 /**
@@ -25,14 +25,20 @@ export const dbCommunityCollection = () => Db('community');
  * @returns {object} community information from id passed as request param
  */
 export async function getCommunity(req, res) {
-   let creatorId = req.params.id;
-   // console.log(`CreatorId: ${creatorId}`)
+   let creatorId = req;
+
    let collection = await dbCommunityCollection();
    let community = await collection
-      .find({ creatorId: new ObjectId(creatorId) })
-      .toArray();
-   // console.log("Community:" , community)
-   res.json(community);
+      .findOne({ 'creatorId': new ObjectId(creatorId) });
+
+   // console.log("Community:" , community == null, community)
+
+   if (community == null) {
+      res.redirect("/createcommunity");
+      return;
+   }
+   res.send(community);
+   return community;
 }
 
 
@@ -52,6 +58,30 @@ export async function getMembersOfCommunity(req, res) {
    // console.log(community);
    res.json(community);
 }
+
+/**
+ * Async function to create specific community from id
+ *
+ * @param req - request passed from express
+ * @returns {object} community information from id passed as request param
+ */
+export async function createCommunity(req, res) {
+   console.log("Creating community...", req);
+
+   // let collection = await dbCommunityCollection();
+   // let community = await collection
+   //    .findOne({ 'creatorId': new ObjectId(creatorId) });
+
+   // // console.log("Community:" , community == null, community)
+
+   // if (community == null) {
+   //    res.redirect("/createcommunity");
+   //    return;
+   // }
+   // res.send(community);
+   // return community;
+}
+
 
 
 /**
@@ -112,25 +142,20 @@ export async function updateCommunity(res, id, updatedUser) {
  * @param res - response passed from express
  * @param id - id of user to be deleted
  */
-export async function deleteCommunity(res, id) {
-   let index = users.findIndex((user) => user.id == id)
-   if (index == -1) {
-      res.status(404).send('User not found')
-      return
-   }
-   users = users.filter((user) => user.id != id)
-   res.json(users)
+export async function deleteCommunity(req, res) {
+   let creatorId = req.body.creatorId;
+   let creatorObjectId = new ObjectId(creatorId);
    try {
-      var items = await dbCommunityCollection()
-         .deleteOne(user);
+      let filter = { 'creatorId': creatorObjectId };
 
-      res.json(items)
+      let collection = await dbCommunityCollection();
+      let communities = await collection
+         .findOneAndDelete(filter);
+
+      res.send(communities);
+      return communities;
    } catch (e) {
-      if (e.code == 11000) {
-         res.status(400).send("User already exists!");
-         return
-      }
-      res.status(500).send(`Generic Error: ${e}`)
+      console.error("Error deleting community.\n", e);
    }
 }
 
