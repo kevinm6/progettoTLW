@@ -14,7 +14,7 @@ import { Db } from "./src/lib/database.js";
 import { join } from "path";
 import { register } from "./src/lib/register.js";
 import { search, getGenres, getRecommended, getTrack } from "./src/lib/spotify/fetch.js"
-import { getUserPlaylists,createplaylist } from "./src/lib/playlist.js";
+import { getUserPlaylists,createplaylist,deletePlaylist } from "./src/lib/playlist.js";
 import * as community from "./src/lib/community.js";
 
 import swaggerUi from 'swagger-ui-express';
@@ -319,6 +319,25 @@ app.post("/createplaylist", function (req, res) {
       }
       */
    createplaylist(res, req.body);
+});
+app.delete("/deleteplaylist/:id", function (req, res) {
+   // #swagger.tags = ['playlist']
+   // #swagger.description = 'Endpoint that allows to delete a playlist given the ID'
+
+   /* #swagger.responses[200] = { 
+         description: 'playlist deleted.' 
+      } 
+      #swagger.responses[400] = { 
+         description: 'Missing parameter' 
+      }
+      #swagger.responses[404] = { 
+         description: 'Playlist not found or not valid owner' 
+      }
+      #swagger.responses[500] = { 
+         description: 'Internal error' 
+      }
+      */  
+   deletePlaylist(res,req.params.id, req.body._id);
 });
 
 /* -------------------- COMMUNITY ------------------- */

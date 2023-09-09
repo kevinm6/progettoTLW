@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,11 +15,43 @@
     <style>
         .custom-modal-xl .modal-dialog {
             max-width: 90%;
-            margin: 1rem auto; 
+            margin: 1rem auto;
         }
 
+        /* Stile del modal */
+        .modal-custom {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content-custom {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #ff0000;
+            width: 50%;
+            text-align: center;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
     </style>
 </head>
+
 <body>
     <div id="menu"></div>
     <div class="container">
@@ -38,11 +71,12 @@
             </div>
         </div>
     </div>
-    <div class="modal fade custom-modal-xl" id="songsModal" tabindex="-1" aria-labelledby="songsModalLabel" aria-hidden="true">
+    <div class="modal fade custom-modal-xl" id="songsModal" tabindex="-1" aria-labelledby="songsModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="songsModalLabel">Canzoni della Playlist</h5>
+                    <h5 class="modal-title" id="songsModalLabel">Your songs</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -62,6 +96,17 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div id="confirmationModal" class="modal modal-custom">
+        <div class="modal-content-custom">
+            <h2>Are you sure?</h2>
+            <p>You are about to delete the playlist: <b><span id="playlistTitle"></span></b>. Questa azione è irreversibile.
+            </p>
+            <div class="button-container">
+                <button id="confirmButton">Delete the playlist</button>
+                <button id="cancelButton">Cancel</button>
             </div>
         </div>
     </div>

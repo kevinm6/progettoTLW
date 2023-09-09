@@ -497,6 +497,48 @@
         }
       }
     },
+    "/deleteplaylist/{id}": {
+      "delete": {
+        "tags": [
+          "playlist"
+        ],
+        "description": "Endpoint that allows to delete a playlist given the ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "playlist deleted."
+          },
+          "400": {
+            "description": "Missing parameter"
+          },
+          "404": {
+            "description": "Playlist not found or not valid owner"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
+      }
+    },
     "/community/{id}": {
       "get": {
         "tags": [
