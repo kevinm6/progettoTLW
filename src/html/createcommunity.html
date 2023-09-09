@@ -14,15 +14,15 @@
       <div id="menu"></div>
 
       <div class="container">
-         <h2>Crea una nuova community</h2>
+         <h2 style="text-align: center;">Crea una nuova community</h2>
 
          <form id="playlistForm">
             <div class="mb-3">
-               <label for="title" class="form-label">Titolo</label>
-               <input type="text" class="form-control" id="title" name="title" required>
+               <label for="name" class="form-label">Name</label>
+               <input type="text" class="form-control" id="name" name="name" required>
             </div>
             <div class="mb-3">
-               <label for="description" class="form-label">Descrizione</label>
+               <label for="description" class="form-label">Description</label>
                <input type="text" class="form-control" id="description" name="description" required>
             </div>
             <div class="mb-3">
@@ -35,7 +35,6 @@
                         <div class="card-body">
                            <p class="card-text "></p>
                            <p class="card-text"><small class="text-body-secondary"></small>
-
                            </p>
                         </div>
                         <div class="card-footer">
@@ -50,7 +49,7 @@
                </div>
 
             </div>
-            <button type="submit" class="btn btn-primary" onclick="createCommunity()">Create Community</button>
+            <button type="button" class="btn btn-primary" onclick="createCommunity()">Create Community</button>
          </form>
       </div>
 

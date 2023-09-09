@@ -29,9 +29,7 @@ export async function getUser(req, res) {
    let id = req.params.id;
    let collection = await dbUserCollection();
    let user = await collection
-      .find({ _id: new ObjectId(id) })
-      .project({})
-      .toArray();
+      .findOne({ _id: new ObjectId(id) })
    res.json(user);
 }
 

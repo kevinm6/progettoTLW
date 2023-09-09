@@ -31,14 +31,7 @@ export async function getCommunity(req, res) {
    let community = await collection
       .findOne({ 'creatorId': new ObjectId(creatorId) });
 
-   // console.log("Community:" , community == null, community)
-
-   if (community == null) {
-      res.redirect("/createcommunity");
-      return;
-   }
-   res.send(community);
-   return community;
+   res.send(community ?? null);
 }
 
 
@@ -153,7 +146,6 @@ export async function deleteCommunity(req, res) {
          .findOneAndDelete(filter);
 
       res.send(communities);
-      return communities;
    } catch (e) {
       console.error("Error deleting community.\n", e);
    }
