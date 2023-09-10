@@ -29,7 +29,7 @@ async function populatePlaylistCards() {
                     onclick="showSongs('${playlist._id}', ${stringified})">
                     View Songs
                 </button>
-                <button class="btn btn-primary" onclick="">
+                <button class="btn btn-primary" onclick="fetchEditPlaylist('${playlist._id}')">
                     Edit playlist
                 </button>
                 <button class="btn btn-danger" onclick="deletePlaylist('${playlist._id}','${playlist.title}')" >
@@ -44,9 +44,12 @@ async function populatePlaylistCards() {
     });
 }
 
+async function fetchEditPlaylist(playlistID) {
+    window.location.href=`http://localhost:3000/src/html/editplaylist.html?id=${playlistID}`;
+}
 
 async function deletePlaylist(playlistID, playlistTitle) {
-    var del=await showConfirmationModal(playlistID, playlistTitle);
+    var del = await showConfirmationModal(playlistID, playlistTitle);
     if (!del) return;
     // Ottieni l'ID dall'archivio locale (localStorage)
     const localStorageID = localStorage.getItem("_id");
@@ -65,7 +68,7 @@ async function deletePlaylist(playlistID, playlistTitle) {
         .then((response) => {
             if (response.ok) {
                 alert("Playlist deleted succesfully!");
-                window.location.href="localhost:3000/playlist"
+                window.location.href = "localhost:3000/playlist"
             } else {
                 // Gestione degli errori
                 alert("An error occurred. Try again later.");

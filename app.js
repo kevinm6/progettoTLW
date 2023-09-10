@@ -14,7 +14,7 @@ import { Db } from "./src/lib/database.js";
 import { join } from "path";
 import { register } from "./src/lib/register.js";
 import { search, getGenres, getRecommended, getTrack } from "./src/lib/spotify/fetch.js"
-import { getUserPlaylists,createplaylist,deletePlaylist } from "./src/lib/playlist.js";
+import { getUserPlaylists,createplaylist,deletePlaylist,getPlaylist } from "./src/lib/playlist.js";
 import * as community from "./src/lib/community.js";
 
 import swaggerUi from 'swagger-ui-express';
@@ -97,6 +97,13 @@ app.get("/profile", async function (_, res) {
    // #swagger.description = 'Endpoint that allows to fetch the profile page'
    res.sendFile(config.__dirname + "/src/html/profile.html");
 });
+app.get("/editplaylist/:id", async function (req, res) {
+   const id = req.params.id;
+   // #swagger.tags = ['fetch']
+   // #swagger.description = 'Endpoint that allows to fetch the edit playlist page'
+   res.sendFile(`${config.__dirname}/src/html/editplaylist.html`);
+});
+
 
 /* ------------------- USERS ------------------- */
 
@@ -296,6 +303,24 @@ app.get("/playlist/:id", async (req, res) => {
       }
       */
    getUserPlaylists(res, req.params.id);
+});
+app.post("/getplaylist", async (req, res) => {
+   // #swagger.tags = ['playlist']
+   // #swagger.description = 'Endpoint that allows to obtain a specific playlist'
+   // #swagger.parameters['id'] = { description: 'Id of the owner.' }
+   // #swagger.parameters['playlistid'] = { description: 'Id of the playlist we want to fetch.' }
+   /* #swagger.responses[200] = {
+         description: 'playlist',
+         schema: { $ref: "#/definitions/playlists" }
+      }
+      #swagger.responses[500] = {
+         description: 'Server error'
+      }
+      #swagger.responses[404] = {
+         description: 'Playlist Not Found'
+      }
+      */
+   getPlaylist(res, req.body.owner_id,req.body.id);
 });
 
 app.post("/createplaylist", function (req, res) {

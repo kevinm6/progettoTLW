@@ -231,6 +231,14 @@
             "description": "OK"
           }
         }
+      },
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
       }
     },
     "/": {
@@ -252,6 +260,27 @@
           "fetch"
         ],
         "description": "Endpoint that allows to fetch the profile page",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/editplaylist/{id}": {
+      "get": {
+        "tags": [
+          "fetch"
+        ],
+        "description": "Endpoint that allows to fetch the edit playlist page",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -497,6 +526,57 @@
         }
       }
     },
+    "/getplaylist": {
+      "post": {
+        "tags": [
+          "playlist"
+        ],
+        "description": "Endpoint that allows to obtain a specific playlist",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Id of the owner.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "playlistid",
+            "description": "Id of the playlist we want to fetch.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "owner_id": {
+                  "example": "any"
+                },
+                "id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "playlist",
+            "schema": {
+              "$ref": "#/definitions/playlists"
+            }
+          },
+          "404": {
+            "description": "Playlist Not Found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
     "/deleteplaylist/{id}": {
       "delete": {
         "tags": [
@@ -551,6 +631,50 @@
             "in": "path",
             "required": true,
             "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "creatorId": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {

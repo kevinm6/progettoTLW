@@ -1,15 +1,3 @@
-function populateUserProfile(userData) {
-    // Mostra i dati dell'utente nel profilo
-    document.getElementById("nickname").value = userData.nickname;
-    document.getElementById("email").value = userData.email;
-    document.getElementById("password").value = "";
-
-    document.getElementById("nome").value = userData.name;
-    document.getElementById("cognome").value = userData.surname;
-    document.getElementById("genres").value = userData.genres.join(", ");
-    document.getElementById("date").value = userData.date;
-}
-
 async function authenticateUser() {
     // Verifica se l'utente è loggato
     if (!localStorage.getItem("nickname") || !localStorage.getItem("email")) {
@@ -97,6 +85,51 @@ function msToTime(msStr) {
     return `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
 }
 
+function creaplaylist() {
+    var title = document.getElementById("title").value;
+    var description = document.getElementById("description").value;
+    var tags = document.getElementById("tags").value;
 
+    // Prendi tutti gli elementi con classe "selected-song"
+    const selectedSongElements = document.querySelectorAll(".selected-song");
+
+    // Creo un array di oggetti con id e titolo delle canzoni selezionate
+    const selectedSongsData = Array.from(selectedSongElements).map(element => {
+        const songId = element.dataset.songId;
+        const artist = element.dataset.artist;
+        const duration = element.dataset.duration;
+        const songTitle = element.querySelector("span").textContent;
+        return { id: songId, title: songTitle, artist: artist, duration: duration };
+    });
+
+    // Dati da inviare
+    const playlistData = {
+        title: title,
+        description: description,
+        tags: tags.split(",").map(tag => tag.trim()),
+        songs: selectedSongsData,
+        owner_id: localStorage.getItem("_id")
+    };
+    console.log(playlistData);
+
+    // Effettua la richiesta POST all'endpoint
+    fetch('/createplaylist', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(playlistData)
+    }).then(async response => {
+        if (response.ok) {
+            alert("Playlist creata con successo");
+            setTimeout(function () {
+                window.location.href = "http://localhost:3000/playlist";
+            }, 500);
+        }
+        else {
+            alert("Errore durante la creazione della playlist");
+        }
+    });
+}
 
 

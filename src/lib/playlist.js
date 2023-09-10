@@ -154,3 +154,19 @@ export async function deletePlaylist(res, playlistID, ownerID) {
     res.status(500).send('Internal Server Error');
   }
 }
+
+export async function getPlaylist(res, owner_id, playlistid) {
+  console.log(owner_id+" is fetching playlist "+playlistid);
+  try {
+    const collection = await dbPlaylistCollection();
+    const playlist = await collection.findOne({ _id: new ObjectId(playlistid), owner_id:owner_id });
+    if (!playlist) {
+      res.status(404).send("Playlist not found");
+      return;
+    }
+
+    res.json(playlist);
+  } catch (error) {
+    res.status(500).send(`Error while fetching playlist: ${error.message}`);
+  }
+}
