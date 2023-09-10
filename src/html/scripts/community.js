@@ -1,6 +1,45 @@
 var communityMembers = {};
 var pageMembers = 0;
 
+
+function createCommunity(userId) {
+   let name = document.getElementById('name').value;
+   let description = document.getElementById('description').value;
+
+   if (!checkFieldFullfilled()) {
+      alert("Community name can't be empty!\nUpdate it and retry")
+      return;
+   }
+
+   let newCommunity = {
+      creatorId: userId,
+      name: name,
+      desc: description,
+      members: communityMembers,
+      playlists: []
+   };
+
+
+   fetch('/createcommunity', {
+      method: "POST",
+      headers: {
+         "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newCommunity)
+   }).then(async response => {
+         if (response.ok) {
+            console.log("Community created successful!");
+            setTimeout(function () {
+               window.location.replace("/community");
+            }, 1400);
+         }
+         else {
+            console.error("Error creating community.");
+         }
+      });
+}
+
+
 function editCommunity(community) {
    console.log("Editing community...");
    /**
@@ -12,6 +51,7 @@ function editCommunity(community) {
     */
 }
 
+
 function prevMembers() {
    if (pageMembers > 0) {
       pageMembers = pageMembers - 1
@@ -19,10 +59,12 @@ function prevMembers() {
    }
 }
 
+
 function nextMembers() {
    pageMembers = pageMembers + 1
    getCredits(id, pageMembers)
 }
+
 
 function showMembers(members, pageMembers) {
    var card = document.getElementById('card-cast')
@@ -56,6 +98,7 @@ function showMembers(members, pageMembers) {
    }
 }
 
+
 function popolateMembers() {
    fetch('/users')
       .then((response) => {
@@ -70,32 +113,34 @@ function popolateMembers() {
 
 
 function addUserToCommunityMembers(userId) {
-   console.log("Clicked checkbox", userId);
    let checkbox = document.getElementById('user-selection-'+userId);
    let checkboxLabel = document.getElementById('label-selection-'+userId);
 
    fetch(`/users/${userId}`)
       .then((response) => {
          if (!response.ok) {
-            console.error("Error fetching user of SNM.", response);
+            console.error(response);
             alert("Error fetching user of SNM. Retry.");
             return;
          }
          response.json().then((user) => {
             if (checkbox.checked) {
-               communityMembers.push({_id: user._id});
-
+               if (communityMembers[user.nickname]?._id == userId) {
+                  alert("User already added to member of community.Cancel...");
+                  return;
+               }
+               communityMembers[user.nickname] = {_id: userId};
             } else {
-               communityMembers.pop()
+               delete communityMembers[user.nickname];
             }
-               // ._id === user._id).concat([{_id: user._id}]);
-
             // advise user about status of selection
             checkboxLabel.innerHTML = checkbox.checked ?
-               `<small style="color:green">Added</small>`: `<small style="color:gray">Add to community</small>`;
+               `<small style="color:green">Added</small>` :
+               `<small style="color:gray">Add to community</small>`;
          });
       });
 }
+
 
 async function fetchCommunity(creatorId) {
    fetch(`/community/${creatorId}`)
@@ -109,43 +154,9 @@ async function fetchCommunity(creatorId) {
             .then((communityData) => {
                handleUI(communityData);
             })
-            .catch((reason) => {
+            .catch(() => {
                handleUI(null);
             });
-      });
-}
-
-function createCommunity() {
-   let name = document.getElementById('name').value;
-   let description = document.getElementById('description').value;
-   let members = communityMembers;
-   let communityData = {
-      name: name,
-      desc: description,
-      members: members,
-      // playlists: playlists
-   };
-
-   console.log(members)
-   console.log(communityData);
-
-   return;
-   fetch('/createcommunity', {
-      method: "POST",
-      headers: {
-         "Content-Type": "application/json"
-      },
-      body: JSON.stringify(communityData)
-   }).then(async response => {
-         if (response.ok) {
-            console.log("Community created successful!");
-            setTimeout(function () {
-               window.location.replace = "/community";
-            }, 500);
-         }
-         else {
-            console.error("Error creating community.");
-         }
       });
 }
 
@@ -162,11 +173,9 @@ function handleUI(community) {
 <h4>${community.desc}</h4>
 </div>`
 
-      if (community.creatorId == user._id) {
-         communityGeneralButton.disabled = false;
-         deleteCommunityButton.disabled = false;
+      // if (community.creatorId == user._id) {
+         communityGeneralButton.removeAttribute('disabled');
          deleteCommunityButton.removeAttribute('disabled');
-         deleteCommunityButton.removeAttribute('hidden');
 
          communityGeneralButton.addEventListener("click", () => {
             // TODO: manage edit of community:
@@ -191,10 +200,8 @@ function handleUI(community) {
                         console.log(response.json());
                         alert(response);
                         if (response.ok) {
-                           window.location.href = '/community';
+                           window.location.replace('/community');
                         }
-                        // fetch(`/community/${user.id}`)
-                        // authandpopulate()
                      })
                } catch (err) {
                   console.error(err)
@@ -203,7 +210,7 @@ function handleUI(community) {
          });
 
          // TODO: manage if user != creator
-      }
+      // }
    } else {
       console.log("Community is ", community);
 
@@ -216,4 +223,12 @@ function handleUI(community) {
 </div>
 `
    }
+}
+
+
+function checkFieldFullfilled() {
+   let name = document.getElementById('name').value;
+   let desc = document.getElementById('description').value;
+
+   return !(name == "") && !(desc == "");
 }

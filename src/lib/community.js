@@ -59,20 +59,14 @@ export async function getMembersOfCommunity(req, res) {
  * @returns {object} community information from id passed as request param
  */
 export async function createCommunity(req, res) {
-   console.log("Creating community...", req);
+   let newCommunity = req.body;
 
-   // let collection = await dbCommunityCollection();
-   // let community = await collection
-   //    .findOne({ 'creatorId': new ObjectId(creatorId) });
+   newCommunity.creatorId = new ObjectId(req.body.creatorId);
+   console.log(newCommunity);
+   let collection = await dbCommunityCollection();
+   let community = await collection.insertOne(newCommunity);
 
-   // // console.log("Community:" , community == null, community)
-
-   // if (community == null) {
-   //    res.redirect("/createcommunity");
-   //    return;
-   // }
-   // res.send(community);
-   // return community;
+   res.send(community);
 }
 
 
