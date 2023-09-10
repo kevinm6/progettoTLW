@@ -21,8 +21,8 @@
          <h2 style="text-align: center">Community</h2>
          <!-- The buttons are probably to be placed on the right -->
          <div>
-            <button style="vertical-align: right;; position:absolute;right:2%;" class="btn btn-primary" id="communityGeneralButton">Edit Community</button>
-            <button style="background-color:red;position:absolute;right:11%;" class="btn btn-primary" id="deletePlaylistButton" disabled>Delete Community</button>
+            <button style="vertical-align:right; position:absolute; right:2%;" class="btn btn-primary" id="communityGeneralButton">Edit Community</button>
+            <button style="background-color:red;position:absolute; right:11%;" class="btn btn-primary" id="deleteCommunityButton" disabled hidden>Delete Community</button>
          </div>
          <div class="col-12">
             <h2 id="community-title"></h2>
@@ -59,7 +59,7 @@
       <script src="scripts/community.js"></script>
       <script>
       let user = null;
-      let community = null;
+      // let community = null;
       // Set ui
 
       async function authandpopulate() {
@@ -76,31 +76,10 @@
                throw new Error("Utente non loggato");
             } else {
                user = userData;
-               populateCommunityCards(userData); // Popola le card dei membri della community
+               fetchCommunity(userData._id); // Popola le card dei membri della community
             }
          } catch (error) {
             console.error("Errore durante l'esecuzione:", error);
-         }
-      }
-
-      async function fetchCommunityMembers(creatorId) {
-         try {
-            // console.log(creatorId)
-            // const userId = localStorage.getItem("_id");
-            const response = await fetch(`/community/${creatorId}`);
-            // console.log("RESPONSE: ", response == false, response);
-            if (response.redirected) {
-               console.log("REDIRECT ??");
-               window.location.assign(response.url ?? '/createcommunity');
-               return response;
-            }
-
-            const communityMembers = await response.json();
-            // console.log(communityMembers[0].members);
-            return communityMembers;
-         } catch (error) {
-            console.error("Errore durante il recupero delle community:", error);
-            return {};
          }
       }
 
@@ -133,80 +112,7 @@
          }
       }
 
-
-      async function populateCommunityCards(user) {
-         const communityData = await fetchCommunityMembers(user._id);
-         if (!communityData.redirected) {
-            community = communityData;
-            handleUI(communityData);
-            // console.log("CommunityData: ", communityData);
-            const membersData = await fetchUsersAndUpdateCards(communityData.members);
-            return;
-         }
-
-         console.log(communityData.redirected);
-      }
-
       authandpopulate();
-
-      function handleUI() {
-         // console.log(community);
-         const communityContainer = document.getElementById('community-container');
-         communityContainer.innerHTML += `
-<div class="col-12">
-<h2>${community.name}</h2>
-<h4>${community.desc}</h4>
-</div>`
-
-         if (community.creatorId == user._id) {
-            const createCommunityButton = document.getElementById("communityGeneralButton");
-            createCommunityButton.disabled = false;
-
-            createCommunityButton.addEventListener("click", () => {
-               // TODO: manage edit of community:
-               //        - add/remove members
-               //        - add/remove playlist
-               editCommunity(community);
-               // window.location.href = '/createcommunity';
-            });
-
-            const deleteCommunityButton = document.getElementById("deletePlaylistButton");
-            deleteCommunityButton.disabled = false;
-
-            deleteCommunityButton.addEventListener("click", () => {
-               // console.log(user);
-               if (window.confirm("Do you really want to delete this community?")) {
-                  try {
-                     fetch(`/community/${user.id}`, {
-                        method: 'DELETE',
-                        headers: {
-                           'Content-Type': 'application/json;charset=utf-8'
-                        },
-                        body: JSON.stringify({ creatorId: user._id})
-                     }).then(response => {
-                           console.log(response.json());
-                           alert(response);
-                           if (response.ok) {
-                              window.location.href = '/community';
-                           }
-                           // fetch(`/community/${user.id}`)
-                           // authandpopulate()
-                        })
-                  } catch (err) {
-                     console.error(err)
-                  }
-               }
-            });
-
-         }
-      }
-
-
-
-
-
-
-
 
       // TODO: fetch user playlist and add manage button to make it visible or not
       //
