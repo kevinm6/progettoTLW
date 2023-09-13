@@ -57,7 +57,7 @@ export const generateSpotifyToken = async () => {
  * https://developer.spotify.com/documentation/web-api/tutorials/client-credentials-flow
  */
 const scheduleRenewSpotifyDevToken = async () => {
-   console.log("⏱️S Scheduling Spotify Token");
+   console.log("⏱️  Scheduling Spotify Token");
    const anHourInMilliseconds = 3600000;
    setInterval(generateSpotifyToken, anHourInMilliseconds);
 }

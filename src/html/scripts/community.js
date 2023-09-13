@@ -26,14 +26,21 @@ function createCommunity(userId) {
          "Content-Type": "application/json"
       },
       body: JSON.stringify(newCommunity)
-   }).then(async response => {
+   }).then((response) => {
          if (response.ok) {
-            console.log("Community created successful!");
-            setTimeout(function () {
-               window.location.replace("/community");
-            }, 1400);
-         }
-         else {
+            response.json().then((msg) => {
+               if (msg.error) {
+                  if (confirm(msg.error)) window.location.replace('/community');
+               } else {
+                  document.getElementsByClassName('btn')[0].style.backgroundColor = 'green';
+                  document.getElementsByClassName('btn')[0].innerText = 'Community successful created!';
+                  setTimeout(function () {
+                     window.location.replace("/community");
+                  }, 1400);
+               }
+            });
+
+         } else {
             console.error("Error creating community.");
          }
       });
@@ -53,60 +60,94 @@ function editCommunity(community) {
 
 
 function prevMembers() {
-   if (pageMembers > 0) {
-      pageMembers = pageMembers - 1
-      getCredits(id, pageMembers)
+   if (pageResults > 0) {
+      pageResults = pageResults - 1
+      getCredits(id, pageResults)
    }
 }
 
 
-function nextMembers() {
-   pageMembers = pageMembers + 1
-   getCredits(id, pageMembers)
+function nextResults() {
+   pageResults = pageResults + 1
+   getCredits(id, pageResults)
 }
 
 
-function showMembers(members, pageMembers) {
-   var card = document.getElementById('card-cast')
-   var container = document.getElementById('container-cast')
-   container.innerHTML = ''
+function showMembers(endpoint, members, pageMembers) {
+   var card = document.getElementById('card-cast');
+   var container = document.getElementById('container-cast');
    container.append(card)
 
-   for (var i = pageMembers * 6; i < (pageMembers + 1) * 6; i++) {
-      var clone = card.cloneNode(true)
-      if (members[i] == null) break;
+   switch (endpoint) {
+      case 'createcommunity':
+         for (var i = pageMembers * 6; i < (pageMembers + 1) * 6; i++) {
+            var clone = card.cloneNode(true)
+            if (members[i] == null) break;
 
-      clone.id = 'card-cast-' + i
-      clone.getElementsByClassName('card-text')[0].innerHTML = members[i].name
-      clone.getElementsByClassName('text-body-secondary')[0].innerHTML = members[i].nickname
 
-      // IDT we want to add the profile picture for users...
-      // just use a placeholder
-      clone.getElementsByClassName('card-img-top')[0].src =
-         'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+            clone.id = 'card-cast-' + i
+            clone.getElementsByClassName('card-text')[0].innerHTML = members[i].name
+            clone.getElementsByClassName('text-body-secondary')[0].innerHTML = members[i].nickname
 
-      clone.getElementsByClassName('checkbox')[0].id += members[i]._id;
-      clone.getElementsByClassName('checkbox')[0].setAttribute('onClick', `addUserToCommunityMembers('${members[i]._id}')`);
+            // IDT we want to add the profile picture for users... just use a placeholder
+            clone.getElementsByClassName('card-img-top')[0].src =
+               'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
 
-      clone.getElementsByTagName('label')[0].setAttribute('id', 'label-selection-'+ members[i]._id);
-      clone.getElementsByTagName('label')[0].setAttribute('for', 'user-selection-'+ members[i]._id);
-      clone.getElementsByTagName('label')[0].innerHTML = `<small style="color:gray;">Add to community</small>`;
+            clone.getElementsByClassName('checkbox')[0].id += members[i]._id;
+            clone.getElementsByClassName('checkbox')[0].setAttribute('onClick', `addUserToCommunityMembers('${members[i]._id}')`);
 
-      clone.classList.remove('d-none')
+            clone.getElementsByTagName('label')[0].setAttribute('id', 'label-selection-'+ members[i]._id);
+            clone.getElementsByTagName('label')[0].setAttribute('for', 'user-selection-'+ members[i]._id);
+            clone.getElementsByTagName('label')[0].innerHTML = `<small style="color:gray;">Add to community</small>`;
 
-      card.before(clone)
+            clone.classList.remove('d-none')
+
+            card.before(clone)
+         }
+
+         break;
+
+      case 'community':
+         for (var i = pageMembers * 6; i < (pageMembers + 1) * 6; i++) {
+            var clone = card.cloneNode(true)
+            if (members[i] == null) break;
+
+
+            clone.id = 'card-cast-' + i
+            clone.getElementsByClassName('card-text')[0].innerHTML = members[i].name
+            clone.getElementsByClassName('text-body-secondary')[0].innerHTML = members[i].nickname
+
+            // IDT we want to add the profile picture for users... just use a placeholder
+            clone.getElementsByClassName('card-img-top')[0].src =
+               'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+
+            // clone.getElementsByClassName('checkbox')[0].id += members[i]._id;
+            // clone.getElementsByClassName('checkbox')[0].setAttribute('onClick', `addUserToCommunityMembers('${members[i]._id}')`);
+
+            // clone.getElementsByTagName('label')[0].setAttribute('id', 'label-selection-'+ members[i]._id);
+            // clone.getElementsByTagName('label')[0].setAttribute('for', 'user-selection-'+ members[i]._id);
+            // clone.getElementsByTagName('label')[0].innerHTML = `<small style="color:gray;">Add to community</small>`;
+
+            clone.classList.remove('d-none')
+
+            card.before(clone)
+         }
+
+         break;
+
+      default: break;
    }
 }
 
 
-function popolateMembers() {
+function popolateMembers(endpoint) {
    fetch('/users')
       .then((response) => {
          if (!response.ok) {
             response.json().then((data) => alert(data.status_message));
             return
          }
-         response.json().then((members) => showMembers(members, pageMembers))
+         response.json().then((members) => showMembers(endpoint, members, pageResults))
       })
       .catch((e) => console.error("Error fetching users of SNM.", e));
 }
@@ -130,48 +171,57 @@ function addUserToCommunityMembers(userId) {
                   return;
                }
                communityMembers[user.nickname] = {_id: userId};
+               checkboxLabel.innerHTML = `<small style="color:green">Added</small>`;
             } else {
                delete communityMembers[user.nickname];
+               checkboxLabel.innerHTML = `<small style="color:gray">Add to community</small>`;
             }
-            // advise user about status of selection
-            checkboxLabel.innerHTML = checkbox.checked ?
-               `<small style="color:green">Added</small>` :
-               `<small style="color:gray">Add to community</small>`;
          });
       });
 }
 
 
-async function fetchCommunity(creatorId) {
+function fetchCommunity(creatorId) {
    fetch(`/community/${creatorId}`)
       .then((response) => {
          if (!response.ok) {
             console.error("Error fetching community.", response);
             return null;
          }
-         console.log(response);
-         response.json()
-            .then((communityData) => {
-               handleUI(communityData);
-            })
-            .catch(() => {
-               handleUI(null);
-            });
+         response.json().then((communityData) => handleUI(communityData));
       });
 }
 
 
 function handleUI(community) {
+   // console.log(community);
+
+   if (window.location.href.includes('/createcommunity')) {
+      if (!community.error) {
+         document.getElementById('create-community-container').innerHTML = `
+         <br><br>
+         <h2 style="text-align: center;">User has already a community.</h2>
+         <p style="text-align: center; color: grey">click on the button below to show it</p>
+         <div>
+            <a style="position:absolute; left:44%; top:50%;" class="btn btn-primary" href="/community">Enter Community</a>
+         </div>
+         `
+      }
+      popolateMembers('createcommunity');
+      return;
+   }
+
+
    const communityContainer = document.getElementById('community-container');
    const communityGeneralButton = document.getElementById("communityGeneralButton");
    const deleteCommunityButton = document.getElementById("deleteCommunityButton");
 
-   if (community) {
-      communityContainer.innerHTML += `
-<div class="col-12">
-<h2>${community.name}</h2>
-<h4>${community.desc}</h4>
-</div>`
+   if (!community.error) {
+      popolateMembers('community');
+
+      console.log(community);
+      document.getElementById('community-title').innerText = community.name;
+      document.getElementById('community-desc').innerText = community.desc;
 
       // if (community.creatorId == user._id) {
          communityGeneralButton.removeAttribute('disabled');
@@ -212,7 +262,6 @@ function handleUI(community) {
          // TODO: manage if user != creator
       // }
    } else {
-      console.log("Community is ", community);
 
       communityContainer.innerHTML = `
 <br><br>
@@ -231,4 +280,16 @@ function checkFieldFullfilled() {
    let desc = document.getElementById('description').value;
 
    return !(name == "") && !(desc == "");
+}
+
+function checkIfUserHasCommunity() {
+   let userId = localStorage.getItem('_id');
+   // TODO: if user is not logged in, we must tell him to register to the app
+
+   if (!userId) {
+
+      return;
+   }
+
+   fetchCommunity(userId);
 }

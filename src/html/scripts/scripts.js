@@ -29,19 +29,19 @@ async function authenticateUser() {
 }
 
 function saveChanges() {
-    var useremail = document.getElementById("email").value;
-    var usernickname = document.getElementById("nickname").value;
-    var userpassword = document.getElementById("password").value;
-    var username = document.getElementById("nome").value;
-    var usersurname = document.getElementById("cognome").value;
-    var userid = localStorage.getItem("_id");
+    var userEmail = document.getElementById("email").value;
+    var userNickname = document.getElementById("nickname").value;
+    var userPassword = document.getElementById("password").value;
+    var userName = document.getElementById("nome").value;
+    var userSurname = document.getElementById("cognome").value;
+    var userId = localStorage.getItem("_id");
     var updatedData = {
-        _id: userid,
-        email: useremail,
-        name: username,
-        surname: usersurname,
-        nickname: usernickname,
-        password: userpassword
+        _id: userId,
+        email: userEmail,
+        name: userName,
+        surname: userSurname,
+        nickname: userNickname,
+        password: userPassword
 
     };
     console.log(updatedData);
@@ -54,9 +54,9 @@ function saveChanges() {
     }).then(response => {
         if (response.ok) {
             alert("Modifiche salvate con successo!");
-            localStorage.setItem("email", useremail);
-            localStorage.setItem("nickname", usernickname);
-            localStorage.setItem("_id", userid);
+            localStorage.setItem("email", userEmail);
+            localStorage.setItem("nickname", userNickname);
+            localStorage.setItem("_id", userId);
             window.location.href = "http://localhost:3000/profile";
         } else {
             throw new Error("Errore durante il salvataggio delle modifiche");

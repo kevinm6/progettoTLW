@@ -1,5 +1,23 @@
 let hasImages = (item) => Object.values(item).length > 0;
 
+var [ pageResults, offset ] = [ 0, 0 ];
+
+function prevResults(filter, query) {
+   if (pageResults > 0) {
+      pageResults -= 1
+      offset = (offset - 20 >= 0) ? offset - 20 : 0;
+      getItems(filter, query, offset)
+   }
+   console.log(pageResults, offset);
+}
+
+function nextResults(filter, query) {
+   pageResults += 1
+   offset += 20;
+   getItems(filter, query, offset)
+   console.log(pageResults, offset);
+}
+
 
 let getItemInfo = (item) => {
    // console.log(item);
@@ -53,7 +71,7 @@ let getItemInfo = (item) => {
    return itemInfo;
 }
 
-function populateCards(data) {
+async function populateCards(data, page) {
    // TODO:
    //    - add always more item + button "more"
    //       - see offset || previous -> https://developer.spotify.com/documentation/web-api/reference/search
@@ -68,11 +86,21 @@ function populateCards(data) {
          return data.albums?.items
       }
    };
+   // console.log(fetchedItems());
 
    let card = document.getElementById("card-track")
    let container = document.getElementById("container-track")
    container.innerHTML = ""
    container.append(card)
+
+   let playlists = await fetchPlaylists();
+
+   let playlistOptions = "";
+   for (i in playlists) {
+      let playlist = playlists[i].title;
+      playlistOptions += `<a class="dropdown-item" onClick='addToPlaylist("pid":"${playlists[i]._id}"})'>${playlist}</a>`
+   }
+
 
    for (let i in fetchedItems()) {
       let currentItem = fetchedItems()[i];
@@ -105,14 +133,24 @@ function populateCards(data) {
       let itemToPass = JSON.stringify(itemInfo);
       clone.getElementsByClassName('btn')[0].setAttribute('onClick', `showTrackInfo(${itemToPass})`);
 
+      clone.getElementsByClassName('dropdown-menu')[0].setAttribute('id', 'playlistSelect' + trackId);
+
+
+      let addTrackToPlaylistFunction =  playlistOptions.replace(/addToPlaylist\(/g, `addToPlaylist({"tid":"${trackId}",`);
+      clone.getElementsByClassName('dropdown-menu')[0].innerHTML += `${addTrackToPlaylistFunction}`;
+
+      // clone.getElementsByClassName('dropdown-toggle')[0].setAttribute('id', 'dropdownPlaylist' + trackId);
+      clone.getElementsByClassName('dropdown-toggle')[0].setAttribute('data-bs-target', '#playlistSelect' + trackId);
+
       clone.classList.remove('d-none');
 
-      card.after(clone);
+      card.before(clone);
       // Debugging: limit to 4 elements
       // if (i == 3) break;
    }
 
 }
+
 
 function showTrackInfo(info) {
    let string = JSON.stringify(info);
@@ -155,9 +193,11 @@ function showTrackInfo(info) {
    modal.show();
 }
 
-function getItems(type, query) {
+
+function getItems(type, query, offset) {
+   console.log("CALLING getItems: ", type, query);
    try {
-      fetch(`/search?q=${query}&type=${type}`)
+      fetch(`/search?q=${query}&type=${type}&offset=${offset}`)
          .then(response => {
             if (!response.ok) {
                response.json().then(data => console.error(data.status_message))
@@ -176,4 +216,40 @@ function getItems(type, query) {
       }, 1000);
    }
 
-};
+}
+
+
+function addToPlaylist(trackIdToAddToPlaylist) {
+
+   let { tid, pid } = trackIdToAddToPlaylist;
+
+   let userId = localStorage.getItem('_id');
+   if (!userId) {
+
+      const msg = `
+               Attention
+You need an account to add song to playlist!
+Register to the app or press 'OK' to create a new account.
+`
+      if (window.confirm(msg)) {
+         window.location.replace('/profile');
+      }
+      return;
+   } else {
+      fetch(`/tracks/${tid}`).then((response) => {
+         if (response.ok) {
+            response.json().then((trackData) => {
+               fetch(`/playlist/${pid}`, {
+                  method: 'PUT',
+                  headers: {
+                     'Content-Type': 'application/json;charset=utf-8'
+                  },
+                  body: JSON.stringify({ track: trackData, pid: pid })
+               })
+            })
+         }
+      })
+   }
+
+}
+

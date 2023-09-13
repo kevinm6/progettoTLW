@@ -32,9 +32,9 @@
          <div class="row g-4 mt-4 p-4">
             <nav aria-label="Page navigation example">
                <ul class="pagination">
-                  <li class="page-item"><button class="page-link" onclick="prev()">Previous</button></li>
+                  <li class="page-item"><button class="page-link" id="prev-page-result">Previous</button></li>
 
-                  <li class="page-item"><button class="page-link" onclick="next()">Next</button></li>
+                  <li class="page-item"><button class="page-link" id="next-page-result">Next</button></li>
                </ul>
             </nav>
          </div>
@@ -55,6 +55,19 @@
 
                      <!-- Trigger the modal with a button -->
                      <button type="button" class="btn btn-info btn-lg">Info</button>
+                     <div class="btn-group dropright">
+                       <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
+                         Add to Playlist
+                       </button>
+                        <div class="dropdown-menu" id="playlist-select-">
+
+                        </div>
+                     </div>
+
+                     <!-- <select class="playlist-select btn-outline-secondary"> -->
+                     <!--   <option selected>Add to playlist</option> -->
+                     <!-- </select> -->
+                     <!-- <button type="button" class="btn btn-outline-primary btn-lg">+</button> -->
 
                      <!-- Modal -->
                      <div class="modal fade" id="trackModal" tabindex="-1" aria-labelledby="trackModalLabel" aria-hidden='true'>
@@ -85,6 +98,7 @@
       <script src="scripts/menu.js"></script>
       <script src="scripts/scripts.js"></script>
       <script src="scripts/explore.js"></script>
+      <script src="scripts/playlists.js"></script>
       <script>
 
       /* Manage search input */
@@ -114,8 +128,16 @@
 
       // Populate page on first start
       getItems(filterSelectId.value);
-      </script>
 
+
+      document.getElementById('prev-page-result').addEventListener('click', function() {
+         prevResults(filterSelectId.value, searchInputId.value)
+      })
+
+      document.getElementById('next-page-result').addEventListener('click', function() {
+         nextResults(filterSelectId.value, searchInputId.value)
+      })
+      </script>
    </body>
 
 </html>

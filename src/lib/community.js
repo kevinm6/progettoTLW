@@ -31,7 +31,11 @@ export async function getCommunity(req, res) {
    let community = await collection
       .findOne({ 'creatorId': new ObjectId(creatorId) });
 
-   res.send(community ?? null);
+   if (community == null) {
+      res.json({'error': "No community found"});
+      return;
+   }
+   res.send(community);
 }
 
 
@@ -62,9 +66,22 @@ export async function createCommunity(req, res) {
    let newCommunity = req.body;
 
    newCommunity.creatorId = new ObjectId(req.body.creatorId);
-   console.log(newCommunity);
+   // console.log(newCommunity);
+
    let collection = await dbCommunityCollection();
-   let community = await collection.insertOne(newCommunity);
+   // check collision
+   let community = await collection
+      .findOne({'creatorId': newCommunity.creatorId});
+
+   if (community == null) {
+      community = await collection.insertOne(newCommunity);
+   } else {
+      let errorMsg = "Community already present for current user.\n\
+Only one community for user is allowed.\n\
+Do you want to go to your community?"
+      res.json({'error': errorMsg});
+      return;
+   }
 
    res.send(community);
 }

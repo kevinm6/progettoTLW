@@ -14,7 +14,7 @@ import { Db } from "./src/lib/database.js";
 import { join } from "path";
 import { register } from "./src/lib/register.js";
 import { search, getGenres, getRecommended, getTrack } from "./src/lib/spotify/fetch.js"
-import { getUserPlaylists,createplaylist,deletePlaylist,getPlaylist } from "./src/lib/playlist.js";
+import { addSongToPlaylist, getUserPlaylists, createplaylist, deletePlaylist, getPlaylist } from "./src/lib/playlist.js";
 import * as community from "./src/lib/community.js";
 
 import swaggerUi from 'swagger-ui-express';
@@ -304,6 +304,19 @@ app.get("/playlist/:id", async (req, res) => {
       */
    getUserPlaylists(res, req.params.id);
 });
+app.put("/playlist/:id", async (req, res) => {
+   // #swagger.tags = ['playlist']
+   // #swagger.description = 'Endpoint that allows to edit user's playlists'
+   // #swagger.parameters['id'] = { description: 'Id of the user we want to edit playlists of.' }
+   /* #swagger.responses[200] = {
+         description: 'playlist updated'
+      }
+      #swagger.responses[500] = {
+         description: 'Server error'
+      }
+      */
+   addSongToPlaylist(req, res);
+});
 app.post("/getplaylist", async (req, res) => {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to obtain a specific playlist'
@@ -349,19 +362,19 @@ app.delete("/deleteplaylist/:id", function (req, res) {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to delete a playlist given the ID'
 
-   /* #swagger.responses[200] = { 
-         description: 'playlist deleted.' 
-      } 
-      #swagger.responses[400] = { 
-         description: 'Missing parameter' 
+   /* #swagger.responses[200] = {
+         description: 'playlist deleted.'
       }
-      #swagger.responses[404] = { 
-         description: 'Playlist not found or not valid owner' 
+      #swagger.responses[400] = {
+         description: 'Missing parameter'
       }
-      #swagger.responses[500] = { 
-         description: 'Internal error' 
+      #swagger.responses[404] = {
+         description: 'Playlist not found or not valid owner'
       }
-      */  
+      #swagger.responses[500] = {
+         description: 'Internal error'
+      }
+      */
    deletePlaylist(res,req.params.id, req.body._id);
 });
 

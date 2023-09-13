@@ -22,34 +22,35 @@
          <!-- The buttons are probably to be placed on the right -->
          <div>
             <button style="vertical-align:right; position:absolute; right:2%;" class="btn btn-primary" id="communityGeneralButton">Edit Community</button>
-            <button style="background-color:red; position:absolute; right:11%;" class="btn btn-primary" id="deleteCommunityButton">Delete Community</button>
+            <button style="position:absolute; right:11%;" class="btn btn-danger" id="deleteCommunityButton">Delete Community</button>
          </div>
-         <div class="col-12">
+         <div class="row justify-content-center">
             <h2 id="community-title"></h2>
             <h4 id="community-desc"></h4>
          </div>
 
-         <div class="row" id="membersContainer">
-            <!-- Qui verranno aggiunte dinamicamente le card delle community -->
-         </div>
-      </div>
+         <div id="container-cast" class="row justify-content-center mt-2 row-cols-2
+            row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4">
+            <div class="col d-none" id="card-cast">
+               <div class="card">
+                  <img src="" class="card-img-top" alt="...">
+                  <div class="card-body">
+                     <p class="card-text "></p>
+                     <p class="card-text"><small class="text-body-secondary"></small>
+                     </p>
+                  </div>
+                  <!-- <div class="card-footer"> -->
+                  <!--    <input class="checkbox" type="checkbox" id="user-selection-"/> -->
+                  <!--    <label for='user-selection-'><label> -->
+                  <!-- </div> -->
 
-      <div id="container-cast" class="row mt-2 row-cols-2
-         row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4">
-         <div class="col d-none" id="card-cast">
-            <div class="card">
-               <img src="" class="card-img-top" alt="...">
-               <div class="card-body">
-                  <p class="card-text "></p>
-                  <p class="card-text"><small class="text-body-secondary"></small>
-
-                  </p>
                </div>
-               <div class="card-footer">
-                  <a href="#" class="btn btn-secondary">Scheda</a>
-               </div>
-
             </div>
+         </div>
+
+         <br><br><br>
+         <div class="row justify-content-center">
+            Playlists
          </div>
       </div>
 
@@ -75,7 +76,13 @@
                throw new Error("Utente non loggato");
             } else {
                user = userData;
-               fetchCommunity(userData._id); // Popola le card dei membri della community
+               fetchCommunity(userData._id);
+               // .then((c) => {
+               //    console.log(c);
+               //    handleUI(c);
+               // });
+               // console.log(community);
+               // handleUI(community);
             }
          } catch (error) {
             console.error("Errore durante l'esecuzione:", error);
