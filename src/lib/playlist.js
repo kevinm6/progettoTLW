@@ -5,7 +5,7 @@ import { config, mongodb } from "./../config/prefs.js";
 import { Db } from "./database.js";
 import { ObjectId } from "mongodb";
 import { getTrack } from "./spotify/fetch.js";
-export const dbPlaylistCollection = () => Db('playlists');
+export const dbPlaylistCollection = async () => await Db('playlists');
 
 /**
  * Retrieves playlists associated with a given owner_id and sends them in the response.
@@ -36,25 +36,29 @@ export async function addSongToPlaylist(req, res) {
   let { track, pid } = req.body;
 
   try {
-    let filterPlaylist = { _id: new ObjectId(pid) }
+    let filter = { _id: new ObjectId(pid) }
 
-    let pushNewSong = {
+    let updateDoc = {
       $push: {
-        songs: [{
+        songs: {
           id: track.id,
           title: track.name,
           artist: track.artists[0].name,
           duration: track.duration_ms,
           year: track.album.release_date,
           album: track.album.name
-        }]
+        }
       },
     }
+    let options
 
-    let collection = await dbPlaylistCollection().updateOne(filterPlaylist, pushNewSong, { upsert: true });
+    let collection = await dbPlaylistCollection();
+    let playlists = await collection.updateOne(filter, updateDoc, options);
 
-    console.log(collection);
-    res.send(collection);
+    console.log(
+         `${playlists.matchedCount} document(s) matched the filter, updated ${playlists.modifiedCount} document(s)`
+      );
+    res.send(playlists);
   } catch (e) {
     res.status(500).send(`Generic error: ${e}`)
   }

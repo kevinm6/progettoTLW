@@ -1,21 +1,24 @@
 let hasImages = (item) => Object.values(item).length > 0;
 
-var [ pageResults, offset ] = [ 0, 0 ];
+var queryCached = '';
+var cachedType = 'Track';
+var [ pageResults, offsetCached ] = [ 0, 0 ];
+const itemsPerPage = 20;
 
 function prevResults(filter, query) {
    if (pageResults > 0) {
       pageResults -= 1
-      offset = (offset - 20 >= 0) ? offset - 20 : 0;
-      getItems(filter, query, offset)
+      offsetCached = (offsetCached - itemsPerPage >= 0) ? offsetCached - itemsPerPage : 0;
+      getItems(filter, query, offsetCached)
    }
-   console.log(pageResults, offset);
+   // console.log(pageResults, offset);
 }
 
 function nextResults(filter, query) {
    pageResults += 1
-   offset += 20;
-   getItems(filter, query, offset)
-   console.log(pageResults, offset);
+   offsetCached += itemsPerPage;
+   getItems(filter, query, offsetCached)
+   // console.log(pageResults, offset);
 }
 
 
@@ -71,11 +74,24 @@ let getItemInfo = (item) => {
    return itemInfo;
 }
 
+
+const createPlaylistsOption = (trackId, playlists) => {
+   let playlistOptions = "";
+   for (i in playlists) {
+      // console.log(i);
+      // let playlist = playlists[i].title;
+      let trackPlaylistObj = JSON.stringify({tid: trackId, pid: playlists[i]._id});
+      playlistOptions += `<a class="dropdown-item" onClick='addToPlaylist(${trackPlaylistObj})'>${playlists[i].title}</a>`
+   }
+   return playlistOptions;
+}
+
 async function populateCards(data, page) {
    // TODO:
    //    - add always more item + button "more"
    //       - see offset || previous -> https://developer.spotify.com/documentation/web-api/reference/search
    //    - refactor?
+
 
    let fetchedItems = () => {
       if (data.tracks?.items != undefined) {
@@ -86,20 +102,16 @@ async function populateCards(data, page) {
          return data.albums?.items
       }
    };
+   let playlists = await fetchPlaylists();
    // console.log(fetchedItems());
+
+   // console.log("DATA:", fetchedItems());
 
    let card = document.getElementById("card-track")
    let container = document.getElementById("container-track")
    container.innerHTML = ""
    container.append(card)
 
-   let playlists = await fetchPlaylists();
-
-   let playlistOptions = "";
-   for (i in playlists) {
-      let playlist = playlists[i].title;
-      playlistOptions += `<a class="dropdown-item" onClick='addToPlaylist("pid":"${playlists[i]._id}"})'>${playlist}</a>`
-   }
 
 
    for (let i in fetchedItems()) {
@@ -135,9 +147,10 @@ async function populateCards(data, page) {
 
       clone.getElementsByClassName('dropdown-menu')[0].setAttribute('id', 'playlistSelect' + trackId);
 
-
-      let addTrackToPlaylistFunction =  playlistOptions.replace(/addToPlaylist\(/g, `addToPlaylist({"tid":"${trackId}",`);
-      clone.getElementsByClassName('dropdown-menu')[0].innerHTML += `${addTrackToPlaylistFunction}`;
+      let plOpt = createPlaylistsOption(trackId, playlists);
+      // console.log(plOpt);
+      // let addTrackToPlaylistFunction =  playlistOptions.replace(/addToPlaylist\(/g, `addToPlaylist({"tid":"${trackId}",`);
+      clone.getElementsByClassName('dropdown-menu')[0].innerHTML += `${plOpt}`;
 
       // clone.getElementsByClassName('dropdown-toggle')[0].setAttribute('id', 'dropdownPlaylist' + trackId);
       clone.getElementsByClassName('dropdown-toggle')[0].setAttribute('data-bs-target', '#playlistSelect' + trackId);
@@ -195,9 +208,15 @@ function showTrackInfo(info) {
 
 
 function getItems(type, query, offset) {
-   console.log("CALLING getItems: ", type, query);
+
+   let q = query || null;
+   let t = type || 'Track';
+   let o = offset || 0;
+
+   if ((t != cachedType) || (q != queryCached)) offsetCached = 0;
+
    try {
-      fetch(`/search?q=${query}&type=${type}&offset=${offset}`)
+      fetch(`/search?q=${q}&type=${t}&offset=${o}`)
          .then(response => {
             if (!response.ok) {
                response.json().then(data => console.error(data.status_message))
@@ -220,8 +239,8 @@ function getItems(type, query, offset) {
 
 
 function addToPlaylist(trackIdToAddToPlaylist) {
-
-   let { tid, pid } = trackIdToAddToPlaylist;
+   let strObj = JSON.stringify(trackIdToAddToPlaylist);
+   let { tid, pid } = JSON.parse(strObj);
 
    let userId = localStorage.getItem('_id');
    if (!userId) {
