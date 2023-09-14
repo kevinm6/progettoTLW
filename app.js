@@ -14,7 +14,7 @@ import { Db } from "./src/lib/database.js";
 import { join } from "path";
 import { register } from "./src/lib/register.js";
 import { search, getGenres, getRecommended, getTrack } from "./src/lib/spotify/fetch.js"
-import { addSongToPlaylist, getUserPlaylists, createplaylist, deletePlaylist, getPlaylist } from "./src/lib/playlist.js";
+import { updatePlaylist,addSongToPlaylist, getUserPlaylists, createplaylist, deletePlaylist, getPlaylist, removeSongFromPlaylist } from "./src/lib/playlist.js";
 import * as community from "./src/lib/community.js";
 
 import swaggerUi from 'swagger-ui-express';
@@ -376,6 +376,47 @@ app.delete("/deleteplaylist/:id", function (req, res) {
       }
       */
    deletePlaylist(res,req.params.id, req.body._id);
+});
+
+app.delete("/deleteSongFromPlaylist", function (req, res) {
+   // #swagger.tags = ['playlist']
+   // #swagger.description = 'Endpoint that allows to delete song from a playlist'
+
+   /* #swagger.responses[200] = { 
+         description: 'Song removed.' 
+      } 
+      #swagger.responses[400] = { 
+         description: 'Missing parameter' 
+      }
+      #swagger.responses[404] = { 
+         description: 'Song not found or not valid' 
+      }
+      #swagger.responses[500] = { 
+         description: 'Internal error' 
+      }
+      */  
+   removeSongFromPlaylist(res,req.body.playlist_id,req.body.track_id,req.body.owner_id);
+});
+
+
+app.put("/updateplaylist/:id", function (req, res) {
+   // #swagger.tags = ['playlist']
+   // #swagger.description = 'Endpoint that allows to update some data from a playlist'
+
+   /* #swagger.responses[200] = { 
+         description: 'playlist updated.' 
+      } 
+      #swagger.responses[400] = { 
+         description: 'Missing parameter' 
+      }
+      #swagger.responses[404] = { 
+         description: 'playlist not found or not valid' 
+      }
+      #swagger.responses[500] = { 
+         description: 'Internal error' 
+      }
+      */  
+   updatePlaylist(res,req.params.id,req.body);
 });
 
 /* -------------------- COMMUNITY ------------------- */

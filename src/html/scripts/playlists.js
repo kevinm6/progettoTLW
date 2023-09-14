@@ -49,7 +49,7 @@ async function fetchEditPlaylist(playlistID) {
 }
 
 async function deletePlaylist(playlistID, playlistTitle) {
-    var del = await showConfirmationModal(playlistID, playlistTitle);
+    var del = await showConfirmationModal("Are you sure?", "You are about to delete the playlist: '"+playlistTitle+"'","Delete playlist","Cancel");
     if (!del) return;
     // Ottieni l'ID dall'archivio locale (localStorage)
     const localStorageID = localStorage.getItem("_id");
@@ -80,43 +80,6 @@ async function deletePlaylist(playlistID, playlistTitle) {
         });
 
 }
-
-
-// Funzione per mostrare il modal di conferma
-async function showConfirmationModal(playlistID, playlistName) {
-    return new Promise((resolve) => {
-        // Ottieni riferimenti agli elementi del modal
-        const confirmationModal = document.getElementById("confirmationModal");
-        const cancelButton = document.getElementById("cancelButton");
-        const confirmButton = document.getElementById("confirmButton");
-        const playlistTitle = document.getElementById("playlistTitle");
-        playlistTitle.textContent = playlistName;
-        confirmationModal.style.display = "block";
-
-        // Event listener per il pulsante di conferma
-        confirmButton.addEventListener("click", function () {
-            hideConfirmationModal();
-            resolve(true); // Risolvi la Promise con 'true'
-            return true;
-        });
-
-        // Event listener per il pulsante di annullamento
-        cancelButton.addEventListener("click", function () {
-            hideConfirmationModal();
-            resolve(false); // Risolvi la Promise con 'false'
-            return false;
-        });
-    });
-}
-
-
-// hide the modal
-function hideConfirmationModal() {
-    const confirmationModal = document.getElementById("confirmationModal");
-    confirmationModal.style.display = "none";
-    return;
-}
-
 
 function showSongs(playlistId, songsJson) {
     songsJson = (JSON.stringify(songsJson));

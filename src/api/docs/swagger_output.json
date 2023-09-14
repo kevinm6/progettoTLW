@@ -234,9 +234,23 @@
       },
       "post": {
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "creatorId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -524,6 +538,44 @@
             "description": "Server error"
           }
         }
+      },
+      "put": {
+        "tags": [
+          "playlist"
+        ],
+        "description": "Endpoint that allows to edit user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id of the user we want to edit playlists of."
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "track": {
+                  "example": "any"
+                },
+                "pid": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "playlist updated"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
       }
     },
     "/getplaylist": {
@@ -612,6 +664,78 @@
           },
           "404": {
             "description": "Playlist not found or not valid owner"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
+      }
+    },
+    "/deleteSongFromPlaylist": {
+      "delete": {
+        "tags": [
+          "playlist"
+        ],
+        "description": "Endpoint that allows to delete song from a playlist",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "playlist_id": {
+                  "example": "any"
+                },
+                "track_id": {
+                  "example": "any"
+                },
+                "owner_id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Song removed."
+          },
+          "400": {
+            "description": "Missing parameter"
+          },
+          "404": {
+            "description": "Song not found or not valid"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
+      }
+    },
+    "/updateplaylist/{id}": {
+      "put": {
+        "tags": [
+          "playlist"
+        ],
+        "description": "Endpoint that allows to update some data from a playlist",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "playlist updated."
+          },
+          "400": {
+            "description": "Missing parameter"
+          },
+          "404": {
+            "description": "playlist not found or not valid"
           },
           "500": {
             "description": "Internal error"
