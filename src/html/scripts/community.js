@@ -1,5 +1,58 @@
+let user = null;
+
 var communityMembers = {};
 var pageMembers = 0;
+
+
+async function authandpopulate() {
+   try {
+      const userData = await authenticateUser();
+      if (userData === "ERR") {
+         console.error("Error during authentication:", error);
+         alert("Error during authentication, try again!");
+         logout();
+         throw new Error("Errore durante l'autenticazione");
+      } else if (userData === "ERR_NOT_LOGGED") {
+         alert("Login to access your community.");
+         window.location.href = '/login';
+         throw new Error("Utente non loggato");
+      } else {
+         user = userData;
+         fetchCommunity(userData._id);
+      }
+   } catch (error) {
+      console.error("Errore durante l'esecuzione:", error);
+   }
+}
+
+
+async function fetchUsersAndUpdateCards(membersData) {
+   // TODO: needs button to add users to community
+   if (membersData.lenght == null) return;
+   try {
+      membersData.forEach(async member => {
+         let res = await fetch(`/users/${member}`);
+         let memberInfo = await res.json()
+         // console.log(memberInfo, memberInfo[0].nickname)
+         const membersContainer = document.getElementById('membersContainer');
+         const card = `
+<div class="col-md-4 mb-4">
+<div class="card">
+<div class="card-body">
+<h5 class="card-title">${memberInfo[0].nickname}</h5>
+</div>
+</div>
+</div>
+`;
+         membersContainer.innerHTML += card;
+         // return memberInfo
+      });
+
+   } catch (error) {
+      console.error("Errore durante il recupero degli utenti:", error);
+      return {};
+   }
+}
 
 
 function createCommunity(userId) {
@@ -73,7 +126,7 @@ function nextResults() {
 }
 
 
-function showMembers(endpoint, members, pageMembers) {
+function showMembers(endpoint, members) {
    var card = document.getElementById('card-cast');
    var container = document.getElementById('container-cast');
    container.append(card)
@@ -108,9 +161,26 @@ function showMembers(endpoint, members, pageMembers) {
          break;
 
       case 'community':
+         // TODO: add button to remove member from community
          for (var i = pageMembers * 6; i < (pageMembers + 1) * 6; i++) {
             var clone = card.cloneNode(true)
-            if (members[i] == null) break;
+            if (members[i] == null) {
+               clone.id = 'card-cast-' + i
+               clone.getElementsByClassName('card-text')[0].innerHTML = `
+               <button style="vertical-align:center; horizontal-align:center; position:relative;"
+                  class="btn btn-primary" onclick="searchUserToAdd()">Add Member</button>
+               `;
+
+               // clone.getElementsByClassName('text-body-secondary')[0].innerHTML = members[i].nickname
+
+               // IDT we want to add the profile picture for users... just use a placeholder
+               clone.getElementsByClassName('card-img-top')[0].src =
+                  'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+
+               clone.classList.remove('d-none')
+               card.before(clone)
+               break;
+            };
 
 
             clone.id = 'card-cast-' + i
@@ -140,14 +210,16 @@ function showMembers(endpoint, members, pageMembers) {
 }
 
 
-function popolateMembers(endpoint) {
+function populateMembers(endpoint) {
+   // TODO: add member of community logic
+
    fetch('/users')
       .then((response) => {
          if (!response.ok) {
             response.json().then((data) => alert(data.status_message));
             return
          }
-         response.json().then((members) => showMembers(endpoint, members, pageResults))
+         response.json().then((members) => showMembers(endpoint, members))
       })
       .catch((e) => console.error("Error fetching users of SNM.", e));
 }
@@ -207,7 +279,7 @@ function handleUI(community) {
          </div>
          `
       }
-      popolateMembers('createcommunity');
+      populateMembers('createcommunity');
       return;
    }
 
@@ -217,7 +289,7 @@ function handleUI(community) {
    const deleteCommunityButton = document.getElementById("deleteCommunityButton");
 
    if (!community.error) {
-      popolateMembers('community');
+      populateMembers('community');
 
       console.log(community);
       document.getElementById('community-title').innerText = community.name;
@@ -282,6 +354,7 @@ function checkFieldFullfilled() {
    return !(name == "") && !(desc == "");
 }
 
+
 function checkIfUserHasCommunity() {
    let userId = localStorage.getItem('_id');
    // TODO: if user is not logged in, we must tell him to register to the app
@@ -292,4 +365,19 @@ function checkIfUserHasCommunity() {
    }
 
    fetchCommunity(userId);
+}
+
+
+function searchUserToAdd() {
+   // TODO: add selection to users not present already in community
+   fetch('/users').then((response) => {
+      if (response.ok) {
+         response.json().then(data => console.log(data))
+      }
+   }).catch((err) => console.error(err));
+}
+
+
+function getPlaylistsOfCommunity(params) {
+
 }

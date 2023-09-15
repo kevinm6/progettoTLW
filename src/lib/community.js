@@ -8,7 +8,7 @@ import { dbUserCollection } from "./user.js";
 /**
  * Community Collection from MongoDB
  */
-export const dbCommunityCollection = async () => await Db('community');
+export const dbCommunityCollection = () => Db('community');
 
 
 /**

@@ -6,7 +6,7 @@ import { Db } from "./database.js";
 import { ObjectId } from "mongodb";
 import {songExistsInPlaylist} from "./utils.js"
 import { getTrack } from "./spotify/fetch.js";
-export const dbPlaylistCollection = async () => await Db('playlists');
+export const dbPlaylistCollection = () => Db('playlists');
 
 /**
  * Retrieves playlists associated with a given owner_id and sends them in the response.

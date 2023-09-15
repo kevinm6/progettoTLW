@@ -4,8 +4,8 @@ import express from "express";
 import cors from "cors";
 import { config } from "./src/config/prefs.js";
 import {
-   serve as swaggeruiServe,
-   setup as swaggeruiSetup,
+   serve as swaggerUiServe,
+   setup as swaggerUiSetup,
 } from "swagger-ui-express";
 import 'dotenv/config'
 import { login,authuser } from "./src/lib/login.js";
@@ -36,7 +36,7 @@ const corsOptions = {
 
 
 // Middleware per servire la documentazione API tramite Swagger UI
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUiServe, swaggerUiSetup(swaggerDocument));
 
 // Middleware per servire file statici
 app.use(express.static(config.__dirname));
@@ -395,19 +395,19 @@ app.delete("/deleteSongFromPlaylist", function (req, res) {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to delete song from a playlist'
 
-   /* #swagger.responses[200] = { 
-         description: 'Song removed.' 
-      } 
-      #swagger.responses[400] = { 
-         description: 'Missing parameter' 
+   /* #swagger.responses[200] = {
+         description: 'Song removed.'
       }
-      #swagger.responses[404] = { 
-         description: 'Song not found or not valid' 
+      #swagger.responses[400] = {
+         description: 'Missing parameter'
       }
-      #swagger.responses[500] = { 
-         description: 'Internal error' 
+      #swagger.responses[404] = {
+         description: 'Song not found or not valid'
       }
-      */  
+      #swagger.responses[500] = {
+         description: 'Internal error'
+      }
+      */
    removeSongFromPlaylist(res,req.body.playlist_id,req.body.track_id,req.body.owner_id);
 });
 
@@ -416,19 +416,19 @@ app.put("/updateplaylist/:id", function (req, res) {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to update some data from a playlist'
 
-   /* #swagger.responses[200] = { 
-         description: 'playlist updated.' 
-      } 
-      #swagger.responses[400] = { 
-         description: 'Missing parameter' 
+   /* #swagger.responses[200] = {
+         description: 'playlist updated.'
       }
-      #swagger.responses[404] = { 
-         description: 'playlist not found or not valid' 
+      #swagger.responses[400] = {
+         description: 'Missing parameter'
       }
-      #swagger.responses[500] = { 
-         description: 'Internal error' 
+      #swagger.responses[404] = {
+         description: 'playlist not found or not valid'
       }
-      */  
+      #swagger.responses[500] = {
+         description: 'Internal error'
+      }
+      */
    updatePlaylist(res,req.params.id,req.body);
 });
 
@@ -464,6 +464,7 @@ app.get("/getGenres", async function (_, res) {
 
 /* ------------------- DB AND SERVER START ------------------- */
 export const db = Db();
+
 app.listen(config.port, config.host, () => {
    console.log(`🟢 Server listening on port: ${config.port}`);
 });

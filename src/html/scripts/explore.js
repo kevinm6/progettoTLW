@@ -258,6 +258,9 @@ Register to the app or press 'OK' to create a new account.
       fetch(`/tracks/${tid}`).then((response) => {
          if (response.ok) {
             response.json().then((trackData) => {
+               let duration = msToTime(trackData.duration_ms);
+               trackData.duration_ms = duration;
+
                fetch(`/playlist/${pid}`, {
                   method: 'PUT',
                   headers: {

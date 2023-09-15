@@ -29,6 +29,7 @@
             <h4 id="community-desc"></h4>
          </div>
 
+         <h3 style="text-align: center;">Members</h3>
          <div id="container-cast" class="row justify-content-center mt-2 row-cols-2
             row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4">
             <div class="col d-none" id="card-cast">
@@ -48,9 +49,10 @@
             </div>
          </div>
 
-         <br><br><br>
+         <br><br>
+         <h3 style="text-align: center;">Playlists</h3>
          <div class="row justify-content-center">
-            Playlists
+
          </div>
       </div>
 
@@ -59,64 +61,6 @@
       <script src="scripts/scripts.js"></script>
       <script src="scripts/community.js"></script>
       <script>
-      let user = null;
-      // Set ui
-
-      async function authandpopulate() {
-         try {
-            const userData = await authenticateUser();
-            if (userData === "ERR") {
-               console.error("Error during authentication:", error);
-               alert("Error during authentication, try again!");
-               logout();
-               throw new Error("Errore durante l'autenticazione");
-            } else if (userData === "ERR_NOT_LOGGED") {
-               alert("Login to access your community.");
-               window.location.href = '/login';
-               throw new Error("Utente non loggato");
-            } else {
-               user = userData;
-               fetchCommunity(userData._id);
-               // .then((c) => {
-               //    console.log(c);
-               //    handleUI(c);
-               // });
-               // console.log(community);
-               // handleUI(community);
-            }
-         } catch (error) {
-            console.error("Errore durante l'esecuzione:", error);
-         }
-      }
-
-
-      async function fetchUsersAndUpdateCards(membersData) {
-         // TODO: needs button to add users to community
-         if (membersData.lenght == null) return;
-         try {
-            membersData.forEach(async member => {
-               let res = await fetch(`/users/${member}`);
-               let memberInfo = await res.json()
-               // console.log(memberInfo, memberInfo[0].nickname)
-               const membersContainer = document.getElementById('membersContainer');
-               const card = `
-<div class="col-md-4 mb-4">
-<div class="card">
-<div class="card-body">
-<h5 class="card-title">${memberInfo[0].nickname}</h5>
-</div>
-</div>
-</div>
-`;
-               membersContainer.innerHTML += card;
-               // return memberInfo
-            });
-
-         } catch (error) {
-            console.error("Errore durante il recupero degli utenti:", error);
-            return {};
-         }
-      }
 
       authandpopulate();
 
