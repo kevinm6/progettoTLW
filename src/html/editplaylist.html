@@ -63,10 +63,15 @@
             <input type="checkbox" class="form-check-input" id="privateToggle" name="privateToggle">
             <label class="form-check-label" for="privateToggle">Private playlist</label>
         </div>
-        <button class="btn btn-primary" id="saveChangesButton" onclick="saveChanges()" disabled>Save changes</button>
+        <button class="btn btn-primary" id="saveChangesButton" onclick="saveChanges()" disabled>Save changes</button><br><br>
+        <div class="mb-3">
+            <label for="description" class="form-label"><b>Add songs to playlist</b></label>
+            <input type="text" id="searchInput" class="form-control mt-4" placeholder="Cerca canzoni">
+        </div>
+        <div id="searchResults"></div><br>
         <div class="mb-3">
             <br>
-            <label for="songs" class="form-label"><b>Songs</b></label>
+            <label for="songs" class="form-label"><b>Playlist's songs</b></label>
             <div id="songsContainer" class="song-container"></div>
 
         </div>
@@ -130,6 +135,39 @@
                 saveChangesButton.disabled = false;
             });
         </script>
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const searchInput = document.getElementById("searchInput");
+                    const searchResults = document.getElementById("searchResults");
+        
+                    searchInput.addEventListener("input", async () => {
+                        const searchTerm = searchInput.value.trim();
+                        if (searchTerm.length > 0) {
+                            try {
+                                const response = await fetch(`/search?q=${searchTerm}&type=track`);
+                                const tracksData = await response.json();
+                                searchResults.innerHTML = "";
+                                tracksData.tracks.items.forEach((track) => {
+                                    console.log(track);
+                                    const artists = track.artists.map((artist) => artist.name).join(", ");
+                                    var duration = msToTime(track.duration_ms);
+                                    var year=track.album.release_date;
+                                    //genera la card
+                                    var trackCard=generateCards(track.name,artists,duration,track.album.name,track.id,track.preview_url,year)
+                                    searchResults.insertAdjacentHTML("beforeend", trackCard);
+                                });
+                            } catch (error) {
+                                console.error("Erorr while fetching tracks:", error);
+                            }
+                        } else {
+                            // Clear search results if search input is empty
+                            searchResults.innerHTML = "";
+                        }
+                        await delay(2000); 
+                    });
+                });
+            </script>
+
 
 </body>
 

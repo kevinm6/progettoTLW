@@ -129,4 +129,45 @@ async function fetchplaylist(playlistid) {
     }
 }
 
-// Funzione per mostrare il modal di conferma
+function generateCards(trackname, artists, duration, albumname, trackid, trackurl,year) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const playlistID = urlParams.get("id");
+    var song={
+        id:trackid,
+        title:trackname,
+        artist:artists,
+        duration:duration,
+        year:year,
+        album:albumname
+    }
+    song=JSON.stringify(song).replace(/"/g, '&quot;');   
+    console.log(song);
+    const trackCard = `
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">${trackname}</h5>
+                <p class="card-text">Artisti: ${artists}</p>
+                <p class="card-text">Durata: ${duration}</p>
+                <p class="card-text">Album: ${albumname}</p>
+                <p class="card-text">Spotify ID: ${trackid}</p>
+                <div class="audio-player">
+                    <audio controls class="custom-audio-player">
+                        <source src="${trackurl}" type="audio/mpeg">
+                        Your browser does not support audio type
+                    </audio>
+                </div>
+                <button class="btn btn-success add-button add-track" onclick="addSong('${playlistID}', '${song}')">
+                Add song
+            </button>
+            
+            </div>
+        </div>
+    `;
+
+    return trackCard;
+
+}
+
+function addSong(playlistID,song){
+    console.log(JSON.parse(song));
+}

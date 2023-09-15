@@ -216,6 +216,21 @@ export async function getPlaylist(res, owner_id, playlistid) {
   }
 }
 
+/**
+ * Updates a playlist's information in the database.
+ *
+ * @param {Response} res - The HTTP response object for sending a response to the client.
+ * @param {string} playlistID - The unique identifier of the playlist to be updated.
+ * @param {object} playlistData - An object containing the updated playlist information.
+ * @param {string} playlistData.title - The new title for the playlist.
+ * @param {string} playlistData.description - The updated description for the playlist.
+ * @param {string[]} playlistData.tags - An array of tags associated with the playlist.
+ * @param {boolean} playlistData.private - A boolean indicating whether the playlist should be private.
+ * @param {string} playlistData.owner_id - The unique identifier of the owner of the playlist.
+ * @throws {Error} Throws an error if any required field is missing.
+ * @returns {Promise} A Promise that resolves once the playlist is updated or rejects if an error occurs.
+ */
+
 export async function updatePlaylist(res, playlistID, playlistData) {
   console.log(playlistID);
   console.log(playlistData);
@@ -240,11 +255,9 @@ export async function updatePlaylist(res, playlistID, playlistData) {
 
   try {
     const collection = await dbPlaylistCollection();
-
-    // Construct the filter to find the specific playlist to update
     const filter = {
-      _id: new ObjectId(playlistID), // Assuming playlistID is the ID of the playlist to update
-      owner_id: new ObjectId(playlistData.owner_id) // Assuming owner_id is the owner of the playlist
+      _id: new ObjectId(playlistID), 
+      owner_id: new ObjectId(playlistData.owner_id) 
     };
     const result = await collection.updateOne(filter, updatedData);
     if (result.modifiedCount === 1) {
