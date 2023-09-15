@@ -63,15 +63,15 @@ async function generateMenu() {
 
    for (let i = 0; i < menuItems.length; i++) {
       let item = menuItems[i];
-      menuHTML += `<li class="nav-item"><a class="nav-link" href="${item.link}">${item.label}</a></li>`;
+      menuHTML += `<li class="nav-item"><a class="menu-link nav-link" href="${item.link}">${item.label}</a></li>`;
    }
 
    const menuElement = document.getElementById("menu");
    menuElement.innerHTML = `
-      <nav class="navbar navbar-expand-md bg-body-tertiary">
+      <nav class="navbar navbar-expand-md ">
          <div class="container-fluid">
-            <a class="navbar-brand" href="#">Social Network for Music</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            <a class="navbar-brand snm" href="">Social Network for Music</a>
+            <button class="btn navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                <span class="navbar-toggler-icon"></span>
             </button>
@@ -81,7 +81,7 @@ async function generateMenu() {
                </ul>
             </div>
          </div>
-      </nav>
+      </nav><br>
 `;
 }
 

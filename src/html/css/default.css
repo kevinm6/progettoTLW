@@ -1,0 +1,110 @@
+body {
+  background-color: #222; 
+  color: #fff; 
+  font-family: Arial, sans-serif; 
+  margin: 0; 
+  padding: 0; 
+}
+
+
+textarea {
+  background-color: #333; 
+  color: #fff;
+  border: 1px solid #777; 
+}
+
+.modal  {
+  background-color: rgba(0, 0, 0, 0.7); /* Sfondo scuro semi-trasparente */
+}
+.modal-body  {
+  background-color: rgba(0, 0, 0, 0.7); /* Sfondo scuro semi-trasparente */
+  border-radius: 5px;
+}
+.thead{
+  color:white;
+  font-style: bold;
+}
+.td{
+  color:white;
+}
+.modal-header{
+  background-color: #1c1c1c;
+}
+
+footer {
+  background-color: #111; 
+  color: #ccc; 
+  padding: 10px; 
+  text-align: center;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #333;
+  color:white;
+}
+
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: orange;
+}
+
+.card-text {
+  color: white;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+
+.card{
+  border: 1px solid white;
+  background-color: #333;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.i {
+  border: 1px solid white;
+}
+.btn {
+  background-color: #333;
+  border: 1 px solid white;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.05); 
+}
+.btn:hover {
+  background-color: #0056b3; /* Cambia il colore quando il cursore è sopra il pulsante */
+  transform: scale(1.05); 
+}
+
+.menu-link{
+  background-color:#333;
+  color:rgb(207, 135, 0);
+  font-size: 18px;
+  font-style:bold;
+}
+.navbar{
+  background-color:#333;
+}
+.snm{
+  background-color:#333;
+  color:orange;
+  font-size: 36px;
+  font-style:bold; 
+}
