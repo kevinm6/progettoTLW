@@ -4,6 +4,7 @@ import crypto from "crypto";
 import { config, mongodb } from "./../config/prefs.js";
 import { Db } from "./database.js";
 import { ObjectId } from "mongodb";
+import {songExistsInPlaylist} from "./utils.js"
 import { getTrack } from "./spotify/fetch.js";
 export const dbPlaylistCollection = async () => await Db('playlists');
 
@@ -31,36 +32,47 @@ export async function getUserPlaylists(res, owner_id) {
  * @param {object} req - request, containing track object and playlist_id
  * @param {object} res - response passed from express
  */
-export async function addSongToPlaylist(req, res) {
-  // req.body contains an object like this { "tid": track_id, "pid": playlist_id }
-  let { track, pid } = req.body;
-
+export async function addSongToPlaylist(res, playlistID,songData) {
+  console.log(songData);
+  if (
+    songData.id === undefined ||
+    songData.title === undefined ||
+    songData.artist === undefined ||
+    songData.duration === undefined ||
+    songData.year === undefined ||
+    songData.album === undefined
+  ) {
+    res.status(400).send('Missing one or more required fields');
+    console.log(`[PLAYLIST] >> ERROR 400 WHILE ATTEMPTING TO CREATE PLAYLIST:`);
+    return;
+  }
   try {
-    let filter = { _id: new ObjectId(pid) }
-
+    let filter = { _id: new ObjectId(playlistID),owner_id: new ObjectId(songData.owner_id) }
     let updateDoc = {
       $push: {
         songs: {
-          id: track.id,
-          title: track.name,
-          artist: track.artists[0].name,
-          duration: track.duration_ms,
-          year: track.album.release_date,
-          album: track.album.name
+          id: songData.id,
+          title: songData.title,
+          artist: songData.artist,
+          duration: songData.duration,
+          year: songData.year,
+          album: songData.album
         }
       },
     }
-    let options
-
     let collection = await dbPlaylistCollection();
-    let playlists = await collection.updateOne(filter, updateDoc, options);
-
-    console.log(
-         `${playlists.matchedCount} document(s) matched the filter, updated ${playlists.modifiedCount} document(s)`
-      );
-    res.send(playlists);
+    const exists=await songExistsInPlaylist(collection,playlistID, songData);
+    if (exists){
+      res.status(400).send('EXISTS');
+      console.log(`[PLAYLIST] >> ERROR 400 WHILE ATTEMPTING TO CREATE PLAYLIST: SONG ALREADY EXISTS`);
+      return;
+    }
+    let playlists = await collection.updateOne(filter, updateDoc);
+    console.log(`[PLAYLIST] >> USER ${songData.owner_id} ADDED SONG ${songData.id} TO PLAYLIST ${songData.playlistID} `);
+    res.status(200).send("OK");
   } catch (e) {
     res.status(500).send(`Generic error: ${e}`)
+    console.log(`[PLAYLIST] >> ERROR 500 WHILE ATTEMPTING TO CREATE PLAYLIST:`+e);
   }
 }
 

@@ -138,10 +138,11 @@ function generateCards(trackname, artists, duration, albumname, trackid, trackur
         artist:artists,
         duration:duration,
         year:year,
-        album:albumname
+        album:albumname,
+        playlistID:playlistID,
+        owner_id:localStorage.getItem("_id")
     }
-    song=JSON.stringify(song).replace(/"/g, '&quot;');   
-    console.log(song);
+    song=JSON.stringify(song).replace(/"/g, '&quot;').replace(/'/g, '')
     const trackCard = `
         <div class="card mb-3">
             <div class="card-body">
@@ -168,6 +169,35 @@ function generateCards(trackname, artists, duration, albumname, trackid, trackur
 
 }
 
-function addSong(playlistID,song){
-    console.log(JSON.parse(song));
+async function addSong(playlistID,song){
+    song = JSON.parse(song);
+    try {
+        const response = await fetch(`/addsongtoplaylist/${playlistID}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(song)
+        });
+    
+        if (response.ok) {
+            alert("Song added successfully");
+            window.location.href = "http://localhost:3000/src/html/editplaylist.html?id=" + playlistID;
+        } else {
+            if (response.status === 400) {
+                const responseBody = await response.text();
+                if (responseBody === 'EXISTS') {
+                    alert("Song is already in the playlist!");
+                } else {
+                    alert("An error occurred while adding the song to the playlist. Please try again later.");
+                }
+            } else {
+                alert("An error occurred while adding the song to the playlist. Please try again later.");
+            }
+        }
+    } catch (error) {
+        console.error("Error adding song to playlist:", error);
+        alert("An error occurred while adding the song to the playlist. Please try again later.");
+    }
+    
 }

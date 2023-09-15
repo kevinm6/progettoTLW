@@ -317,6 +317,7 @@ app.put("/playlist/:id", async (req, res) => {
       */
    addSongToPlaylist(req, res);
 });
+
 app.post("/getplaylist", async (req, res) => {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to obtain a specific playlist'
@@ -377,7 +378,19 @@ app.delete("/deleteplaylist/:id", function (req, res) {
       */
    deletePlaylist(res,req.params.id, req.body._id);
 });
-
+app.put("/addsongtoplaylist/:id", async (req, res) => {
+   // #swagger.tags = ['playlist']
+   // #swagger.description = 'Endpoint that allows to add song to playlist'
+   // #swagger.parameters['id'] = { description: 'Id of the playlist we want to add song to.' }
+   /* #swagger.responses[200] = {
+         description: 'playlist updated'
+      }
+      #swagger.responses[500] = {
+         description: 'Server error'
+      }
+      */
+   addSongToPlaylist(res,req.params.id,req.body);
+});
 app.delete("/deleteSongFromPlaylist", function (req, res) {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to delete song from a playlist'
