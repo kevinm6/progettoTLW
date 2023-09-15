@@ -66,8 +66,9 @@ const search = async (searchQuery, res) => {
    let typeLower = searchQuery.type.toLowerCase();
    // set query to null if is empty string
    let query = searchQuery.q || null;
+   let o = searchQuery.offset ?? 0;
 
-   const url = `${BASE_URL}/search?q=${query}&type=${typeLower}`;
+   const url = `${BASE_URL}/search?q=${query}&type=${typeLower}&offset=${o}`;
    const searchResult = await fetchSpotify(url);
 
    res.json(searchResult);
