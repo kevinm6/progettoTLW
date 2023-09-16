@@ -82,15 +82,13 @@ const createPlaylistsOption = (trackId, playlists) => {
 
    let playlistOptions = "";
    for (i in playlists) {
-      // console.log(i);
-      // let playlist = playlists[i].title;
       let trackPlaylistObj = JSON.stringify({ tid: trackId, pid: playlists[i]._id });
       playlistOptions += `<a class="dropdown-item" onClick='addToPlaylist(${trackPlaylistObj})'>${playlists[i].title}</a>`
    }
    return playlistOptions;
 }
 
-async function populateCards(data, page) {
+async function populateCards(data) {
    let fetchedItems = () => {
       if (data.tracks?.items != undefined) {
          return data.tracks?.items
@@ -155,7 +153,10 @@ async function populateCards(data, page) {
       } else {
          clone.getElementsByClassName('dropdown-toggle')[0].disabled = false;
          clone.getElementsByClassName('dropdown-toggle')[0].hidden = false;
-         clone.getElementsByClassName('dropdown-menu')[0].innerHTML += `${playlistsOptions}`;
+         clone.getElementsByClassName('dropdown-menu')[0].innerHTML += `
+         <h6 class="dropdown-header">Select playlist</h6>
+         ${playlistsOptions}
+         `;
       }
 
       // clone.getElementsByClassName('dropdown-toggle')[0].setAttribute('id', 'dropdownPlaylist' + trackId);
@@ -236,68 +237,6 @@ Import playlist
 `;
       playlistContainer.innerHTML += card;
    });
-   /*
-   let playlists = null;
-   if (localStorage.getItem('_id')) {
-      playlists = await fetchPlaylists();
-   }
-
-   for (let i in fetchedItems()) {
-      let currentItem = fetchedItems()[i];
-      console.log(currentItem);
-      let itemInfo = getItemInfo(currentItem);
-
-      let clone = card.cloneNode(true)
-      clone.id = 'card-track-' + i;
-      let trackId = currentItem.id;
-
-      clone.getElementsByClassName('card-title')[0].innerHTML = itemInfo.name;
-
-      clone.getElementsByClassName('card-text')[0].innerHTML = itemInfo.cardText;
-
-      clone.getElementsByClassName('card-img-top')[0].src = itemInfo.img;
-
-      clone.getElementsByClassName('text-body-secondary')[0].innerHTML = itemInfo.secondBodyText;
-
-      clone.getElementsByClassName('img-responsive')[0].src = itemInfo.img;
-
-      clone.getElementsByClassName('modal')[0].setAttribute('id', 'trackModal' + trackId);
-      clone.getElementsByClassName('modal-title')[0].setAttribute('id', 'trackModalLabel' + trackId);
-      clone.getElementsByClassName('modal-footer')[0].setAttribute('id', 'trackModalFooter' + trackId);
-
-      clone.getElementsByClassName('btn-close')[0].setAttribute('data-dismiss', 'trackModal' + trackId);
-
-      clone.getElementsByClassName('btn')[0].setAttribute('data-toggle', 'modal');
-      clone.getElementsByClassName('btn')[0].setAttribute('data-target', '#trackModal' + trackId);
-
-      let itemToPass = JSON.stringify(itemInfo);
-      clone.getElementsByClassName('btn')[0].setAttribute('onClick', `showTrackInfo(${itemToPass})`);
-
-      clone.getElementsByClassName('dropdown-menu')[0].setAttribute('id', 'playlistSelect' + trackId);
-
-      let playlistsOptions = playlists && Object.values(playlists).length > 0 ? createPlaylistsOption(trackId, playlists) : null;
-      if (playlistsOptions == null) {
-         clone.getElementsByClassName('dropdown-toggle')[0].disabled = true;
-         clone.getElementsByClassName('dropdown-toggle')[0].hidden = true;
-         clone.getElementsByClassName('dropdown-toggle')[0].className = "btn btn-outline-secondary dropdown-toggle";
-         clone.getElementsByClassName('dropdown-toggle')[0].innerText = `No playlists.`
-      } else {
-         clone.getElementsByClassName('dropdown-toggle')[0].disabled = false;
-         clone.getElementsByClassName('dropdown-toggle')[0].hidden = false;
-         clone.getElementsByClassName('dropdown-menu')[0].innerHTML += `${playlistsOptions}`;
-      }
-
-      // clone.getElementsByClassName('dropdown-toggle')[0].setAttribute('id', 'dropdownPlaylist' + trackId);
-      clone.getElementsByClassName('dropdown-toggle')[0].setAttribute('data-bs-target', '#playlistSelect' + trackId);
-
-      clone.classList.remove('d-none');
-
-      card.before(clone);
-      // Debugging: limit to 4 elements
-      // if (i == 3) break;
-   }
-   */
-
 }
 
 function showTrackInfo(info) {
@@ -352,15 +291,14 @@ function getItems(type, query, offset) {
 
    try {
       switch (t) {
-         case 'Playlist' || 'Playlists':
-            fetch(`/playlists`)
+         case 'Playlist':
+            fetch(`/playlists?q=${q}`)
                .then(response => {
                   if (!response.ok) {
                      response.json().then(data => console.error(data.status_message))
                      return
                   }
                   response.json().then(data => {
-                     // console.log(data);
                      populatePublicPlaylistCards({ playlists: data })
                   })
                })
@@ -375,7 +313,6 @@ function getItems(type, query, offset) {
                      return
                   }
                   response.json().then(data => {
-                     // console.log(data);
                      populateCards(data);
                   })
                })
@@ -433,7 +370,7 @@ Register to the app or press 'OK' to create a new account.
 function importPublicPlaylist(pid) {
    console.log("playlist_id", pid);
 
-   // TODO: to change the message, I can't think about it right now!!! 😅
+   // TODO: change the message, I can't think about it right now!!! 😅
    let msg = `
 Do you want to import this playlist to your personal list?
 `;
