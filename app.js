@@ -14,7 +14,7 @@ import { Db } from "./src/lib/database.js";
 import { join } from "path";
 import { register } from "./src/lib/register.js";
 import { search, getGenres, getRecommended, getTrack } from "./src/lib/spotify/fetch.js"
-import { updatePlaylist,addSongToPlaylist, getUserPlaylists, createplaylist, deletePlaylist, getPlaylist, removeSongFromPlaylist } from "./src/lib/playlist.js";
+import * as playlist from "./src/lib/playlist.js";
 import * as community from "./src/lib/community.js";
 
 import swaggerUi from 'swagger-ui-express';
@@ -291,6 +291,18 @@ app.get("/artists/:id", async function (req, res) {
 
 /* -------------------- PLAYLIST ------------------- */
 
+app.get("/playlists", async (req, res) => {
+   // #swagger.tags = ['playlist']
+   // #swagger.description = 'Endpoint that allows to obtain all public playlists'
+   /* #swagger.responses[200] = {
+         description: 'list of playlists'
+      }
+      #swagger.responses[500] = {
+         description: 'Server error'
+      }
+      */
+   playlist.getPublicPlaylists(req, res);
+});
 app.get("/playlist/:id", async (req, res) => {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to obtain user's playlists'
@@ -302,7 +314,7 @@ app.get("/playlist/:id", async (req, res) => {
          description: 'Server error'
       }
       */
-   getUserPlaylists(res, req.params.id);
+   playlist.getUserPlaylists(res, req.params.id);
 });
 app.put("/playlist/:id", async (req, res) => {
    // #swagger.tags = ['playlist']
@@ -315,7 +327,25 @@ app.put("/playlist/:id", async (req, res) => {
          description: 'Server error'
       }
       */
-   addSongToPlaylist(req, res);
+   playlist.addSongToPlaylist(req, res);
+});
+
+app.get("/getplaylist/:id", async (req, res) => {
+   // #swagger.tags = ['playlist']
+   // #swagger.description = 'Endpoint that allows to obtain a specific playlist from given id'
+   // #swagger.parameters['playlistid'] = { description: 'Id of the playlist we want to fetch.' }
+   /* #swagger.responses[200] = {
+         description: 'playlist',
+         schema: { $ref: "#/definitions/playlists" }
+      }
+      #swagger.responses[500] = {
+         description: 'Server error'
+      }
+      #swagger.responses[404] = {
+         description: 'Playlist Not Found'
+      }
+      */
+   playlist.getPlaylistFromId(res, req.params.id);
 });
 
 app.post("/getplaylist", async (req, res) => {
@@ -334,7 +364,7 @@ app.post("/getplaylist", async (req, res) => {
          description: 'Playlist Not Found'
       }
       */
-   getPlaylist(res, req.body.owner_id,req.body.id);
+   playlist.getPlaylist(res, req.body.owner_id,req.body.id);
 });
 
 app.post("/createplaylist", function (req, res) {
@@ -357,7 +387,7 @@ app.post("/createplaylist", function (req, res) {
          description: 'Server error'
       }
       */
-   createplaylist(res, req.body);
+   playlist.createplaylist(res, req.body);
 });
 app.delete("/deleteplaylist/:id", function (req, res) {
    // #swagger.tags = ['playlist']
@@ -376,7 +406,7 @@ app.delete("/deleteplaylist/:id", function (req, res) {
          description: 'Internal error'
       }
       */
-   deletePlaylist(res,req.params.id, req.body._id);
+   playlist.deletePlaylist(res,req.params.id, req.body._id);
 });
 app.put("/addsongtoplaylist/:id", async (req, res) => {
    // #swagger.tags = ['playlist']
@@ -389,7 +419,7 @@ app.put("/addsongtoplaylist/:id", async (req, res) => {
          description: 'Server error'
       }
       */
-   addSongToPlaylist(res,req.params.id,req.body);
+   playlist.addSongToPlaylist(res,req.params.id,req.body);
 });
 app.delete("/deleteSongFromPlaylist", function (req, res) {
    // #swagger.tags = ['playlist']
@@ -408,7 +438,7 @@ app.delete("/deleteSongFromPlaylist", function (req, res) {
          description: 'Internal error'
       }
       */
-   removeSongFromPlaylist(res,req.body.playlist_id,req.body.track_id,req.body.owner_id);
+   playlist.removeSongFromPlaylist(res,req.body.playlist_id,req.body.track_id,req.body.owner_id);
 });
 
 
@@ -429,7 +459,7 @@ app.put("/updateplaylist/:id", function (req, res) {
          description: 'Internal error'
       }
       */
-   updatePlaylist(res,req.params.id,req.body);
+   playlist.updatePlaylist(res,req.params.id,req.body);
 });
 
 /* -------------------- COMMUNITY ------------------- */

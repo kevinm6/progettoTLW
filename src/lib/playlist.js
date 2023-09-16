@@ -8,6 +8,24 @@ import {songExistsInPlaylist} from "./utils.js"
 import { getTrack } from "./spotify/fetch.js";
 export const dbPlaylistCollection = () => Db('playlists');
 
+
+/**
+ * Retrieves all public playlists
+ * @param {Object} res - The response object used to send the playlists.
+ * @param {string} req - Request sent from the client
+ */
+export async function getPublicPlaylists(req, res) {
+  try {
+    let collection = await dbPlaylistCollection();
+    let playlists = await collection
+      .find({ private: false })
+      .toArray();
+    res.send(playlists);
+  } catch (error) {
+    res.status(500).send(`Error while fetching playlists: ${error.message}`);
+  }
+}
+
 /**
  * Retrieves playlists associated with a given owner_id and sends them in the response.
  * @param {Object} res - The response object used to send the playlists.
@@ -233,6 +251,33 @@ export async function getPlaylist(res, owner_id, playlistid) {
 }
 
 /**
+ * Fetches a specific playlist from a database and responds with it as JSON.
+ *
+ * @param {Object} res - The HTTP response object to send the response.
+ * @param {string} playlistid - The ID of the playlist to retrieve.
+ * @returns {Promise} A promise representing the process of fetching and responding with the playlist.
+ *
+ * @throws {Error} If an error occurs during playlist retrieval or response, an exception is thrown.
+ */
+export async function getPlaylistFromId(res, playlistid) {
+  try {
+    const collection = await dbPlaylistCollection();
+    const playlist = await collection.findOne({ _id: new ObjectId(playlistid) });
+    if (!playlist) {
+      res.status(404).send("Playlist not found");
+      console.log(`[PLAYLIST] >> ERROR 404 WHILE TRYING TO FETCH PLAYLIST ${playlistid}`)
+      return;
+    }
+
+    res.json(playlist);
+    console.log(`[PLAYLIST] >> SUCCESFULLY FETCHED PLAYLIST ${playlistid}`)
+
+  } catch (error) {
+    res.status(500).send(`Error while fetching playlist: ${error.message}`);
+    console.log(`[PLAYLIST] >> ERROR 500 WHILE FETCHING PLAYLIST`)
+  }
+}
+/**
  * Updates a playlist's information in the database.
  *
  * @param {Response} res - The HTTP response object for sending a response to the client.
@@ -272,8 +317,8 @@ export async function updatePlaylist(res, playlistID, playlistData) {
   try {
     const collection = await dbPlaylistCollection();
     const filter = {
-      _id: new ObjectId(playlistID), 
-      owner_id: new ObjectId(playlistData.owner_id) 
+      _id: new ObjectId(playlistID),
+      owner_id: new ObjectId(playlistData.owner_id)
     };
     const result = await collection.updateOne(filter, updatedData);
     if (result.modifiedCount === 1) {

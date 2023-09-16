@@ -55,7 +55,7 @@
 <body>
     <div id="menu"></div>
     <div class="container">
-        <h2>Le tue playlist</h2>
+        <h2>My Playlists</h2>
         <div class="row" id="playlistContainer">
             <!-- Qui verranno aggiunte dinamicamente le card delle playlist -->
         </div>
@@ -120,7 +120,7 @@
                     throw new Error("Errore durante l'autenticazione");
                 } else if (userData === "ERR_NOT_LOGGED") {
                     alert("Effettua il login per accedere alle tue playlist");
-                    window.location.href = "http://localhost:3000/login";
+                    window.location.href = '/login';
                     throw new Error("Utente non loggato");
                 } else {
                     // Esegui altre azioni dopo l'autenticazione

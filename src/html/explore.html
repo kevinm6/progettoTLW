@@ -23,13 +23,14 @@
                     <option selected>Track</option>
                     <option value="Artist">Artist</option>
                     <option value="Album">Album</option>
+                    <option value="Playlist">Playlist</option>
                   </select>
                </div>
             </div>
          </form>
       </div>
 
-      <div class="container">
+      <div class="container" id="container-items">
          <div class="row g-4 mt-4 p-4">
             <nav aria-label="Page navigation example">
                <ul class="pagination">
@@ -64,11 +65,6 @@
 
                         </div>
                      </div>
-
-                     <!-- <select class="playlist-select btn-outline-secondary"> -->
-                     <!--   <option selected>Add to playlist</option> -->
-                     <!-- </select> -->
-                     <!-- <button type="button" class="btn btn-outline-primary btn-lg">+</button> -->
 
                      <!-- Modal -->
                      <div class="modal fade" id="trackModal" tabindex="-1" aria-labelledby="trackModalLabel" aria-hidden='true'>
@@ -126,6 +122,27 @@
 
       // Update search if filter change
       filterSelectId.addEventListener('change', function(ev) {
+         switch (filterSelectId.value) {
+            case 'Track':
+               searchInputId.placeholder = "Search Track from name or artist's name";
+               break;
+
+            case 'Artist':
+               searchInputId.placeholder = "Search Artist from name or songs";
+               break;
+
+            case 'Album':
+               searchInputId.placeholder = "Search Album from name or artist's name";
+               break;
+
+            case 'Playlist':
+               searchInputId.placeholder = "Search from Public playlist from songs or tags";
+               break;
+
+            default:
+               searchInputId.placeholder = "Search";
+               break;
+         }
          getItems(filterSelectId.value, searchInputId.value);
       })
 

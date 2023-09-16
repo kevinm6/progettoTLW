@@ -1,16 +1,15 @@
 /** file created for dealing with function used in playlists.html exclusively */
 async function fetchPlaylists() {
-    try {
-        const userId = localStorage.getItem("_id");
-        const response = await fetch(`/playlist/${userId}`);
-        const playlistsData = await response.json();
-        return playlistsData;
+   try {
+     const userId = localStorage.getItem("_id");
+     const response = await fetch(`/playlist/${userId}`);
+     const playlistsData = await response.json();
+     return playlistsData;
     } catch (error) {
         console.error("Errore durante il recupero delle playlist:", error);
         return [];
     }
 }
-
 
 async function populatePlaylistCards() {
     const playlistsData = await fetchPlaylists();
@@ -35,7 +34,7 @@ async function populatePlaylistCards() {
                 <button class="btn btn-danger" onclick="deletePlaylist('${playlist._id}','${playlist.title}')" >
                     Delete
                 </button>
-                
+
             </div>
         </div>
     </div>
