@@ -22,7 +22,7 @@ async function populatePlaylistCards() {
         <div class="col-md-4 mb-4">
         <div class="card h-100">
             <div class="card-body">
-                <h5 class="card-title">${playlist.title}${playlist.private ? '<i class="bi bi-lock-fill text-success"></i>' : ''}</h5>
+                <h5 class="card-title">${playlist.title}${playlist.private ? '<i class="private bi bi-lock-fill text-success"></i>' : ''}</h5>
                 <p class="card-text">${playlist.description}</p>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
                     onclick="showSongs('${playlist._id}', ${stringified})">

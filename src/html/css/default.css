@@ -1,43 +1,93 @@
+@import url('https://fonts.googleapis.com/css?family=Inconsolata&display=swap');
+/* ================== BODY SECTION AND MAIN COMPONENTS=================== */
 body {
-  background-color: #222; 
-  color: #fff; 
-  font-family: Arial, sans-serif; 
-  margin: 0; 
-  padding: 0; 
-}
-
-
-textarea {
-  background-color: #333; 
+  background-color: #222;
   color: #fff;
-  border: 1px solid #777; 
-}
-
-.modal  {
-  background-color: rgba(0, 0, 0, 0.7); /* Sfondo scuro semi-trasparente */
-}
-.modal-body  {
-  background-color: rgba(0, 0, 0, 0.7); /* Sfondo scuro semi-trasparente */
-  border-radius: 5px;
-}
-.thead{
-  color:white;
-  font-style: bold;
-}
-.td{
-  color:white;
-}
-.modal-header{
-  background-color: #1c1c1c;
+  font-family: 'Inconsolata', monospace;
+  margin: 0;
+  padding: 0;
 }
 
 footer {
-  background-color: #111; 
-  color: #ccc; 
-  padding: 10px; 
+  background-color: #111;
+  color: #ccc;
+  padding: 10px;
   text-align: center;
 }
+.menu-link {
+  background-color: #333;
+  color: rgb(207, 135, 0);
+  font-size: 18px;
+  font-weight: bold;
+}
+.navbar {
+  background-color: #333;
+}
+/* ============================= MODAL SECTION AND========================= */
+.dropdown-menu{
+  color:white;
+  background-color: #333;
+  z-index: 9999; 
+}
+.dropdown-item{
+  color:white;
+  background-color: #333;
 
+}
+/* ============================= MODAL SECTION AND========================= */
+.modal {
+  background-color: rgba(0, 0, 0, 0.7); /* Sfondo scuro semi-trasparente */
+  color: white;
+}
+
+.modal-body {
+  background-color: rgba(0, 0, 0, 0.7); /* Sfondo scuro semi-trasparente */
+  border-radius: 5px;
+  color: white;
+}
+
+.modal-header {
+  background-color: #1c1c1c;
+  color: white;
+}
+.custom-modal-xl .modal-dialog {
+  max-width: 90%;
+  margin: 1rem auto;
+}
+
+/* Stile del modal */
+.modal-custom {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content-custom {
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #ff0000;
+  width: 50%;
+  text-align: center;
+  color:white;
+  background-color: #333;
+}
+/* ============================ TABLES SECTION ============================ */
+
+thead {
+  color: orange;
+  font-style: bold;
+}
+
+tbody{
+  color: white;
+}
+/* ============================ INPUTS SECTION ============================ */
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -47,9 +97,22 @@ textarea {
   border-radius: 5px;
   font-size: 16px;
   background-color: #333;
-  color:white;
+  color: white;
+}
+.form-select {
+  background-color: #333;
+  color: white;
+  border: 1px solid white; 
+  border-radius:5px;
 }
 
+/* Stile per le opzioni della select */
+.form-select option {
+  background-color: #333;
+  color: white;
+}
+
+/* ============================ CARDS SECTION ============================ */
 
 .card-title {
   font-size: 18px;
@@ -64,8 +127,7 @@ textarea {
   margin-bottom: 10px;
 }
 
-
-.card{
+.card {
   border: 1px solid white;
   background-color: #333;
   border: none;
@@ -73,38 +135,49 @@ textarea {
   font-size: 12px;
   cursor: pointer;
 }
-
-.i {
-  border: 1px solid white;
+.card-body {
+  color:white;
 }
+/* ============================ BUTTONS SECTION ============================ */
 .btn {
   background-color: #333;
-  border: 1 px solid white;
+  border: 1px solid orange;
+  color:white;
   border-radius: 5px;
   font-size: 14px;
   cursor: pointer;
 }
+/* ============================ LI UL ============================ */
+li,ul{
+  color: white;
+}
+/* ======================= HOVERS AND AFTERS SECTION ======================== */
 
 .card:hover {
-  transform: scale(1.05); 
+  transform: scale(1.05);
 }
 .btn:hover {
-  background-color: #0056b3; /* Cambia il colore quando il cursore è sopra il pulsante */
-  transform: scale(1.05); 
+  background-color: orange; 
+  transform: scale(1.05);
 }
-
-.menu-link{
-  background-color:#333;
-  color:rgb(207, 135, 0);
-  font-size: 18px;
-  font-style:bold;
-}
-.navbar{
-  background-color:#333;
-}
-.snm{
-  background-color:#333;
-  color:orange;
+.snm {
+  background-color: #333;
+  color: orange;
   font-size: 36px;
-  font-style:bold; 
+  font-weight: bold;
+}
+.private:hover::after {
+  content: "This playlist is private. Only you can see its content and its details";
+  display: block;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  z-index: 1;
+  top: -25px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 12px;
 }

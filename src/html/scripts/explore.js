@@ -2,7 +2,7 @@ let hasImages = (item) => Object.values(item).length > 0;
 
 var queryCached = '';
 var cachedType = 'Track';
-var [ pageResults, offsetCached ] = [ 0, 0 ];
+var [pageResults, offsetCached] = [0, 0];
 const itemsPerPage = 20;
 
 
@@ -33,10 +33,10 @@ let getItemInfo = (item) => {
       case 'track':
          // console.log("Track: ", item);
          itemInfo.name = item.name;
-         itemInfo.cardText = (Object.values(item.artists).lenght > 1) ? item.artists.map((artist) => {artist.name }).join(", ") : item.artists[0].name;
-         itemInfo.secondBodyText = (Object.values(item.duration_ms) > 0) ?  msToTime(item.duration_ms) : "";
+         itemInfo.cardText = (Object.values(item.artists).lenght > 1) ? item.artists.map((artist) => { artist.name }).join(", ") : item.artists[0].name;
+         itemInfo.secondBodyText = (Object.values(item.duration_ms) > 0) ? msToTime(item.duration_ms) : "";
 
-         if (hasImages(item.album.images)) {
+         if (hasImages(item.album.images)) {
             itemInfo.img = item.album.images[0].url;
          } else {
             itemInfo.img = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
@@ -48,7 +48,7 @@ let getItemInfo = (item) => {
       case 'artist':
          // console.log("Artist: ", item);
          itemInfo.name = item.name;
-         itemInfo.cardText = item.genres?.map((genre) =>  genre).join(", ");
+         itemInfo.cardText = item.genres?.map((genre) => genre).join(", ");
          itemInfo.secondBodyText = (Object.values(item.popularity) > 0) ? `Popularity: ${item.popularity}` : "";
 
          if (hasImages(item.images)) {
@@ -61,8 +61,8 @@ let getItemInfo = (item) => {
       case 'album':
          // console.log("Album: ", item);
          itemInfo.name = item.name;
-         itemInfo.cardText = item.artists?.map((artist) =>  artist.name).join(", ");
-         itemInfo.secondBodyText =(Object.values(item.release_date) !== "") ? `Release Date: ${item.release_date}` : "";
+         itemInfo.cardText = item.artists?.map((artist) => artist.name).join(", ");
+         itemInfo.secondBodyText = (Object.values(item.release_date) !== "") ? `Release Date: ${item.release_date}` : "";
 
          if (hasImages(item.images)) {
             itemInfo.img = item.images[0].url;
@@ -84,7 +84,7 @@ const createPlaylistsOption = (trackId, playlists) => {
    for (i in playlists) {
       // console.log(i);
       // let playlist = playlists[i].title;
-      let trackPlaylistObj = JSON.stringify({tid: trackId, pid: playlists[i]._id});
+      let trackPlaylistObj = JSON.stringify({ tid: trackId, pid: playlists[i]._id });
       playlistOptions += `<a class="dropdown-item" onClick='addToPlaylist(${trackPlaylistObj})'>${playlists[i].title}</a>`
    }
    return playlistOptions;
@@ -453,16 +453,16 @@ Do you want to import this playlist to your personal list?
                   },
                   body: JSON.stringify(playlistData)
                }).then(async response => {
-                     if (response.ok) {
-                        alert("Playlist created successfully");
-                        setTimeout(function () {
-                           window.location.replace('/playlist');
-                        }, 500);
-                     }
-                     else {
-                        alert("Error importing playlist!");
-                     }
-                  });
+                  if (response.ok) {
+                     alert("Playlist created successfully");
+                     setTimeout(function () {
+                        window.location.replace('/playlist');
+                     }, 500);
+                  }
+                  else {
+                     alert("Error importing playlist!");
+                  }
+               });
             })
          }
       })

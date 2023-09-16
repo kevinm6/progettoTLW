@@ -515,6 +515,22 @@
         }
       }
     },
+    "/playlists": {
+      "get": {
+        "tags": [
+          "playlist"
+        ],
+        "description": "Endpoint that allows to obtain all public playlists",
+        "responses": {
+          "200": {
+            "description": "list of playlists"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
     "/playlist/{id}": {
       "get": {
         "tags": [
@@ -556,6 +572,42 @@
         "responses": {
           "200": {
             "description": "playlist updated"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/getplaylist/{id}": {
+      "get": {
+        "tags": [
+          "playlist"
+        ],
+        "description": "Endpoint that allows to obtain a specific playlist from given id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "playlistid",
+            "description": "Id of the playlist we want to fetch.",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "playlist",
+            "schema": {
+              "$ref": "#/definitions/playlists"
+            }
+          },
+          "404": {
+            "description": "Playlist Not Found"
           },
           "500": {
             "description": "Server error"
