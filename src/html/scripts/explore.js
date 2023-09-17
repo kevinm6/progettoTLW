@@ -136,6 +136,8 @@ async function populateCards(data) {
       clone.getElementsByClassName('modal-footer')[0].setAttribute('id', 'trackModalFooter' + trackId);
 
       clone.getElementsByClassName('btn-close')[0].setAttribute('data-dismiss', 'trackModal' + trackId);
+      // Quando il bottone viene chiuso, riabilita l'hover sulla card!
+      clone.getElementsByClassName('btn-close')[0].setAttribute('onclick', 'reenableHoverOnCards()');
 
       clone.getElementsByClassName('btn')[0].setAttribute('data-toggle', 'modal');
       clone.getElementsByClassName('btn')[0].setAttribute('data-target', '#trackModal' + trackId);
@@ -159,19 +161,15 @@ async function populateCards(data) {
          ${playlistsOptions}
          `;
       }
-
       // clone.getElementsByClassName('dropdown-toggle')[0].setAttribute('id', 'dropdownPlaylist' + trackId);
       clone.getElementsByClassName('dropdown-toggle')[0].setAttribute('data-bs-target', '#playlistSelect' + trackId);
-
       clone.classList.remove('d-none');
-
       card.before(clone);
       // Debugging: limit to 4 elements
       // if (i == 3) break;
    }
 
 }
-
 
 async function populatePublicPlaylistCards(data) {
    let container = document.getElementById("container-items");
@@ -183,28 +181,29 @@ async function populatePublicPlaylistCards(data) {
       //var stringified = JSON.stringify(playlist.songs).replace(/"/g, '&quot;');
       var stringified = JSON.stringify(playlist.songs).replace(/"/g, '&quot;');
       const card = `
-<div class="col-md-4 mb-4">
-<div class="card h-100">
-<div class="card-body">
-<h5 class="card-title">${playlist.title}${playlist.private ? '<i class="bi bi-lock-fill text-success"></i>' : ''}</h5>
-<p class="card-text">${playlist.description}</p>
-<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
-onclick="showSongs('${playlist._id}', ${stringified})">
-View Songs
-</button>
-<button class="btn btn-primary" onclick="importPublicPlaylist('${playlist._id}')">
-Import playlist
-</button>
+         <div class="col-md-4 mb-4">
+         <div class="card h-100">
+         <div class="card-body">
+         <h5 class="card-title">${playlist.title}${playlist.private ? '<i class="bi bi-lock-fill text-success"></i>' : ''}</h5>
+         <p class="card-text">${playlist.description}</p>
+         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
+         onclick="showSongs('${playlist._id}', ${stringified})">
+         View Songs
+         </button>
+         <button class="btn btn-primary" onclick="importPublicPlaylist('${playlist._id}')">
+         Import playlist
+         </button>
 
-</div>
-</div>
-</div>
-`;
+         </div>
+         </div>
+         </div>
+         `;
       playlistContainer.innerHTML += card;
    });
 }
 
 function showTrackInfo(info) {
+   disableHoverOnCards();
    let string = JSON.stringify(info);
    let item = JSON.parse(string);
 
@@ -243,8 +242,23 @@ function showTrackInfo(info) {
    }
 
    modal.show();
+
 }
 
+function disableHoverOnCards() {
+   console.log("hover disabled");
+   const cards = document.querySelectorAll('.card');
+   cards.forEach(card => {
+      card.classList.add('disable-hover');
+   });
+}
+function reenableHoverOnCards() {
+   console.log("hover reenabled");
+   const cards = document.querySelectorAll('.card');
+   cards.forEach(card => {
+      card.classList.remove('disable-hover');
+   });
+}
 
 function getItems(type, query, offset) {
 
@@ -291,6 +305,7 @@ function getItems(type, query, offset) {
       }, 1000);
    }
 
+
 }
 
 
@@ -314,16 +329,7 @@ Register to the app or press 'OK' to create a new account.
       fetch(`/tracks/${tid}`).then((response) => {
          if (response.ok) {
             response.json().then((trackData) => {
-               let duration = msToTime(trackData.duration_ms);
-               trackData.duration_ms = duration;
-
-               fetch(`/playlist/${pid}`, {
-                  method: 'PUT',
-                  headers: {
-                     'Content-Type': 'application/json;charset=utf-8'
-                  },
-                  body: JSON.stringify({ track: trackData, pid: pid })
-               })
+               addSong(pid, trackData);
             })
          }
       })
@@ -331,6 +337,51 @@ Register to the app or press 'OK' to create a new account.
 
 }
 
+async function addSong(playlistID, track) {
+   console.log(track);
+   const artists = track.artists.map((artist) => artist.name).join(", ");
+   var duration = msToTime(track.duration_ms);
+   var year = track.album.release_date;
+   var song={
+      id:track.id,
+      title:track.name,
+      artist:artists,
+      duration:duration,
+      year:track.album.release_date,
+      album:track.album.name,
+      playlistID:playlistID,
+      owner_id:localStorage.getItem("_id")
+  }
+   try {
+      const response = await fetch(`/addsongtoplaylist/${playlistID}`, {
+         method: 'PUT',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(song)
+      });
+
+      if (response.ok) {
+         alert("Song added successfully");
+         window.location.href = "http://localhost:3000/src/html/editplaylist.html?id=" + playlistID;
+      } else {
+         if (response.status === 400) {
+            const responseBody = await response.text();
+            if (responseBody === 'EXISTS') {
+               alert("Song is already in the playlist!");
+            } else {
+               alert("An error occurred while adding the song to the playlist. Please try again later.");
+            }
+         } else {
+            alert("An error occurred while adding the song to the playlist. Please try again later.");
+         }
+      }
+   } catch (error) {
+      console.error("Error adding song to playlist:", error);
+      alert("An error occurred while adding the song to the playlist. Please try again later.");
+   }
+
+}
 
 function importPublicPlaylist(pid) {
    console.log("playlist_id", pid);
@@ -379,46 +430,46 @@ function setContainerHtml(items) {
    switch (items) {
       case 'Playlist':
          container.innerHTML = `<div class="container">
-   <br><br>
-   <h2 style="text-align:center;">Public Playlists</h2>
-   <div class="row" id="playlistPublicContainer">
-      <!-- Card are dynamically created -->
-   </div>
-</div>
-<div class="modal fade custom-modal-xl" id="songsModal" tabindex="-1" aria-labelledby="songsModalLabel"
-   aria-hidden="true">
-   <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title" id="songsModalLabel">Your songs</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-         </div>
-         <div class="modal-body">
-            <table class="table">
-               <thead>
-                  <tr>
-                     <th scope="col">Title</th>
-                     <th scope="col">Artists</th>
-                     <th scope="col">Album</th>
-                     <th scope="col">Genres</th>
-                     <th scope="col">Duration</th>
-                     <th scope="col">Year</th>
-                  </tr>
-               </thead>
-               <tbody id="songsTableBody">
-                  <!-- Songs will be added here dinamically -->
-               </tbody>
-            </table>
+         <br><br>
+         <h2 style="text-align:center;">Public Playlists</h2>
+         <div class="row" id="playlistPublicContainer">
+            <!-- Card are dynamically created -->
          </div>
       </div>
-   </div>
-</div>
-`;
+      <div class="modal fade custom-modal-xl" id="songsModal" tabindex="-1" aria-labelledby="songsModalLabel"
+         aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="songsModalLabel">Your songs</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                  <table class="table">
+                     <thead>
+                        <tr>
+                           <th scope="col">Title</th>
+                           <th scope="col">Artists</th>
+                           <th scope="col">Album</th>
+                           <th scope="col">Genres</th>
+                           <th scope="col">Duration</th>
+                           <th scope="col">Year</th>
+                        </tr>
+                     </thead>
+                     <tbody id="songsTableBody">
+                        <!-- Songs will be added here dinamically -->
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+      `;
 
          break;
 
       default:
-         container .innerHTML = `<div class="row g-4 mt-4 p-4">
+         container.innerHTML = `<div class="row g-4 mt-4 p-4">
             <nav aria-label="Page navigation example">
                <ul class="pagination">
                   <li class="page-item"><button class=" btn" id="prev-page-result">Previous</button></li>
@@ -460,7 +511,7 @@ function setContainerHtml(items) {
                            <div class="modal-content">
                               <div class="modal-header">
                                  <h5 class="modal-title text-center" id="trackModalLabel"></h5>
-                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="modalclose"></button>
                               </div>
                               <div class="modal-body" id="trackModalBody">
                                  <img class="img-responsive" alt="">
@@ -477,5 +528,6 @@ function setContainerHtml(items) {
       </div>`;
          break;
    }
+
 
 }

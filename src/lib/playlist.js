@@ -86,7 +86,6 @@ export async function getUserPlaylists(res, owner_id) {
  * @param {object} res - response passed from express
  */
 export async function addSongToPlaylist(res, playlistID,songData) {
-   console.log(songData);
    if (
       songData.id === undefined ||
          songData.title === undefined ||
@@ -195,6 +194,8 @@ export async function createplaylist(res, playlist) {
    try {
       var playlistCollection = await dbPlaylistCollection();
       playlist.owner_id = new ObjectId(playlist.owner_id);
+      console.log("CREATE PLAYLIST>");
+      console.log(playlist);
       await playlistCollection.insertOne(playlist); // Changed userCollection to playlistCollection
 
       // Risposta affermativa con uno status 200 per evitare oggetti circolari
@@ -328,8 +329,6 @@ export async function getPlaylistFromId(res, playlistid) {
  */
 
 export async function updatePlaylist(res, playlistID, playlistData) {
-   console.log(playlistID);
-   console.log(playlistData);
    if (
       playlistData.title === undefined ||
          playlistData.description === undefined ||
@@ -340,15 +339,17 @@ export async function updatePlaylist(res, playlistID, playlistData) {
       console.log(`[PLAYLIST] >> ERROR 400 WHILE ATTEMPTING TO UPDATE PLAYLIST:`)
       return;
    }
+
    const updatedData = {
       $set: {
          title: playlistData.title,
          description: playlistData.description,
-         tags: playlistData.tags,
-         private: playlistData.private
+         tags:playlistData.tags,
+         private: playlistData.private,
       }
    };
-
+   console.log("DATA TO UPDATE: ");
+   console.log(updatedData);
    try {
       const collection = await dbPlaylistCollection();
       const filter = {

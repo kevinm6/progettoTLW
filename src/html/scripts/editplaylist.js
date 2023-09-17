@@ -11,7 +11,7 @@ async function saveChanges(){
     var updatedData={
         title:title,
         description:description,
-        tags:tags,
+        tags:tags.split(",").map(tag => tag.trim()),
         private:private,
         owner_id:owner_id
     }
@@ -121,6 +121,7 @@ async function fetchplaylist(playlistid) {
         }
 
         const playlistData = await response.json();
+        console.log("FETCHED: ");
         console.log(playlistData);
         return playlistData;
     } catch (error) {

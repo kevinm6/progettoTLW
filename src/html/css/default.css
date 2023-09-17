@@ -26,8 +26,7 @@ footer {
 /* ============================= MODAL SECTION AND========================= */
 .dropdown-menu{
   color:white;
-  background-color: #333;
-  z-index: 9999; 
+  background-color: #333; 
 }
 .dropdown-item{
   color:white;
@@ -180,4 +179,7 @@ li,ul{
   right: 0;
   text-align: center;
   font-size: 12px;
+}
+.disable-hover {
+  transform: none !important; 
 }

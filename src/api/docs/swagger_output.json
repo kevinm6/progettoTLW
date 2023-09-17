@@ -243,6 +243,9 @@
               "properties": {
                 "creatorId": {
                   "example": "any"
+                },
+                "members": {
+                  "example": "any"
                 }
               }
             }
@@ -840,11 +843,35 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "creatorId": {
+                  "example": "any"
+                },
+                "member": {
+                  "example": "any"
+                },
+                "op": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
