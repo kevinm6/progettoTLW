@@ -101,8 +101,9 @@ async function populateCards(data) {
    // console.log(fetchedItems());
    // console.log("DATA:", fetchedItems());
 
+   setContainerHtml('default');
    let card = document.getElementById("card-track")
-   let container = document.getElementById("container-track")
+   let container = document.getElementById("container-track");
    container.innerHTML = ""
    container.append(card)
 
@@ -174,43 +175,7 @@ async function populateCards(data) {
 
 async function populatePublicPlaylistCards(data) {
    let container = document.getElementById("container-items");
-   container.innerHTML = `
-<div class="container">
-   <br><br>
-   <h2 style="text-align:center;">Public Playlists</h2>
-   <div class="row" id="playlistPublicContainer">
-      <!-- Card are dynamically created -->
-   </div>
-</div>
-<div class="modal fade custom-modal-xl" id="songsModal" tabindex="-1" aria-labelledby="songsModalLabel"
-   aria-hidden="true">
-   <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title" id="songsModalLabel">Your songs</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-         </div>
-         <div class="modal-body">
-            <table class="table">
-               <thead>
-                  <tr>
-                     <th scope="col">Title</th>
-                     <th scope="col">Artists</th>
-                     <th scope="col">Album</th>
-                     <th scope="col">Genres</th>
-                     <th scope="col">Duration</th>
-                     <th scope="col">Year</th>
-                  </tr>
-               </thead>
-               <tbody id="songsTableBody">
-                  <!-- Songs will be added here dinamically -->
-               </tbody>
-            </table>
-         </div>
-      </div>
-   </div>
-</div>
-`;
+   setContainerHtml('Playlist');
 
    const playlistContainer = document.getElementById("playlistPublicContainer");
 
@@ -404,4 +369,113 @@ Do you want to import this playlist to your personal list?
          }
       })
    }
+}
+
+
+/* Util function to switch HTML based on element to visualize */
+function setContainerHtml(items) {
+   let container = document.getElementById('container-items');
+
+   switch (items) {
+      case 'Playlist':
+         container.innerHTML = `<div class="container">
+   <br><br>
+   <h2 style="text-align:center;">Public Playlists</h2>
+   <div class="row" id="playlistPublicContainer">
+      <!-- Card are dynamically created -->
+   </div>
+</div>
+<div class="modal fade custom-modal-xl" id="songsModal" tabindex="-1" aria-labelledby="songsModalLabel"
+   aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="songsModalLabel">Your songs</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+            <table class="table">
+               <thead>
+                  <tr>
+                     <th scope="col">Title</th>
+                     <th scope="col">Artists</th>
+                     <th scope="col">Album</th>
+                     <th scope="col">Genres</th>
+                     <th scope="col">Duration</th>
+                     <th scope="col">Year</th>
+                  </tr>
+               </thead>
+               <tbody id="songsTableBody">
+                  <!-- Songs will be added here dinamically -->
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+</div>
+`;
+
+         break;
+
+      default:
+         container .innerHTML = `<div class="row g-4 mt-4 p-4">
+            <nav aria-label="Page navigation example">
+               <ul class="pagination">
+                  <li class="page-item"><button class=" btn" id="prev-page-result">Previous</button></li>
+
+                  <li class="page-item"><button class=" btn" id="next-page-result">Next</button></li>
+               </ul>
+            </nav>
+         </div>
+
+         <div id="container-track" class="row g-4 mt-2 p-4">
+            <div id="card-track" class="col-3 d-none">
+               <div class="card h-100" style="width: 18rem;">
+                  <img class="card-img-top" alt="...">
+                  <div class="card-body">
+                     <h5 class="card-title"></h5>
+                     <p class="card-text"></p>
+
+                  </div>
+                  <div class="card-footer">
+                     <p class="card-text">
+                        <small class="text-body-secondary"></small>
+                     </p>
+
+                     <!-- Trigger the modal with a button -->
+                     <button type="button" class="btn">Info</button>
+                     <div class="btn-group dropup">
+                       <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
+                         Add to Playlist
+                       </button>
+                        <div class="dropdown-menu dropdown-menu-right" id="playlist-select-">
+
+                        </div>
+                     </div>
+
+                     <!-- Modal -->
+                     <div class="modal" id="trackModal" tabindex="-1" aria-labelledby="trackModalLabel" aria-hidden='true'>
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                           <!-- Modal content -->
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <h5 class="modal-title text-center" id="trackModalLabel"></h5>
+                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body" id="trackModalBody">
+                                 <img class="img-responsive" alt="">
+                              </div>
+                              <div class="modal-footer" id="trackModalFooter"></div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+            </div>
+         </div>
+      </div>`;
+         break;
+   }
+
 }

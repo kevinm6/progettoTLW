@@ -175,7 +175,6 @@ async function showConfirmationModal(customModalTitle,customModalBody,confirmTex
     });
 }
 
-
 // hide the modal
 function hideConfirmationModal() {
     const confirmationModal = document.getElementById("confirmationModal");

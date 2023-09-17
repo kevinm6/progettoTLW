@@ -521,6 +521,13 @@
           "playlist"
         ],
         "description": "Endpoint that allows to obtain all public playlists",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "list of playlists"

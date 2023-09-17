@@ -2,7 +2,6 @@
 import { ObjectId } from "mongodb";
 import { Db } from "./database.js";
 import { hash } from "./utils.js";
-import { dbUserCollection } from "./user.js";
 
 
 /**
@@ -25,11 +24,11 @@ export const dbCommunityCollection = () => Db('community');
  * @returns {object} community information from id passed as request param
  */
 export async function getCommunity(req, res) {
-   let creatorId = req;
+   let cid = req;
 
    let collection = await dbCommunityCollection();
    let community = await collection
-      .findOne({ 'creatorId': new ObjectId(creatorId) });
+      .findOne({ creatorId: new ObjectId(cid) });
 
    if (community == null) {
       res.json({'error': "No community found"});
@@ -49,12 +48,13 @@ export async function getMembersOfCommunity(req, res) {
    let id = req.params.id;
    let collection = await dbCommunityCollection();
    let community = await collection
-      .find({ creator: new ObjectId(id) })
+      .find({ creatorId: new ObjectId(id) })
       .project({})
       .toArray();
    // console.log(community);
    res.json(community);
 }
+
 
 /**
  * Async function to create specific community from id
@@ -66,7 +66,10 @@ export async function createCommunity(req, res) {
    let newCommunity = req.body;
 
    newCommunity.creatorId = new ObjectId(req.body.creatorId);
-   // console.log(newCommunity);
+   for (const member in newCommunity.members) {
+      let memberId = newCommunity.members[member]._id;
+      newCommunity.members[member]._id = new ObjectId(memberId);
+   }
 
    let collection = await dbCommunityCollection();
    // check collision
@@ -87,7 +90,6 @@ Do you want to go to your community?"
 }
 
 
-
 /**
  * Async function to update an existing user
  *
@@ -95,20 +97,31 @@ Do you want to go to your community?"
  * @param id - id of the user to be updated
  * @param updateduser - user to be updated
  */
-export async function updateCommunity(res, id, updatedUser) {
-   console.log(id);
-   if (updatedUser.name == undefined) {
-      res.status(400).send('Missing Name');
-      return;
+export async function updateCommunity(req, res) {
+   let cid = req.body.creatorId;
+   let member = req.body.member;
+   console.log(member);
+
+   var filter = { creatorId: new ObjectId(cid) };
+
+   let collection = await dbCommunityCollection();
+
+   switch (req.body.op) {
+      case 'removeMember':
+         var members = {
+           $pull: { members: { _id: new ObjectId(member._id) } },
+         }
+         let community = await collection.updateOne(filter, members)
+         console.log(community);
+
+         res.json(community);
+         break;
+
+      default:
+         console.log("Default action required, fallback and return!");
+         return;
    }
-   if (updatedUser.nickname == undefined) {
-      res.status(400).send('Missing Nickname');
-      return;
-   }
-   if (updatedUser.email == undefined) {
-      res.status(400).send('Missing Email');
-      return;
-   }
+   return;
 
    try {
       var filter = { _id: new ObjectId(id) };

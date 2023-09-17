@@ -1,12 +1,31 @@
 /* Playlist & Tracks lib functions to manage User */
 
-// import crypto from "crypto";
-import { config, mongodb } from "./../config/prefs.js";
 import { Db } from "./database.js";
 import { ObjectId } from "mongodb";
 import {songExistsInPlaylist} from "./utils.js"
-// import { getTrack } from "./spotify/fetch.js";
 export const dbPlaylistCollection = () => Db('playlists');
+
+
+/**
+ * This function is useful to create Indexes if doesn't already exists, to improve
+ * search in DB with 'case insensitive' queries
+ */
+(async function() {
+   let collection = await dbPlaylistCollection();
+   let indexes = await collection.listIndexes().toArray();
+   if (Object.keys(indexes).length == 4) return;
+
+   let tagIndex = await collection.createIndex({ 'tags': 1 }, {
+      collation: { locale: 'en', strength: 2 }
+   });
+   let titleIndex = await collection.createIndex({ 'songs.title': 1 }, {
+      collation: { locale: 'en', strength: 2 }
+   });
+   let artistIndex = await collection.createIndex({ 'songs.artist': 2 }, {
+      collation: { locale: 'en', strength: 2 }
+   });
+   console.log(`Indexes created: ${tagIndex}, ${titleIndex}, ${artistIndex}`);
+})()
 
 
 /**
@@ -34,6 +53,7 @@ export async function getPublicPlaylists(req, res) {
       }
       let playlists = await collection
          .find(filter)
+         .collation({ locale: 'en', strength: 2 })
          .toArray();
       res.send(playlists);
    } catch (error) {
