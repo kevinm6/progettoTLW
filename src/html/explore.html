@@ -58,7 +58,7 @@
       const searchInputId = document.getElementById('search-input');
       const filterSelectId = document.getElementById('search-filter');
 
-      searchInputId.addEventListener('keypress', function(event) {
+      searchInputId.addEventListener('input', function(event) {
          // check if Enter key is pressed
          clearTimeout(timeoutId);
          if (event.key == 'Enter') {
