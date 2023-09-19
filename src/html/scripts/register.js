@@ -173,7 +173,7 @@ async function getSpotifyGenres() {
             localStorage.removeItem("nickname");
              alert("Registrazione avvenuta con successo, verrai reindirizzato alla pagina di login");
              setTimeout(function () {
-                window.location.href = "http://localhost:3000/login";
+                window.location.href = "/login";
              }, 500); // Ritarda l'href di 0,5 secondi (500 millisecondi)
           }
           else {

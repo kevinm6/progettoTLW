@@ -95,7 +95,7 @@
                     throw error;
                 } else if (userData == "ERR_NOT_LOGGED") {
                     alert("Log-in to access this page");
-                    window.location.href = "http://localhost:3000/login";
+                    window.location.href = "/login";
                     throw new Error("User not logged");
                 } else {
                     const urlParams = new URLSearchParams(window.location.search);

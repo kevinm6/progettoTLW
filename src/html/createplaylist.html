@@ -109,7 +109,7 @@
                     throw new Error("Errore durante l'autenticazione");
                 } else if (userData === "ERR_NOT_LOGGED") {
                     alert("Effettua il login per creare una playlist");
-                    window.location.href = "http://localhost:3000/login";
+                    window.location.href = "/login";
                     throw new Error("Utente non loggato");
                 }
             } catch (error) {

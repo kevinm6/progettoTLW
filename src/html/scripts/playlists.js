@@ -44,7 +44,7 @@ async function populatePlaylistCards() {
 }
 
 async function fetchEditPlaylist(playlistID) {
-    window.location.href=`http://localhost:3000/src/html/editplaylist.html?id=${playlistID}`;
+    window.location.href=`/src/html/editplaylist.html?id=${playlistID}`;
 }
 
 async function deletePlaylist(playlistID, playlistTitle) {
@@ -54,7 +54,7 @@ async function deletePlaylist(playlistID, playlistTitle) {
     const localStorageID = localStorage.getItem("_id");
 
     // Crea l'URL con l'ID della playlist
-    const url = `http://localhost:3000/deleteplaylist/${playlistID}`;
+    const url = `/deleteplaylist/${playlistID}`;
 
     // Esegui la richiesta DELETE
     fetch(url, {
@@ -67,7 +67,7 @@ async function deletePlaylist(playlistID, playlistTitle) {
         .then((response) => {
             if (response.ok) {
                 alert("Playlist deleted succesfully!");
-                window.location.href = "localhost:3000/playlist"
+                window.location.href = "/playlist"
             } else {
                 // Gestione degli errori
                 alert("An error occurred. Try again later.");
@@ -104,4 +104,50 @@ function showSongs(playlistId, songsJson) {
 
     const songsModal = new bootstrap.Modal(document.getElementById("songsModal"));
     songsModal.show();
+}
+function creaplaylist() {
+    var title = document.getElementById("title").value;
+    var description = document.getElementById("description").value;
+    var tags = document.getElementById("tags").value;
+
+    // Prendi tutti gli elementi con classe "selected-song"
+    const selectedSongElements = document.querySelectorAll(".selected-song");
+
+    // Creo un array di oggetti con id e titolo delle canzoni selezionate
+    const selectedSongsData = Array.from(selectedSongElements).map(element => {
+        const songId = element.dataset.songId;
+        const artist = element.dataset.artist;
+        const duration = element.dataset.duration;
+        const songTitle = element.querySelector("span").textContent;
+        return { id: songId, title: songTitle, artist: artist, duration: duration };
+    });
+
+    // Dati da inviare
+    const playlistData = {
+        title: title,
+        description: description,
+        tags: tags.split(",").map(tag => tag.trim()),
+        songs: selectedSongsData,
+        owner_id: localStorage.getItem("_id")
+    };
+    console.log(playlistData);
+
+    // Effettua la richiesta POST all'endpoint
+    fetch('/createplaylist', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(playlistData)
+    }).then(async response => {
+        if (response.ok) {
+            alert("Playlist creata con successo");
+            setTimeout(function () {
+                window.location.href = "/playlist";
+            }, 500);
+        }
+        else {
+            alert("Errore durante la creazione della playlist");
+        }
+    });
 }

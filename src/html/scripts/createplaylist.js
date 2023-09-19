@@ -154,7 +154,7 @@ function creaplaylist() {
         if (response.ok) {
             alert("Playlist creata con successo");
             setTimeout(function () {
-                window.location.href = "http://localhost:3000/playlist";
+                window.location.href = "/playlist";
             }, 500);
         }
         else {

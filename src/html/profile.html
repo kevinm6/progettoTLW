@@ -124,7 +124,7 @@
                     throw error;
                 } else if (userData == "ERR_NOT_LOGGED") {
                     alert("Effettua il login per accedere al profilo");
-                    window.location.href = "http://localhost:3000/login";
+                    window.location.href = "/login";
                     throw new Error("Utente non loggato");
                 } else {
                     populateUserProfile(userData);

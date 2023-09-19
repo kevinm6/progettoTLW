@@ -34,7 +34,7 @@ async function saveChanges(){
 
         if (response.ok) {
             alert("Playlist updated successfully");
-            window.location.href="http://localhost:3000/src/html/editplaylist.html?id="+id;
+            window.location.href="/src/html/editplaylist.html?id="+id;
         } else {
 
             alert("An error occurred while updating the playlist. Please try again later.");
@@ -114,7 +114,7 @@ async function deleteSong(trackid, playlistID) {
     const owner_id = localStorage.getItem("_id");
     var del = await showConfirmationModal("Are you sure?","You are about to delete this Song from the playlist","Delete Song","Cancel");
     if (!del) return;
-    fetch(`http://localhost:3000/deleteSongFromPlaylist`, {
+    fetch(`/deleteSongFromPlaylist`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -128,7 +128,7 @@ async function deleteSong(trackid, playlistID) {
       .then((response) => {
         if (response.status === 200) {
           alert("Song removed successfully");
-          window.location.href="http://localhost:3000/src/html/editplaylist.html?id="+playlistID;
+          window.location.href="/src/html/editplaylist.html?id="+playlistID;
         } else {
           alert("An error has occurred, please try again later");
         }
@@ -251,7 +251,7 @@ async function addSong(playlistID,song){
     
         if (response.ok) {
             alert("Song added successfully");
-            window.location.href = "http://localhost:3000/src/html/editplaylist.html?id=" + playlistID;
+            window.location.href = "/src/html/editplaylist.html?id=" + playlistID;
         } else {
             if (response.status === 400) {
                 const responseBody = await response.text();
