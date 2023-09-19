@@ -1,59 +1,101 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>SNM</title>
-      <link
-         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
-         rel="stylesheet"
-         integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
-         crossorigin="anonymous"
-      />
-   </head>
 
-   <body>
-      <div id="menu"></div>
-      <div class="container">
-         <div class="row g-4 mt-4 p-4">
-            <p style='text-align:center; color: red; '> THIS IS THE HOME PAGE! </p>
-            <!-- <nav aria-label="Page navigation example"> -->
-            <!--    <ul class="pagination"> -->
-            <!--       <li class="page-item"> -->
-            <!--          <button class="page-link" onclick="prev()">Previous</button> -->
-            <!--       </li> -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Social Network for Music
+    </title>
+    <link rel="icon" href="./images/LOGOSNM.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/default.css">
+</head>
 
-            <!--       <li class="page-item"> -->
-            <!--          <button class="page-link" onclick="next()">Next</button> -->
-            <!--       </li> -->
-            <!--    </ul> -->
-            <!-- </nav> -->
-         </div>
-         <div id="container-film" class="row g-4 mt-2 p-4">
-            <div id="card-film" class="col-3 d-none">
-               <div class="card h-100" style='width:"18rem"'>
-                  <img class="card-img-top" alt=""/>
-                  <div class="card-body">
-                     <h5 class="card-title"></h5>
-                     <p class="card-text"></p>
-                  </div>
-                  <div class="card-footer">
-                     <p class="card-text">
-                        <small class="text-body-secondary"></small>
-                     </p>
-                     <a href="#" class="btn btn-secondary">Scheda</a>
-                  </div>
-               </div>
+<body>
+    <div id="menu"></div>
+    <div class="container">
+        <div class="row mt-4 p-4">
+            <div class="col-md-12">
+                <div class="fade-in-element">
+                    <h1>Welcome to Social Network for Music</h1>
+                    <p>
+                        Social Network for Music (SNM) is the first social network designed for music enthusiasts like
+                        you.
+                        Whether you're a music lover, a playlist curator, or an artist, SNM has something for everyone.
+                    </p>
+                </div>
+                <div class="fade-in-element">
+                    <h2>What We Offer</h2>
+                    <p>
+                        At SNM, you can create and manage your own music playlists, discover new tracks and artists, and
+                        connect with fellow music enthusiasts. Our platform provides a seamless experience for music
+                        sharing and discovery.
+                    </p>
+                </div>
+                <div class="fade-in-element">
+                    <h2>Key Features</h2>
+
+                    <ul>
+                        <li>Create and customize your playlists with your favorite songs.</li>
+                        <li>Explore a vast library of music from various genres.</li>
+                        <li>Connect with friends and share your musical discoveries.</li>
+                        <li>Discover new tracks and artists based on your musical preferences.</li>
+                    </ul>
+
+                </div>
+                <div class="fade-in-element">
+                    <h2>Using Spotify APIs</h2>
+                    <p>
+                        SNM utilizes Spotify's APIs to provide access to a wide range of music tracks and information.
+                        You can learn more about Spotify's APIs <a href="https://developer.spotify.com/documentation/web-api/reference" target="_blank">here</a>.
+                    </p>
+                </div>
+                <div class="fade-in-element">
+                    <h2>About this project</h2>
+                    <p>
+                        Our platform uses Node.js and Express.js to create a robust and scalable backend that can handle
+                        complex operations efficiently. We've developed custom API endpoints to facilitate seamless
+                        communication between the frontend and backend systems. <br>
+                        You can explore our API documentation
+                        <a href="/api-docs">here</a> to gain a deeper understanding of our endpoints and data
+                        structures.<br>
+                    </p>
+                </div>
+                <div class="fade-in-element">
+                    <h2>About the Authors</h2>
+                    <p>
+                        Social Network for Music was created by
+                        <li><b><a href="https://github.com/kevinm6">Kevin Manca</a></b></li>
+                        <li><b><a href="https://github.com/FriendlyWizard23">Alessandro Riemer Barboza</a></b></li>
+                    </p>
+                </div>
             </div>
-         </div>
-      </div>
+        </div>
+        <div class="row mt-4 p-4">
+        </div>
+    </div>
+    <div class="spacer"></div>
+    <footer id="footer"></footer>
+    <script type="module" src="../html/scripts/footer.js"></script>
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const elements = document.querySelectorAll(".fade-in-element");
+            elements.forEach(function (element, index) {
+                setTimeout(function () {
+                    element.style.opacity = "1";
+                    element.style.transform = "translateY(0)";
+                }, index * 1200);
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+        crossorigin="anonymous"></script>
 
-      <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
-      crossorigin="anonymous">
-      </script>
+    <script type="module" src="../html/scripts/menu.js"></script>
+</body>
 
-      <script type="module" src="../html/scripts/menu.js"></script>
-   </body>
 </html>

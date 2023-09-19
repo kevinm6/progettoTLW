@@ -1,55 +1,56 @@
 <!doctype html>
 <html lang="en">
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Movie Demo</title>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
-         integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
-         <link rel="stylesheet" href="./css/default.css">
-      <!-- <link rel="stylesheet" href="css/explore.css"> -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Movie Demo</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+   integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+<link rel="stylesheet" href="./css/default.css">
+<!-- <link rel="stylesheet" href="css/explore.css"> -->
+
 <head>
-   </head>
+</head>
 
-   <body>
-      <div id="menu"></div>
-      <!-- Search Box -->
-      <div class="container">
-         <form>
-            <div class="dropdown">
-               <div class="input-group">
-                  <input type="text" id="search-input" class="form-control w-auto" placeholder="Search">
-                  <select class="form-select" id="search-filter" aria-label="Filter select">
-                    <i class="glyphicon glyphicon-search"></i>
-                    <option selected>Track</option>
-                    <option value="Artist">Artist</option>
-                    <option value="Album">Album</option>
-                    <option value="Playlist">Playlist</option>
-                  </select>
-               </div>
+<body>
+   <div id="menu"></div>
+   <!-- Search Box -->
+   <div class="container">
+      <form>
+         <div class="dropdown">
+            <div class="input-group">
+               <input type="text" id="search-input" class="form-control w-auto" placeholder="Search">
+               <select class="form-select" id="search-filter" aria-label="Filter select">
+                  <i class="glyphicon glyphicon-search"></i>
+                  <option selected>Track</option>
+                  <option value="Artist">Artist</option>
+                  <option value="Album">Album</option>
+                  <option value="Playlist">Playlist</option>
+               </select>
             </div>
-         </form>
-      </div>
-
-      <div class="container" id="container-items">
-         <div class="row g-4 mt-4 p-4">
-            <nav aria-label="Page navigation example">
-               <ul class="pagination">
-                  <li class="page-item"><button class=" btn" id="prev-page-result">Previous</button></li>
-
-                  <li class="page-item"><button class=" btn" id="next-page-result">Next</button></li>
-               </ul>
-            </nav>
          </div>
-      </div>
+      </form>
+   </div>
 
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+   <div class="container" id="container-items">
+      <div class="row g-4 mt-4 p-4">
+         <nav aria-label="Page navigation example">
+            <ul class="pagination">
+               <li class="page-item"><button class=" btn" id="prev-page-result">Previous</button></li>
+
+               <li class="page-item"><button class=" btn" id="next-page-result">Next</button></li>
+            </ul>
+         </nav>
+      </div>
+   </div>
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
       crossorigin="anonymous"></script>
-      <script src="scripts/menu.js"></script>
-      <script src="scripts/scripts.js"></script>
-      <script src="scripts/explore.js"></script>
-      <script src="scripts/playlists.js"></script>
-      <script>
+   <script src="scripts/menu.js"></script>
+   <script src="scripts/scripts.js"></script>
+   <script src="scripts/explore.js"></script>
+   <script src="scripts/playlists.js"></script>
+   <script>
       /* This variable set the delay of keypress input in search */
       var debounceTime = 650;
 
@@ -58,7 +59,7 @@
       const searchInputId = document.getElementById('search-input');
       const filterSelectId = document.getElementById('search-filter');
 
-      searchInputId.addEventListener('input', function(event) {
+      searchInputId.addEventListener('input', function (event) {
          // check if Enter key is pressed
          clearTimeout(timeoutId);
          if (event.key == 'Enter') {
@@ -74,7 +75,7 @@
 
 
       // Update search if filter change
-      filterSelectId.addEventListener('change', function(ev) {
+      filterSelectId.addEventListener('change', function (ev) {
          switch (filterSelectId.value) {
             case 'Track':
                searchInputId.placeholder = "Search Track from name or artist's name";
@@ -103,15 +104,17 @@
       getItems(filterSelectId.value);
 
 
-      document.getElementById('prev-page-result').addEventListener('click', function() {
+      document.getElementById('prev-page-result').addEventListener('click', function () {
          prevResults(filterSelectId.value, searchInputId.value)
       })
 
-      document.getElementById('next-page-result').addEventListener('click', function() {
+      document.getElementById('next-page-result').addEventListener('click', function () {
          nextResults(filterSelectId.value, searchInputId.value)
       })
-      </script>
-   </body>
+   </script>
+   <div class="spacer"></div>
+   <footer id="footer"></footer>
+   <script type="module" src="../html/scripts/footer.js"></script>
+</body>
 
 </html>
-

@@ -6,6 +6,9 @@ body {
   font-family: 'Inconsolata', monospace;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
 }
 
 footer {
@@ -23,6 +26,20 @@ footer {
 .navbar {
   background-color: #333;
 }
+
+/* ============================= IMAGES========================= */
+.snmimg:hover {
+  transform: scale(1.1); /* Ingigantisci l'immagine del 10% */
+}
+.snmimg{
+  width:8%;
+  height:auto;
+  margin-right: 10px;
+}
+.snmbodyimage {
+  width:10%;
+  height:auto;
+}
 /* ============================= MODAL SECTION AND========================= */
 .dropdown-menu{
   color:white;
@@ -33,7 +50,26 @@ footer {
   background-color: #333;
 
 }
-/* ============================= MODAL SECTION AND========================= */
+/* ============================= FOOTER SECTION========================= */
+
+footer {
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: 50px; 
+}
+.footer-p{
+  color:orange;
+  font-style:italic;
+}
+/*
+body > footer {
+  margin-top: auto;
+}*/
+.spacer {
+  flex-grow: 1; 
+}
+/* ============================= MODAL SECTION ========================= */
 .modal {
   background-color: rgba(0, 0, 0, 0.7); /* Sfondo scuro semi-trasparente */
   color: white;
@@ -150,6 +186,11 @@ textarea {
 li,ul{
   color: white;
 }
+/* ============================ TITLES ============================ */
+h1,h2,h3{
+  color: orange;
+  font-style:bold;
+}
 /* ======================= HOVERS AND AFTERS SECTION ======================== */
 
 .card:hover {
@@ -162,9 +203,10 @@ li,ul{
 .snm {
   background-color: #333;
   color: orange;
-  font-size: 36px;
+  font-size: 42px;
   font-weight: bold;
 }
+
 .private:hover::after {
   content: "This playlist is private. Only you can see its content and its details";
   display: block;
@@ -182,4 +224,15 @@ li,ul{
 }
 .disable-hover {
   transform: none !important; 
+}
+.fade-in-element {
+  opacity: 0;
+  transform: translateY(20px); /* Puoi regolare la trasformazione se vuoi un leggero effetto di scorrimento verso l'alto */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+} 
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: left;
 }
