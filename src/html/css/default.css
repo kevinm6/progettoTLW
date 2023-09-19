@@ -230,9 +230,3 @@ h1,h2,h3{
   transform: translateY(20px); /* Puoi regolare la trasformazione se vuoi un leggero effetto di scorrimento verso l'alto */
   transition: opacity 0.5s ease, transform 0.5s ease;
 } 
-
-.container {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-}
