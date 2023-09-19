@@ -6,7 +6,28 @@ var pageMembers = 0;
 // TODO: divide createcommunity function in separate module and fix
 
 
-async function authAndPopulate() {
+async function checkIfUserHasCommunity(endpoint, uid) {
+   // TODO: if user is not logged in, we must tell him to register to the app
+   if (!uid) {
+      alert("You need to register to the app!");
+      return;
+   }
+   let community = await fetchCommunity(uid);
+
+   switch (endpoint) {
+      case 'createcommunity':
+         createCommunityHandleUI(uid, community);
+         break;
+
+      case 'community':
+         communityHandleUI(uid, community);
+         break;
+
+      default: break;
+   }
+}
+
+async function authAndSetUser(endpoint) {
    try {
       const userData = await authenticateUser();
       if (userData === "ERR") {
@@ -19,8 +40,8 @@ async function authAndPopulate() {
          window.location.href = '/login';
          throw new Error("Utente non loggato");
       } else {
-         user = userData;
-         fetchCommunity(userData._id);
+         user = await userData;
+         checkIfUserHasCommunity(endpoint, user._id);
       }
    } catch (error) {
       console.error("Errore durante l'esecuzione:", error);
@@ -57,79 +78,33 @@ async function fetchUsersAndUpdateCards(membersData) {
 }
 
 
-function createCommunity(userId) {
-   let name = document.getElementById('name').value;
-   let description = document.getElementById('description').value;
-
-   if (!checkFieldFullfilled()) {
-      alert("Community name can't be empty!\nUpdate it and retry")
-      return;
-   }
-
-   let newCommunity = {
-      creatorId: userId,
-      name: name,
-      desc: description,
-      members: communityMembers,
-      playlists: []
-   };
-
-   console.log(newCommunity);
-
-   fetch('/createcommunity', {
-      method: "POST",
-      headers: {
-         "Content-Type": "application/json"
-      },
-      body: JSON.stringify(newCommunity)
-   }).then((response) => {
-         if (response.ok) {
-            response.json().then((msg) => {
-               if (msg.error) {
-                  if (confirm(msg.error)) window.location.replace('/community');
-               } else {
-                  document.getElementsByClassName('btn')[0].style.backgroundColor = 'green';
-                  document.getElementsByClassName('btn')[0].innerText = 'Community successful created!';
-                  setTimeout(function () {
-                     window.location.replace("/community");
-                  }, 1400);
-               }
-            });
-
-         } else {
-            console.error("Error creating community.");
-         }
-      });
-}
+// function editCommunity(community) {
+//    console.log("Editing community...");
+//    /**
+//     * local updateCommunity = await fetch(`/community/`, {
+//     * method: 'PUT'
+//     * body: ''
+//     * body: ''
+//     * })
+//     */
+// }
 
 
-function editCommunity(community) {
-   console.log("Editing community...");
-   /**
-    * local updateCommunity = await fetch(`/community/`, {
-    * method: 'PUT'
-    * body: ''
-    * body: ''
-    * })
-    */
-}
+// function prevMembers() {
+//    if (pageResults > 0) {
+//       pageResults = pageResults - 1
+//       getCredits(id, pageResults)
+//    }
+// }
 
 
-function prevMembers() {
-   if (pageResults > 0) {
-      pageResults = pageResults - 1
-      getCredits(id, pageResults)
-   }
-}
+// function nextResults() {
+//    pageResults = pageResults + 1
+//    getCredits(id, pageResults)
+// }
 
 
-function nextResults() {
-   pageResults = pageResults + 1
-   getCredits(id, pageResults)
-}
-
-
-function populateMembers(members, endpoint) {
+function populatePlaylists(members, endpoint) {
    var card = document.getElementById('card-cast');
    var container = document.getElementById('container-cast');
    container.append(card)
@@ -141,9 +116,11 @@ function populateMembers(members, endpoint) {
                response.json().then((members) => {
                   for (const i in members) {
                   // for (var i = pageMembers * 6; i < (pageMembers + 1) * 6; i++) {
-                     var clone = card.cloneNode(true)
-                     // if (members[i] == null) break;
 
+                     /* Skip card creation for creator of community */
+                     if (user._id == members[i]._id) continue;
+
+                     var clone = card.cloneNode(true)
 
                      clone.id = 'card-cast-' + i
                      clone.getElementsByClassName('card-text')[0].innerHTML = members[i].name
@@ -175,6 +152,8 @@ function populateMembers(members, endpoint) {
          // TODO: add button to remove member from community
 
          for (const member in members) {
+            /* Skip card creation for creator of community */
+            if (user._id == members[i]._id) continue;
             fetch(`/users/${members[member]._id}`).then((response) => {
                if (response.ok) {
                   response.json().then((m) => {
@@ -227,6 +206,77 @@ function populateMembers(members, endpoint) {
    }
 }
 
+function populatePlaylists(playlists, endpoint) {
+   var card = document.getElementById('card-cast');
+   var container = document.getElementById('container-cast');
+   container.append(card)
+
+   // console.log(playlists, endpoint)
+   switch (endpoint) {
+      case 'createcommunity':
+         const playlistContainer = document.getElementById("playlistContainer");
+         playlists.forEach(playlist => {
+               var stringified = JSON.stringify(playlist.songs).replace(/"/g, '&quot;');
+               const card = `
+                  <div class="col-md-4 mb-4">
+                  <div class="card h-100">
+                  <div class="card-body">
+                  <h5 class="card-title">${playlist.title}${playlist.private ? '<i class="bi bi-lock-fill text-success"></i>' : ''}</h5>
+                  <p class="card-text">${playlist.description}</p>
+                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
+                  onclick="showSongs('${playlist._id}', ${stringified})">
+                  View Songs
+                  </button>
+                  <button class="btn btn-primary" onclick="toggleCreateCommunityPlaylist(this,'${playlist._id}')">
+                  Add Playlist
+                  </button>
+
+                  </div>
+                  </div>
+                  </div>
+                  `;
+               playlistContainer.innerHTML += card;
+         });
+         break;
+
+      case 'community':
+         // TODO: add button to remove member from community
+
+         for (const member in members) {
+            /* Skip card creation for creator of community */
+            if (user._id == members[i]._id) continue;
+            fetch(`/users/${members[member]._id}`).then((response) => {
+               if (response.ok) {
+                  response.json().then((m) => {
+                     var clone = card.cloneNode(true)
+                     // console.log(m);
+                     clone.id = 'card-cast-' + m._id
+                     clone.getElementsByClassName('card-text')[0].innerHTML = m.name
+                     clone.getElementsByClassName('text-body-secondary')[0].innerHTML = m.nickname
+
+                     // IDT we want to add the profile picture for users... just use a placeholder
+                     clone.getElementsByClassName('card-img-top')[0].src =
+                        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+
+                     let strMember = JSON.stringify(m);
+                     clone.getElementsByClassName('btn btn-danger')[0]
+                        .setAttribute('onClick', `removeMemberFromCommunity('${strMember}')`);
+
+                     clone.classList.remove('d-none')
+                     card.before(clone)
+                  })
+               }
+            }).catch((err) => {
+                  console.error("Error fetching members of community:", err);
+                  alert("Error fetching members of community. Retry!");
+               })
+         }
+
+         break;
+
+      default: break;
+   }
+}
 
 function addUserToCommunityMembers(userId) {
    let checkbox = document.getElementById('user-selection-'+userId);
@@ -274,43 +324,27 @@ function removeMemberFromCommunity(member) {
 }
 
 
-function fetchCommunity(creatorId) {
+async function fetchCommunity(creatorId) {
    fetch(`/community/${creatorId}`)
       .then((response) => {
          if (!response.ok) {
             console.error("Error fetching community.", response);
             return null;
          }
-         response.json().then((communityData) => handleUI(communityData));
+         response.json().then((communityData) => {
+            return communityData ?? null
+         })
       });
 }
 
 
-function handleUI(community) {
-   // console.log(community);
-
-   if (window.location.href.includes('/createcommunity')) {
-      if (!community.error) {
-         document.getElementById('create-community-container').innerHTML = `
-<br><br>
-<h2 style="text-align: center;">User has already a community.</h2>
-<p style="text-align: center; color: grey">click on the button below to show it</p>
-<div>
-   <a style="position:absolute; left:44%; top:50%;" class="btn btn-primary" href="/community">Enter Community</a>
-</div>
-`
-      }
-      populateMembers([], 'createcommunity');
-      return;
-   }
-
-
+function communityHandleUI(uid, community) {
    const communityContainer = document.getElementById('community-container');
    const communityGeneralButton = document.getElementById("communityGeneralButton");
    const deleteCommunityButton = document.getElementById("deleteCommunityButton");
 
    if (!community.error) {
-      populateMembers(community.members, 'community');
+      populatePlaylists(community.members, 'community');
 
       document.getElementById('community-title').innerText = community.name;
       document.getElementById('community-desc').innerText = community.desc;
@@ -367,26 +401,13 @@ function handleUI(community) {
 }
 
 
+
+
 function checkFieldFullfilled() {
    let name = document.getElementById('name').value;
    let desc = document.getElementById('description').value;
 
    return !(name == "") && !(desc == "");
-}
-
-
-function checkIfUserHasCommunity() {
-   // authAndPopulate();
-   // let userId = user._id;
-   console.log(user);
-   // TODO: if user is not logged in, we must tell him to register to the app
-
-   if (!userId) {
-
-      return;
-   }
-
-   fetchCommunity(userId);
 }
 
 

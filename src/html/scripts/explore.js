@@ -98,7 +98,6 @@ async function populateCards(data) {
          return data.albums?.items
       }
    };
-   // console.log(fetchedItems());
    // console.log("DATA:", fetchedItems());
 
    setContainerHtml('default');
@@ -172,13 +171,11 @@ async function populateCards(data) {
 }
 
 async function populatePublicPlaylistCards(data) {
-   let container = document.getElementById("container-items");
    setContainerHtml('Playlist');
 
    const playlistContainer = document.getElementById("playlistPublicContainer");
 
    data.playlists.forEach(playlist => {
-      //var stringified = JSON.stringify(playlist.songs).replace(/"/g, '&quot;');
       var stringified = JSON.stringify(playlist.songs).replace(/"/g, '&quot;');
       const card = `
          <div class="col-md-4 mb-4">
@@ -285,6 +282,7 @@ function getItems(type, query, offset) {
             break;
 
          default:
+            // console.log("Request:", q, t, o);
             fetch(`/search?q=${q}&type=${t}&offset=${o}`)
                .then(response => {
                   if (!response.ok) {

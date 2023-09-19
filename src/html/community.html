@@ -54,6 +54,48 @@
 
             </div>
          </div>
+
+         <br><br>
+       <div class="container">
+         <br><br>
+         <h2 style="text-align:center;">Public Playlists</h2>
+         <div class="row" id="playlistPublicContainer">
+            <!-- Card are dynamically created -->
+         </div>
+      </div>
+      <div class="modal fade custom-modal-xl" id="songsModal" tabindex="-1" aria-labelledby="songsModalLabel"
+         aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="songsModalLabel">Your songs</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                  <table class="table">
+                     <thead>
+                        <tr>
+                           <th scope="col">Title</th>
+                           <th scope="col">Artists</th>
+                           <th scope="col">Album</th>
+                           <th scope="col">Genres</th>
+                           <th scope="col">Duration</th>
+                           <th scope="col">Year</th>
+                        </tr>
+                     </thead>
+                     <tbody id="songsTableBody">
+                        <!-- Songs will be added here dinamically -->
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+      `;
+        <h3 style="text-align: center;">Playlists</h3>
+         <div class="row justify-content-center">
+
+         </div>
       </div>
 
       <br><br>
@@ -63,13 +105,7 @@
       </div>
    </div>
 
-
-   <script src="scripts/menu.js"></script>
-   <script src="scripts/scripts.js"></script>
-   <script src="scripts/community.js"></script>
-   <script>
-
-      authAndPopulate();
+      authAndSetUser();
 
       // TODO: fetch user playlist and add manage button to make it visible or not
       //
@@ -82,4 +118,3 @@
 </body>
 
 
-</html>
