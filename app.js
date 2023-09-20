@@ -45,8 +45,6 @@ app.use(express.static(join(config.__dirname, "/src/config/")));
 app.use(express.static(join(config.__dirname, "/src/public/")));
 app.use(express.static(join(config.__dirname, "/src/html/")));
 
-
-
 /* -------------------- FETCH ------------------- */
 app.get("/playlist", async (_, res) => {
    // #swagger.tags = ['fetch']
@@ -158,7 +156,7 @@ app.put("/users/:id", function (req, res) {
 });
 
 // User delete Endpoint
-app.delete("/users/:id", function (req, res) {
+app.delete("/deleteUser/:id", function (req, res) {
    // #swagger.tags = ['users']
    // #swagger.description = 'Endpoint that allows to delete a specific user from the database'
    // #swagger.parameters['id'] = { description: 'User ID to be deleted.' }

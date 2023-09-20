@@ -1,7 +1,20 @@
 @import url('https://fonts.googleapis.com/css?family=Inconsolata&display=swap');
 /* ================== BODY SECTION AND MAIN COMPONENTS=================== */
+:root {
+  /*--purplecol: #cc00cc;*/
+  --purplecol: #b65fcf;
+  --greycol: #121212;
+  --footercol: #111;
+  --bodybgcolor: #222;
+  --defaulttextsize: 1em;
+  --cardtextsize: 1em;
+  --cardtitlesize: 1.3em;
+  --menutextsize: 1em;
+  --hovertextsize: 1.2em;
+  --deafultSNMsize: 2em;
+}
 body {
-  background-color: #222;
+  background-color: var(--bodybgcolor);
   color: #fff;
   font-family: 'Inconsolata', monospace;
   margin: 0;
@@ -12,19 +25,19 @@ body {
 }
 
 footer {
-  background-color: #111;
+  background-color: var(--footercol);
   color: #ccc;
   padding: 10px;
   text-align: center;
 }
 .menu-link {
-  background-color: #333;
-  color: rgb(207, 135, 0);
-  font-size: 18px;
+  background-color: var(--greycol);
+  color: var(--purplecol);
+  font-size: var(--menutextsize);
   font-weight: bold;
 }
 .navbar {
-  background-color: #333;
+  background-color: var(--greycol);
 }
 
 /* ============================= IMAGES========================= */
@@ -43,11 +56,11 @@ footer {
 /* ============================= MODAL SECTION AND========================= */
 .dropdown-menu{
   color:white;
-  background-color: #333; 
+  background-color: var(--greycol); 
 }
 .dropdown-item{
   color:white;
-  background-color: #333;
+  background-color: var(--greycol);
 
 }
 /* ============================= FOOTER SECTION========================= */
@@ -59,13 +72,9 @@ footer {
   margin-top: 50px; 
 }
 .footer-p{
-  color:orange;
+  color:var(--purplecol);
   font-style:italic;
 }
-/*
-body > footer {
-  margin-top: auto;
-}*/
 .spacer {
   flex-grow: 1; 
 }
@@ -110,12 +119,12 @@ body > footer {
   width: 50%;
   text-align: center;
   color:white;
-  background-color: #333;
+  background-color: var(--greycol);
 }
 /* ============================ TABLES SECTION ============================ */
 
 thead {
-  color: orange;
+  color: var(--purplecol);
   font-style: bold;
 }
 
@@ -130,12 +139,12 @@ textarea {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
-  background-color: #333;
+  font-size: var(--defaulttextsize);
+  background-color: var(--greycol);
   color: white;
 }
 .form-select {
-  background-color: #333;
+  background-color: var(--greycol);
   color: white;
   border: 1px solid white; 
   border-radius:5px;
@@ -143,31 +152,31 @@ textarea {
 
 /* Stile per le opzioni della select */
 .form-select option {
-  background-color: #333;
+  background-color: var(--greycol);
   color: white;
 }
 
 /* ============================ CARDS SECTION ============================ */
 
 .card-title {
-  font-size: 18px;
+  font-size: var(--cardtitlesize);;
   font-weight: bold;
   margin-bottom: 10px;
-  color: orange;
+  color: var(--purplecol);
 }
 
 .card-text {
   color: white;
-  font-size: 16px;
+  font-size: 1em;
   margin-bottom: 10px;
 }
 
 .card {
   border: 1px solid white;
-  background-color: #333;
+  background-color: var(--greycol);
   border: none;
   border-radius: 5px;
-  font-size: 12px;
+  font-size: var(--cardtextsize);
   cursor: pointer;
 }
 .card-body {
@@ -175,11 +184,11 @@ textarea {
 }
 /* ============================ BUTTONS SECTION ============================ */
 .btn {
-  background-color: #333;
-  border: 1px solid orange;
+  background-color: var(--greycol);
+  border: 1px solid var(--purplecol);
   color:white;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: var(--defaulttextsize);
   cursor: pointer;
 }
 /* ============================ LI UL ============================ */
@@ -188,7 +197,7 @@ li,ul{
 }
 /* ============================ TITLES ============================ */
 h1,h2,h3{
-  color: orange;
+  color: var(--purplecol);
   font-style:bold;
 }
 /* ======================= HOVERS AND AFTERS SECTION ======================== */
@@ -197,13 +206,13 @@ h1,h2,h3{
   transform: scale(1.05);
 }
 .btn:hover {
-  background-color: orange; 
+  background-color: var(--purplecol); 
   transform: scale(1.05);
 }
 .snm {
-  background-color: #333;
-  color: orange;
-  font-size: 42px;
+  background-color: var(--greycol);
+  color: var(--purplecol);
+  font-size: var(--deafultSNMsize);
   font-weight: bold;
 }
 
@@ -220,7 +229,7 @@ h1,h2,h3{
   left: 0;
   right: 0;
   text-align: center;
-  font-size: 12px;
+  font-size: var(--hovertextsize);;
 }
 .disable-hover {
   transform: none !important; 

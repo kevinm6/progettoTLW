@@ -2,13 +2,13 @@
 import { ObjectId } from "mongodb";
 import { Db } from "./database.js";
 import { hash } from "./utils.js";
+import { deletePlaylist, deleteUserPlaylists}from "./playlist.js";
 
 
 /**
  * User Collection from MongoDB
  */
 export const dbUserCollection = () => Db('users');
-
 
 
 
@@ -110,23 +110,20 @@ export async function updateUser(res, id, updatedUser) {
  * @param id - id of user to be deleted
  */
 export async function deleteUser(res, id) {
-   let index = users.findIndex((user) => user.id == id)
-   if (index == -1) {
-      res.status(404).send('User not found')
-      return
-   }
-   users = users.filter((user) => user.id != id)
-   res.json(users)
+   id= new ObjectId(id);
    try {
-      var items = await dbUserCollection()
-         .deleteOne(user);
-
+      var items = await dbUserCollection();
+      await items.deleteOne({_id:id});
+      var playlistdel=await deleteUserPlaylists(id);
       res.status(200).send();
    } catch (e) {
       if (e.code == 11000) {
-         res.status(400).send("User Doesn't exist!");
+         res.status(400).send("Error while deleting user!");
+         console.log(e);
          return
       }
-      res.status(500).send(`Generic Error: ${e}`)
+      res.status(500).send(`Generic Error: ${e}`);
+      console.log(e);
    }
 }
+

@@ -370,3 +370,18 @@ export async function updatePlaylist(res, playlistID, playlistData) {
    }
 
 }
+
+// OWNER_ID IS EXPECTED TO ALREADY BE ON OBJ
+export async function deleteUserPlaylists(owner_id){
+   if (owner_id === undefined)return false;
+   try {
+      var playlistCollection = await dbPlaylistCollection();
+      const playlist = await playlistCollection.deleteMany({ owner_id: owner_id});
+      if (!playlist) {
+         return false
+      }
+      return true
+   } catch (e) {
+      return false;
+   }  
+}

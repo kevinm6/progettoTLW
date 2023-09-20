@@ -67,10 +67,11 @@ async function generateMenu() {
    }
 
    const menuElement = document.getElementById("menu");
+   /* <img src="../../public/images/LOGOSNM.png" class="snmimg" alt="Logo"> */
    menuElement.innerHTML = `
       <nav class="navbar navbar-expand-md ">
          <div class="container-fluid">
-         <img src="../../public/images/LOGOSNM.png" class="snmimg" alt="Logo"><a class="navbar-brand snm" href="">Social Network Music</a>
+        <a class="navbar-brand snm" href="">Social Network Music</a>
             <button class="btn navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                <span class="navbar-toggler-icon"></span>

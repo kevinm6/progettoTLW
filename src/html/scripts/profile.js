@@ -25,7 +25,6 @@ function saveChanges() {
         password: userPassword
 
     };
-    console.log(updatedData);
     fetch(`/users/${updatedData._id}`, {
         method: "PUT",
         headers: {
@@ -46,7 +45,29 @@ function saveChanges() {
         console.error("An error has occurred:", error);
     });
 }
-
+async function deleteUser(){
+    del=await showConfirmationModal("Are you sure","By confirming you will delete your account. This action is irreversible","Delete","Cancel");
+    if(!del)return;
+    id=localStorage.getItem("_id");
+    fetch(`/deleteUser/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    }).then(response => {
+        if (response.ok) {
+            alert("Account deleted!");
+            localStorage.removeItem("email");
+            localStorage.removeItem("nickname");
+            localStorage.removeItem("_id");
+            window.location.href = "/register";
+        } else {
+            throw new Error("Errore durante l'eliminazione dell'account");
+        }
+    }).catch(error => {
+        console.error("An error has occurred:", error);
+    });
+}
 function logout() {
     localStorage.removeItem("nickname");
     localStorage.removeItem("email");

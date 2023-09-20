@@ -121,31 +121,21 @@ async function populateCards(data) {
       let trackId = currentItem.id;
 
       clone.getElementsByClassName('card-title')[0].innerHTML = itemInfo.name;
-
       clone.getElementsByClassName('card-text')[0].innerHTML = itemInfo.cardText;
-
       clone.getElementsByClassName('card-img-top')[0].src = itemInfo.img;
-
       clone.getElementsByClassName('text-body-secondary')[0].innerHTML = itemInfo.secondBodyText;
-
       clone.getElementsByClassName('img-responsive')[0].src = itemInfo.img;
-
       clone.getElementsByClassName('modal')[0].setAttribute('id', 'trackModal' + trackId);
       clone.getElementsByClassName('modal-title')[0].setAttribute('id', 'trackModalLabel' + trackId);
       clone.getElementsByClassName('modal-footer')[0].setAttribute('id', 'trackModalFooter' + trackId);
-
       clone.getElementsByClassName('btn-close')[0].setAttribute('data-dismiss', 'trackModal' + trackId);
       // Quando il bottone viene chiuso, riabilita l'hover sulla card!
       clone.getElementsByClassName('btn-close')[0].setAttribute('onclick', 'reenableHoverOnCards()');
-
       clone.getElementsByClassName('btn')[0].setAttribute('data-toggle', 'modal');
       clone.getElementsByClassName('btn')[0].setAttribute('data-target', '#trackModal' + trackId);
-
       let itemToPass = JSON.stringify(itemInfo);
       clone.getElementsByClassName('btn')[0].setAttribute('onClick', `showTrackInfo(${itemToPass})`);
-
       clone.getElementsByClassName('dropdown-menu')[0].setAttribute('id', 'playlistSelect' + trackId);
-
       let playlistsOptions = playlists && Object.values(playlists).length > 0 ? createPlaylistsOption(trackId, playlists) : null;
       if (playlistsOptions == null) {
          clone.getElementsByClassName('dropdown-toggle')[0].disabled = true;
@@ -424,7 +414,6 @@ Do you want to import this playlist to your personal list?
 /* Util function to switch HTML based on element to visualize */
 function setContainerHtml(items) {
    let container = document.getElementById('container-items');
-
    switch (items) {
       case 'Playlist':
          container.innerHTML = `<div class="container">
@@ -467,63 +456,62 @@ function setContainerHtml(items) {
          break;
 
       default:
-         container.innerHTML = `<div class="row g-4 mt-4 p-4">
-            <nav aria-label="Page navigation example">
-               <ul class="pagination">
-                  <li class="page-item"><button class=" btn" id="prev-page-result">Previous</button></li>
+         container.innerHTML = `
+            <div class="row g-4 mt-4 p-4">
+               <nav aria-label="Page navigation example">
+                  <ul class="pagination">
+                     <li class="page-item"><button class="btn" id="prev-page-result">Previous</button></li>
+                     <li class="page-item"><button class="btn" id="next-page-result">Next</button></li>
+                  </ul>
+               </nav>
+            </div>
 
-                  <li class="page-item"><button class=" btn" id="next-page-result">Next</button></li>
-               </ul>
-            </nav>
-         </div>
-
-         <div id="container-track" class="row g-4 mt-2 p-4">
-            <div id="card-track" class="col-3 d-none">
-               <div class="card h-100" style="width: 18rem;">
-                  <img class="card-img-top" alt="...">
-                  <div class="card-body">
-                     <h5 class="card-title"></h5>
-                     <p class="card-text"></p>
-
-                  </div>
-                  <div class="card-footer">
-                     <p class="card-text">
-                        <small class="text-body-secondary"></small>
-                     </p>
-
-                     <!-- Trigger the modal with a button -->
-                     <button type="button" class="btn">Info</button>
-                     <div class="btn-group dropup">
-                       <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
-                         Add to Playlist
-                       </button>
-                        <div class="dropdown-menu dropdown-menu-right" id="playlist-select-">
-
-                        </div>
+            <div id="container-track" class="row g-4 mt-2 p-4">
+               <div id="card-track" class="card col-lg-3 col-md-4 col-12">
+                  <div class="card h-100">
+                     <img class="card-img-top" alt="...">
+                     <div class="card-body">
+                        <h5 class="card-title"></h5>
+                        <p class="card-text"></p>
                      </div>
-
-                     <!-- Modal -->
-                     <div class="modal" id="trackModal" tabindex="-1" aria-labelledby="trackModalLabel" aria-hidden='true'>
-                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                           <!-- Modal content -->
-                           <div class="modal-content">
-                              <div class="modal-header">
-                                 <h5 class="modal-title text-center" id="trackModalLabel"></h5>
-                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="modalclose"></button>
+                     <div class="card-footer">
+                        <p class="card-text">
+                           <small class="text-body-secondary"></small>
+                        </p>
+                        
+                        <!-- Trigger the modal with a button -->
+                        <button type="button" class="btn">Info</button>
+                        <div class="btn-group dropup">
+                           <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
+                              Add to Playlist
+                           </button>
+                           <div class="dropdown-menu dropdown-menu-right" id="playlist-select-">
+                           </div>
+                        </div>
+                        
+                        <!-- Modal -->
+                        <div class="modal" id="trackModal" tabindex="-1" aria-labelledby="trackModalLabel" aria-hidden="true">
+                           <div class="modal-dialog modal-dialog-centered modal-lg">
+                              <!-- Modal content -->
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="trackModalLabel"></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="modalclose"></button>
+                                 </div>
+                                 <div class="modal-body" id="trackModalBody">
+                                    <img class="img-responsive" alt="">
+                                 </div>
+                                 <div class="modal-footer" id="trackModalFooter"></div>
                               </div>
-                              <div class="modal-body" id="trackModalBody">
-                                 <img class="img-responsive" alt="">
-                              </div>
-                              <div class="modal-footer" id="trackModalFooter"></div>
                            </div>
                         </div>
                      </div>
                   </div>
                </div>
-
             </div>
-         </div>
-      </div>`;
+            </div>`;
+
+
          break;
    }
 
