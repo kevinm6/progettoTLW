@@ -40,6 +40,7 @@
          <div class="col d-none" id="card-cast">
             <div class="card">
                <img src="" class="card-img-top" alt="...">
+
                <div class="card-body">
                   <p class="card-text "></p>
                   <p class="card-text"><small class="text-body-secondary"></small></p>
@@ -47,22 +48,19 @@
                   <button type="button" class="btn btn-danger">
                      <i class="fa fa-close"></i></button>
                </div>
-               <!-- <div class="card-footer"> -->
-               <!--    <input class="checkbox" type="checkbox" id="user-selection-"/> -->
-               <!--    <label for='user-selection-'><label> -->
-               <!-- </div> -->
 
             </div>
          </div>
+      </div>
 
          <br><br>
-       <div class="container">
-         <br><br>
-         <h2 style="text-align:center;">Public Playlists</h2>
+      <div class="container">
+         <h2 style="text-align:center;">Shared Playlists</h2>
          <div class="row" id="playlistPublicContainer">
-            <!-- Card are dynamically created -->
+            <!-- Cards are dynamically created -->
          </div>
       </div>
+
       <div class="modal fade custom-modal-xl" id="songsModal" tabindex="-1" aria-labelledby="songsModalLabel"
          aria-hidden="true">
          <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -91,11 +89,6 @@
             </div>
          </div>
       </div>
-      `;
-        <h3 style="text-align: center;">Playlists</h3>
-         <div class="row justify-content-center">
-
-         </div>
       </div>
 
       <br><br>
@@ -105,17 +98,17 @@
       </div>
    </div>
 
-   <script>
-      authAndSetUser();
+   <script src="scripts/menu.js"></script>
+   <script src="scripts/scripts.js"></script>
+   <script src="scripts/community.js"></script>
 
-      // TODO: fetch user playlist and add manage button to make it visible or not
-      //
-      // async function getUserPlaylists(user) {
-      // }
+   <script>
+      authAndSetUser('community');
+
    </script>
+
    <div class="spacer"></div>
    <footer id="footer"></footer>
    <script type="module" src="../html/scripts/footer.js"></script>
+
 </body>
-
-

@@ -1,7 +1,6 @@
 var user = null;
-
-var communityMembers = {};
 var pageMembers = 0;
+
 
 // TODO: divide createcommunity function in separate module and fix
 
@@ -19,6 +18,7 @@ async function authAndSetUser(endpoint) {
          throw new Error("Utente non loggato");
       } else {
          user = await userData;
+         console.log(user);
          checkIfUserHasCommunity(endpoint, user._id);
       }
    } catch (error) {
@@ -27,12 +27,13 @@ async function authAndSetUser(endpoint) {
 }
 
 async function checkIfUserHasCommunity(endpoint, uid) {
-   // TODO: if user is not logged in, we must tell him to register to the app
+   // TODO: improve if user is not logged
    if (!uid) {
       alert("You need to register to the app!");
       return;
    }
    let community = await fetchCommunity(uid);
+   console.log(endpoint, uid, community);
 
    switch (endpoint) {
       case 'createcommunity':
@@ -47,6 +48,8 @@ async function checkIfUserHasCommunity(endpoint, uid) {
             `;
             return
          };
+
+
          populateMembers([], endpoint);
          getUserPlaylists(uid, endpoint);
          break;
@@ -65,6 +68,8 @@ async function checkIfUserHasCommunity(endpoint, uid) {
             `;
             return
          };
+
+         populateMembers(community.members, endpoint);
          communityHandleUI(uid, community);
          break;
 
@@ -73,33 +78,33 @@ async function checkIfUserHasCommunity(endpoint, uid) {
 }
 
 
-async function fetchUsersAndUpdateCards(membersData) {
-   // TODO: needs button to add users to community
-   if (membersData.lenght == null) return;
-   try {
-      membersData.forEach(async member => {
-         let res = await fetch(`/users/${member}`);
-         let memberInfo = await res.json()
-         // console.log(memberInfo, memberInfo[0].nickname)
-         const membersContainer = document.getElementById('membersContainer');
-         const card = `
-<div class="col-md-4 mb-4">
-<div class="card">
-<div class="card-body">
-<h5 class="card-title">${memberInfo[0].nickname}</h5>
-</div>
-</div>
-</div>
-`;
-         membersContainer.innerHTML += card;
-         // return memberInfo
-      });
+// async function fetchUsersAndUpdateCards(membersData) {
+//    // TODO: needs button to add users to community
+//    if (membersData.lenght == null) return;
+//    try {
+//       membersData.forEach(async member => {
+//          let res = await fetch(`/users/${member}`);
+//          let memberInfo = await res.json()
+//          // console.log(memberInfo, memberInfo[0].nickname)
+//          const membersContainer = document.getElementById('membersContainer');
+//          const card = `
+// <div class="col-md-4 mb-4">
+// <div class="card">
+// <div class="card-body">
+// <h5 class="card-title">${memberInfo[0].nickname}</h5>
+// </div>
+// </div>
+// </div>
+// `;
+//          membersContainer.innerHTML += card;
+//          // return memberInfo
+//       });
 
-   } catch (error) {
-      console.error("Errore durante il recupero degli utenti:", error);
-      return {};
-   }
-}
+//    } catch (error) {
+//       console.error("Errore durante il recupero degli utenti:", error);
+//       return {};
+//    }
+// }
 
 
 // function editCommunity(community) {
@@ -188,7 +193,7 @@ function populateMembers(members, endpoint) {
 
          for (const member in members) {
             /* Skip card creation for creator of community */
-            if (user._id == members[i]._id) continue;
+            if (user._id == member._id) continue;
             fetch(`/users/${members[member]._id}`).then((response) => {
                if (response.ok) {
                   response.json().then((m) => {
@@ -339,16 +344,9 @@ function removeMemberFromCommunity(member) {
 
 
 async function fetchCommunity(creatorId) {
-   fetch(`/community/${creatorId}`)
-      .then((response) => {
-         if (!response.ok) {
-            console.error("Error fetching community.", response);
-            return null;
-         }
-         response.json().then((communityData) => {
-            return communityData ?? null
-         })
-      });
+   const res = await fetch(`/community/${creatorId}`)
+   let communityData = await res.json();
+   return communityData;
 }
 
 
@@ -357,61 +355,44 @@ function communityHandleUI(uid, community) {
    const communityGeneralButton = document.getElementById("communityGeneralButton");
    const deleteCommunityButton = document.getElementById("deleteCommunityButton");
 
-   if (!community.error) {
-      populatePlaylists(community.members, 'community');
+   document.getElementById('community-title').innerText = community.name;
+   document.getElementById('community-desc').innerText = community.desc;
 
-      document.getElementById('community-title').innerText = community.name;
-      document.getElementById('community-desc').innerText = community.desc;
+   // if (community.creatorId == user._id) {
+   communityGeneralButton.removeAttribute('disabled');
+   deleteCommunityButton.removeAttribute('disabled');
 
-      // if (community.creatorId == user._id) {
-      communityGeneralButton.removeAttribute('disabled');
-      deleteCommunityButton.removeAttribute('disabled');
-
-      communityGeneralButton.addEventListener("click", () => {
-         // TODO: manage edit of community:
-         //        - add/remove members
-         //        - add/remove playlist
-         editCommunity(community);
-         // window.location.href = '/createcommunity';
-      });
+   communityGeneralButton.addEventListener("click", () => {
+      // TODO: manage edit of community:
+      //        - add/remove members
+      //        - add/remove playlist
+      editCommunity(community);
+      // window.location.href = '/createcommunity';
+   });
 
 
-      deleteCommunityButton.addEventListener("click", () => {
-         // console.log(user);
-         if (window.confirm("Do you really want to delete this community?")) {
-            try {
-               fetch(`/community/${user.id}`, {
-                  method: 'DELETE',
-                  headers: {
-                     'Content-Type': 'application/json;charset=utf-8'
-                  },
-                  body: JSON.stringify({ creatorId: user._id})
-               }).then(response => {
-                     console.log(response.json());
-                     alert(response);
-                     if (response.ok) {
-                        window.location.replace('/community');
-                     }
-                  })
-            } catch (err) {
-               console.error(err)
-            }
+   deleteCommunityButton.addEventListener("click", () => {
+      // console.log(user);
+      if (window.confirm("Do you really want to delete this community?")) {
+         try {
+            fetch(`/community/${user.id}`, {
+               method: 'DELETE',
+               headers: {
+                  'Content-Type': 'application/json;charset=utf-8'
+               },
+               body: JSON.stringify({ creatorId: user._id})
+            }).then(response => {
+                  console.log(response.json());
+                  alert(response);
+                  if (response.ok) {
+                     window.location.replace('/community');
+                  }
+               })
+         } catch (err) {
+            console.error(err)
          }
-      });
-
-      // TODO: manage if user != creator
-      // }
-   } else {
-
-      communityContainer.innerHTML = `
-<br><br>
-<h2 style="text-align: center;">No Community found.</h2>
-<p style="text-align: center; color: grey">click on the button below to create one</p>
-<div>
-   <a style="position:absolute; left:44%; top:50%;" class="btn btn-primary" href="/createcommunity">Create Community</a>
-</div>
-`
-   }
+      }
+   });
 }
 
 

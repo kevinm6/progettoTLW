@@ -29,12 +29,7 @@ export async function getCommunity(req, res) {
    let collection = await dbCommunityCollection();
    let community = await collection
       .findOne({ creatorId: new ObjectId(cid) });
-
-   if (community == null) {
-      res.json({'error': "No community found"});
-      return;
-   }
-   res.send(community);
+   res.json(community);
 }
 
 
@@ -99,8 +94,8 @@ Do you want to go to your community?"
  */
 export async function updateCommunity(req, res) {
    let cid = req.body.creatorId;
-   let member = req.body.member;
-   console.log(member);
+   let member = JSON.parse(req.body.member);
+   console.log("API updateCommunity: ", cid, member._id);
 
    var filter = { creatorId: new ObjectId(cid) };
 

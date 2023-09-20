@@ -1,3 +1,4 @@
+var communityMembers = {};
 let playlists = [];
 
 function createCommunity(self, uid) {
