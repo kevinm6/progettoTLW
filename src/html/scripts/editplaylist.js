@@ -65,7 +65,7 @@ async function fetchAndPopulate(id) {
     songsContainer.innerHTML = '';
     playlistData.songs.forEach((song) => {
         const trackCardHTML = generateTrackCard(song,id);
-        songsContainer.insertAdjacentHTML('beforeend', `<div class="song-card">${trackCardHTML}</div>`);
+        songsContainer.insertAdjacentHTML('beforeend', `${trackCardHTML}`);
     });
 }
 /**
@@ -81,8 +81,9 @@ async function fetchAndPopulate(id) {
  * @returns {string} - An HTML string representing the song track card.
  */
 function generateTrackCard(song,id) {
-    const trackCard = `
-        <div class="card mb-3">
+    var trackCard = `
+    <div class="col-lg-3 col-md-6 col-12 mb-3">
+        <div class="card">
             <div class="card-body">
                 <h5 class="card-title">${song.title}</h5>
                 <p class="card-text">Artisti: ${song.artist}</p>
@@ -90,11 +91,12 @@ function generateTrackCard(song,id) {
                 <p class="card-text">Year: ${song.year}</p>
                 <p class="card-text">Album: ${song.album}</p>
                 <button class="btn btn-danger remove-button" data-id="${song.id}" onclick="deleteSong('${song.id}','${id}')">
-                Rimuovi
-            </button>
+                    Rimuovi
+                </button>
             </div>
         </div>
-    `;
+    </div>
+`;
 
     return trackCard;
 }
@@ -203,7 +205,8 @@ function generateCards(trackname, artists, duration, albumname, trackid, trackur
     }
     song=JSON.stringify(song).replace(/"/g, '&quot;').replace(/'/g, '')
     const trackCard = `
-        <div class="card mb-3">
+    <div class="col-sm-6 mb-3">
+        <div class="card">
             <div class="card-body">
                 <h5 class="card-title">${trackname}</h5>
                 <p class="card-text">Artisti: ${artists}</p>
@@ -217,13 +220,13 @@ function generateCards(trackname, artists, duration, albumname, trackid, trackur
                     </audio>
                 </div>
                 <button class="btn btn-success add-button add-track" onclick="addSong('${playlistID}', '${song}')">
-                Add song
-            </button>
-            
+                    Add song
+                </button>
             </div>
         </div>
-    `;
-
+    </div>
+`;
+    console.log("WTF");
     return trackCard;
 
 }

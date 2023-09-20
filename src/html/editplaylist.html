@@ -69,12 +69,13 @@
             <label for="description" class="form-label"><b>Add songs to playlist</b></label>
             <input type="text" id="searchInput" class="form-control mt-4" placeholder="Cerca canzoni">
         </div>
-        <div id="searchResults"></div><br>
+        <div id="searchResults" class="row"></div><br>
         <div class="mb-3">
-            <br>
-            <label for="songs" class="form-label"><b>Playlist's songs</b></label>
-            <div id="songsContainer" class="song-container"></div>
-
+        <br>
+        <label for="songs" class="form-label"><b>Playlist's songs</b></label>
+        <div class="row" id="songsContainer">
+            <!-- Qui verranno aggiunte dinamicamente le card delle playlist -->
+        </div>
         </div>
     </div>
 

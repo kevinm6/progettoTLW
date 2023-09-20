@@ -466,7 +466,7 @@ function setContainerHtml(items) {
                </nav>
             </div>
 
-            <div id="container-track" class="row g-4 mt-2 p-4">
+            <div id="container-track" class="row g-4 mt-2 p-4 mb-3">
                <div id="card-track" class="card col-lg-3 col-md-4 col-12">
                   <div class="card h-100">
                      <img class="card-img-top" alt="...">

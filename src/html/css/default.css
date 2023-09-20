@@ -6,12 +6,6 @@
   --greycol: #121212;
   --footercol: #111;
   --bodybgcolor: #222;
-  --defaulttextsize: 1em;
-  --cardtextsize: 1em;
-  --cardtitlesize: 1.3em;
-  --menutextsize: 1em;
-  --hovertextsize: 1.2em;
-  --deafultSNMsize: 2em;
 }
 body {
   background-color: var(--bodybgcolor);
@@ -33,7 +27,6 @@ footer {
 .menu-link {
   background-color: var(--greycol);
   color: var(--purplecol);
-  font-size: var(--menutextsize);
   font-weight: bold;
 }
 .navbar {
@@ -139,7 +132,6 @@ textarea {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: var(--defaulttextsize);
   background-color: var(--greycol);
   color: white;
 }
@@ -159,7 +151,6 @@ textarea {
 /* ============================ CARDS SECTION ============================ */
 
 .card-title {
-  font-size: var(--cardtitlesize);;
   font-weight: bold;
   margin-bottom: 10px;
   color: var(--purplecol);
@@ -167,7 +158,6 @@ textarea {
 
 .card-text {
   color: white;
-  font-size: 1em;
   margin-bottom: 10px;
 }
 
@@ -176,7 +166,6 @@ textarea {
   background-color: var(--greycol);
   border: none;
   border-radius: 5px;
-  font-size: var(--cardtextsize);
   cursor: pointer;
 }
 .card-body {
@@ -188,7 +177,6 @@ textarea {
   border: 1px solid var(--purplecol);
   color:white;
   border-radius: 5px;
-  font-size: var(--defaulttextsize);
   cursor: pointer;
 }
 /* ============================ LI UL ============================ */
@@ -212,7 +200,6 @@ h1,h2,h3{
 .snm {
   background-color: var(--greycol);
   color: var(--purplecol);
-  font-size: var(--deafultSNMsize);
   font-weight: bold;
 }
 
@@ -229,7 +216,6 @@ h1,h2,h3{
   left: 0;
   right: 0;
   text-align: center;
-  font-size: var(--hovertextsize);;
 }
 .disable-hover {
   transform: none !important; 

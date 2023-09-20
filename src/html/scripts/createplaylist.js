@@ -62,25 +62,31 @@ function addSelectedSong(songId, songTitle, artist, duration,year,album) {
  */
 function generateCards(trackname, artists, duration, albumname, trackid, trackurl,year) {
     const trackCard = `
-        <div class="card mb-3">
+    <div class="col-sm-6 mb-3">
+        <div class="card">
             <div class="card-body">
                 <h5 class="card-title">${trackname}</h5>
                 <p class="card-text">Artisti: ${artists}</p>
                 <p class="card-text">Durata: ${duration}</p>
                 <p class="card-text">Album: ${albumname}</p>
                 <p class="card-text">Spotify ID: ${trackid}</p>
-                <div class="audio-player">
-                    <audio controls class="custom-audio-player">
-                        <source src="${trackurl}" type="audio/mpeg">
-                        Il tuo browser non supporta l'elemento audio.
-                    </audio>
+                <div class="d-none d-md-block d-lg-none"> 
+                    <div class="audio-player">
+                        <audio controls class="custom-audio-player">
+                            <source src="${trackurl}" type="audio/mpeg">
+                            Il tuo browser non supporta l'elemento audio.
+                        </audio>
+                    </div>
                 </div>
                 <button class="btn btn-success add-button add-track" data-id="${trackid}" data-title="${trackname}" data-artists="${artists}" data-duration="${duration}" data-year="${year}" data-album="${albumname}">
                     Add song
                 </button>
             </div>
         </div>
-    `;
+    </div>
+`;
+    
+    
 
     return trackCard;
 
