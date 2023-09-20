@@ -44,8 +44,9 @@ async function checkIfUserHasCommunity(endpoint, uid) {
             <br><br>
             <h2 style="text-align: center;">User has already a community.</h2>
             <p style="text-align: center; color: grey">click on the button below to show it</p>
+            <br>
             <div>
-               <a style="position:absolute; left:44%; top:50%;" class="btn btn-primary" href="/community">Enter Community</a>
+               <a style="position:relative; left:44%; top:50%;" class="btn btn-primary" href="/community">Enter Community</a>
             </div>
             `;
             return
@@ -352,22 +353,39 @@ async function fetchCommunity(creatorId) {
 
 
 function communityHandleUI(community) {
-   const communityContainer = document.getElementById('community-container');
+   // const communityContainer = document.getElementById('community-container');
    const communityGeneralButton = document.getElementById("communityGeneralButton");
 
    document.getElementById('community-title').innerText = community.name;
    document.getElementById('community-desc').innerText = community.desc;
 
-   // if (community.creatorId == user._id) {
-   communityGeneralButton.removeAttribute('disabled');
+   if (community.creatorId == user._id) {
+      communityGeneralButton.removeAttribute('disabled');
 
-   communityGeneralButton.addEventListener("click", () => {
-      toggleEditCommunity(community);
-   });
+      communityGeneralButton.removeEventListener('hover', () => {
+         communityGeneralButton.style.display = 'block';
+         communityGeneralButton.innerText = `You are not the owner of this community.
+         Only the creator can!`;
+      });
+      communityGeneralButton.addEventListener('click', () => {
+         toggleEditCommunity(community);
+      });
+   } else {
+      communityGeneralButton.removeEventListener("click");
+      communityGeneralButton.addEventListener('hover', () => {
+         communityGeneralButton.style.display = 'block';
+         communityGeneralButton.innerText = `You are not the owner of this community.
+         Only the creator can!`;
+      })
+   }
 }
 
 
 function toggleEditCommunity(community) {
+   const communityTitle = document.getElementById('community-title');
+   const communityDesc = document.getElementById('community-desc');
+
+   // TODO: check changes and update!!!
    if (edit) {
       edit = false;
       let btns = document.querySelectorAll('.btn-danger');
@@ -375,7 +393,8 @@ function toggleEditCommunity(community) {
          btn.setAttribute('disabled', true);
          btn.setAttribute('hidden', true);
       })
-
+      communityTitle.removeAttribute('contenteditable');
+      communityDesc.removeAttribute('contenteditable');
    } else {
       edit = true;
       let btns = document.querySelectorAll('.btn-danger');
@@ -383,6 +402,8 @@ function toggleEditCommunity(community) {
          btn.removeAttribute('disabled');
          btn.removeAttribute('hidden');
       })
+      communityTitle.setAttribute('contenteditable', true);
+      communityDesc.setAttribute('contenteditable', true);
 
       const deleteCommunityButton = document.getElementById("deleteCommunityButton");
       deleteCommunityButton.addEventListener("click", () => {
