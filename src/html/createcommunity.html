@@ -1,162 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Create Community</title>
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-   <link rel="stylesheet" href="./css/default.css">
-</head>
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Create Community</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+      <link rel="stylesheet" href="./css/default.css">
+   </head>
 
-<body>
-   <div id="menu"></div>
+   <body>
+      <div id="menu"></div>
 
-   <div class="container" id="create-community-container">
-      <h2 style="text-align: center;">Create new community</h2>
+      <div class="container" id="create-community-container">
+
+         <h1 style="text-align: center;">Create new community</h1>
 
          <form name='communityForm' id="create-community-form">
+
             <div class="mb-3">
-               <label for="name" class="form-label">Name</label>
-               <input type="text" class="form-control" id="name" name="name" required>
+               <h4 style="text-align:center;">Name</h4>
+               <input type="text" class="form-control" id="name" name="name">
             </div>
+
             <div class="mb-3">
-               <label for="description" class="form-label">Description</label>
-               <input type="text" class="form-control" id="description" name="description" required>
+               <h4 style="text-align:center;">Description</h4>
+               <input type="text" class="form-control" id="description" name="description">
             </div>
+
             <div class="mb-3">
-               <h3 style="text-align:center;">Members</h3>
+               <h4 style="text-align:center;">Members</h4>
                <!-- <label for="members" class="form-label">Members</label> -->
 
                <div id="container-cast" class="row mt-2 row-cols-2
                   row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4">
-               <div class="col d-none" id="card-cast">
-                  <div class="card">
-                     <img src="" class="card-img-top" alt="...">
-                     <div class="card-body">
-                        <p class="card-text "></p>
-                        <p class="card-text"><small class="text-body-secondary"></small>
-                        </p>
-                     </div>
-                     <div class="card-footer">
-                        <input class="checkbox" type="checkbox" id="user-selection-" />
-                        <label for='user-selection-'><label>
-                     </div>
+                  <div class="col d-none" id="card-cast">
+                     <div class="card">
+                        <img src="" class="card-img-top" alt="...">
+                        <div class="card-body">
+                           <p class="card-text "></p>
+                           <p class="card-text"><small class="text-body-secondary"></small>
+                           </p>
+                        </div>
+                        <div class="card-footer">
+                           <input class="checkbox" type="checkbox" id="user-selection-" />
+                           <label for='user-selection-'><label>
+                        </div>
 
+                     </div>
                   </div>
                </div>
             </div>
 
-            <br><br>
-
             <div class="mb-3">
+
                <div class="container">
-                  <h3 style="text-align:center;">Community Playlists</h3>
+                  <h4 style="text-align:center;">Community Playlists</h4>
                   <div class="row" id="playlistContainer">
                      <!-- Card are dynamically created -->
                   </div>
                </div>
-            <div class="modal fade custom-modal-xl" id="songsModal" tabindex="-1" aria-labelledby="songsModalLabel"
-               aria-hidden="true">
-               <div class="modal-dialog modal-dialog-centered modal-lg">
-                  <div class="modal-content">
-                     <div class="modal-header">
-                        <h5 class="modal-title" id="songsModalLabel">Your songs</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                     </div>
-                     <div class="modal-body">
-                        <table class="table">
-                           <thead>
-                              <tr>
-                                 <th scope="col">Title</th>
-                                 <th scope="col">Artists</th>
-                                 <th scope="col">Album</th>
-                                 <th scope="col">Genres</th>
-                                 <th scope="col">Duration</th>
-                                 <th scope="col">Year</th>
-                              </tr>
-                           </thead>
-                           <tbody id="songsTableBody">
-                              <!-- Songs will be added here dinamically -->
-                           </tbody>
-                        </table>
+
+               <div class="modal fade custom-modal-xl" id="songsModal" tabindex="-1" aria-labelledby="songsModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-lg">
+                     <div class="modal-content">
+                        <div class="modal-header">
+                           <h5 class="modal-title" id="songsModalLabel">Your songs</h5>
+                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                           <table class="table">
+                              <thead>
+                                 <tr>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Artists</th>
+                                    <th scope="col">Album</th>
+                                    <th scope="col">Genres</th>
+                                    <th scope="col">Duration</th>
+                                    <th scope="col">Year</th>
+                                 </tr>
+                              </thead>
+                              <tbody id="songsTableBody">
+                                 <!-- Songs will be added here dinamically -->
+                              </tbody>
+                           </table>
+                        </div>
                      </div>
                   </div>
                </div>
+
             </div>
 
-            <br><br>
+         </form>
 
-            <div class="mb-3">
-               <div class="container">
-                  <h3 style="text-align:center;">Community Playlists</h3>
-                  <div class="row" id="playlistContainer">
-                     <!-- Card are dynamically created -->
-                  </div>
-               </div>
-            <div class="modal fade custom-modal-xl" id="songsModal" tabindex="-1" aria-labelledby="songsModalLabel"
-               aria-hidden="true">
-               <div class="modal-dialog modal-dialog-centered modal-lg">
-                  <div class="modal-content">
-                     <div class="modal-header">
-                        <h5 class="modal-title" id="songsModalLabel">Your songs</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                     </div>
-                     <div class="modal-body">
-                        <table class="table">
-                           <thead>
-                              <tr>
-                                 <th scope="col">Title</th>
-                                 <th scope="col">Artists</th>
-                                 <th scope="col">Album</th>
-                                 <th scope="col">Genres</th>
-                                 <th scope="col">Duration</th>
-                                 <th scope="col">Year</th>
-                              </tr>
-                           </thead>
-                           <tbody id="songsTableBody">
-                              <!-- Songs will be added here dinamically -->
-                           </tbody>
-                        </table>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         <button type="button" class="btn btn-primary" disabled>Create Community</button>
-      </form>
-
+      </div>
+      <div class="spacer"></div>
+      <button type='button' id='btn-createcommunity' class="btn btn-primary" disabled>Create Community</button>
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
       <script src="scripts/menu.js"></script>
       <script src="scripts/scripts.js"></script>
-      <script src="scripts/createcommunity.js"></script>
+      <script src="scripts/createCommunity.js"></script>
       <script src="scripts/community.js"></script>
       <script src="scripts/playlists.js"></script>
       <script>
-      authAndSetUser('createcommunity');
 
-      let createCommunityButton = document.getElementsByClassName('btn')[0];
+         authAndSetUser('createcommunity');
 
-      let name = document.getElementById('name');
-      name.addEventListener('input', (event) => {
-         if (name.value === "" || name.value == null) {
-            createCommunityButton.disabled = true;
-         } else {
-            createCommunityButton.removeAttribute('disabled');
-         }
-      })
+         const createCommunityButton = document.getElementById('btn-createcommunity');
 
-      createCommunityButton.addEventListener('click', () => {
-         let userId = localStorage.getItem('_id');
-         createCommunity(userId);
-      })
+         let name = document.getElementById('name');
+         name.addEventListener('input', (event) => {
+            if (name.value === "" || name.value == null) {
+               createCommunityButton.disabled = true;
+            } else {
+               createCommunityButton.removeAttribute('disabled');
+            }
+         })
 
-      // Aggiungi qui il codice JavaScript per la creazione della community
-   </script>
-    <div class="spacer"></div>
-    <footer id="footer"></footer>
-    <script type="module" src="../html/scripts/footer.js"></script>
-</body>
+         createCommunityButton.addEventListener('click', () => {
+            let userId = localStorage.getItem('_id');
+            createCommunity(createCommunityButton, userId);
+         })
+
+      </script>
+
+      <div class="spacer"></div>
+      <footer id="footer"></footer>
+      <script type="module" src="../html/scripts/footer.js"></script>
+   </body>
 

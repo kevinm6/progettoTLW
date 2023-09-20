@@ -64,8 +64,8 @@ export async function getMembersOfCommunity(req, res) {
  */
 export async function createCommunity(req, res) {
    let newCommunity = req.body;
-
    newCommunity.creatorId = new ObjectId(req.body.creatorId);
+
    for (const member in newCommunity.members) {
       let memberId = newCommunity.members[member]._id;
       newCommunity.members[member]._id = new ObjectId(memberId);

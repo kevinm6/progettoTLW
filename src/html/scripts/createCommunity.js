@@ -1,7 +1,6 @@
 let playlists = [];
 
-
-function createCommunity(userId) {
+function createCommunity(self, uid) {
    let name = document.getElementById('name').value;
    let description = document.getElementById('description').value;
 
@@ -9,16 +8,15 @@ function createCommunity(userId) {
       alert("Community name can't be empty!\nUpdate it and retry");
       return;
    }
+   console.log(self);
 
    let newCommunity = {
-      creatorId: userId,
+      creatorId: uid,
       name: name,
       desc: description,
       members: communityMembers,
       playlists: playlists
    };
-
-   console.log(newCommunity);
 
    fetch('/createcommunity', {
       method: "POST",
@@ -32,8 +30,8 @@ function createCommunity(userId) {
                if (msg.error) {
                   if (confirm(msg.error)) window.location.replace('/community');
                } else {
-                  document.getElementsByClassName('btn')[0].style.backgroundColor = 'green';
-                  document.getElementsByClassName('btn')[0].innerText = 'Community successful created!';
+                  self.innerText = ' Community successful created!';
+                  self.style.backgroundColor = 'green';
                   setTimeout(function() {
                      window.location.replace("/community");
                   }, 1400);
@@ -47,40 +45,13 @@ function createCommunity(userId) {
 }
 
 
-function createCommunityHandleUI(community) {
-   if (!community == null) {
-      document.getElementById('create-community-container').innerHTML = `
-<br><br>
-<h2 style="text-align: center;">User has already a community.</h2>
-<p style="text-align: center; color: grey">click on the button below to show it</p>
-<div>
-   <a style="position:absolute; left:44%; top:50%;" class="btn btn-primary" href="/community">Enter Community</a>
-</div>
-`
-   } else {
-      getUserPlaylists(user._id);
-      return;
-   }
-}
-
-
-function getUserPlaylists(uid) {
-   fetch(`/playlist/${uid}`).then((response) => {
-      if (response.ok) {
-         response.json().then((playlists) => {
-            populatePlaylists(playlists, 'createcommunity');
-         })
-      }
-   })
-}
-
-
 function toggleCreateCommunityPlaylist(self, pid) {
+   console.log(self, pid);
    switch (self.innerText) {
       case 'Add Playlist':
+         playlists.push(pid);
          self.innerText = 'Remove Playlist';
          self.className = 'btn btn-danger';
-         playlists.push(pid);
          break;
 
       case 'Remove Playlist':
@@ -95,3 +66,4 @@ function toggleCreateCommunityPlaylist(self, pid) {
    }
    console.log(playlists);
 }
+

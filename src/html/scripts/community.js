@@ -5,28 +5,6 @@ var pageMembers = 0;
 
 // TODO: divide createcommunity function in separate module and fix
 
-
-async function checkIfUserHasCommunity(endpoint, uid) {
-   // TODO: if user is not logged in, we must tell him to register to the app
-   if (!uid) {
-      alert("You need to register to the app!");
-      return;
-   }
-   let community = await fetchCommunity(uid);
-
-   switch (endpoint) {
-      case 'createcommunity':
-         createCommunityHandleUI(uid, community);
-         break;
-
-      case 'community':
-         communityHandleUI(uid, community);
-         break;
-
-      default: break;
-   }
-}
-
 async function authAndSetUser(endpoint) {
    try {
       const userData = await authenticateUser();
@@ -45,6 +23,52 @@ async function authAndSetUser(endpoint) {
       }
    } catch (error) {
       console.error("Errore durante l'esecuzione:", error);
+   }
+}
+
+async function checkIfUserHasCommunity(endpoint, uid) {
+   // TODO: if user is not logged in, we must tell him to register to the app
+   if (!uid) {
+      alert("You need to register to the app!");
+      return;
+   }
+   let community = await fetchCommunity(uid);
+
+   switch (endpoint) {
+      case 'createcommunity':
+         if (community != null) {
+            document.getElementById('create-community-container').innerHTML = `
+            <br><br>
+            <h2 style="text-align: center;">User has already a community.</h2>
+            <p style="text-align: center; color: grey">click on the button below to show it</p>
+            <div>
+               <a style="position:absolute; left:44%; top:50%;" class="btn btn-primary" href="/community">Enter Community</a>
+            </div>
+            `;
+            return
+         };
+         populateMembers([], endpoint);
+         getUserPlaylists(uid, endpoint);
+         break;
+
+      case 'community':
+
+         if (community == null) {
+            const communityContainer = document.getElementById('community-container');
+            communityContainer.innerHTML = `
+            <br><br>
+            <h2 style="text-align: center;">No Community found.</h2>
+            <p style="text-align: center; color: grey">click on the button below to create one</p>
+            <div>
+               <a style="position:absolute; left:44%; top:50%;" class="btn btn-primary" href="/createcommunity">Create Community</a>
+            </div>
+            `;
+            return
+         };
+         communityHandleUI(uid, community);
+         break;
+
+      default: break;
    }
 }
 
@@ -103,8 +127,19 @@ async function fetchUsersAndUpdateCards(membersData) {
 //    getCredits(id, pageResults)
 // }
 
+function getUserPlaylists(uid, endpoint) {
+   fetch(`/playlist/${uid}`).then((response) => {
+      if (response.ok) {
+         response.json().then((playlists) => {
+            populatePlaylists(playlists, endpoint);
+         })
+      }
+   })
+}
 
-function populatePlaylists(members, endpoint) {
+
+
+function populateMembers(members, endpoint) {
    var card = document.getElementById('card-cast');
    var container = document.getElementById('container-cast');
    container.append(card)
@@ -179,25 +214,6 @@ function populatePlaylists(members, endpoint) {
                   console.error("Error fetching members of community:", err);
                   alert("Error fetching members of community. Retry!");
                })
-            /* if (members[i] == null) {
-               clone.id = 'card-cast-' + i
-               clone.getElementsByClassName('card-text')[0].innerHTML = `
-<button style="vertical-align:center; horizontal-align:center; position:relative;"
-   class="btn btn-primary" onclick="searchUserToAdd()">Add Member</button>
-`;
-
-               // clone.getElementsByClassName('text-body-secondary')[0].innerHTML = members[i].nickname
-
-               // IDT we want to add the profile picture for users... just use a placeholder
-               clone.getElementsByClassName('card-img-top')[0].src =
-                  'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-
-               clone.classList.remove('d-none')
-               card.before(clone)
-               break;
-            } */;
-
-
          }
 
          break;
@@ -216,26 +232,24 @@ function populatePlaylists(playlists, endpoint) {
       case 'createcommunity':
          const playlistContainer = document.getElementById("playlistContainer");
          playlists.forEach(playlist => {
-               var stringified = JSON.stringify(playlist.songs).replace(/"/g, '&quot;');
-               const card = `
-                  <div class="col-md-4 mb-4">
-                  <div class="card h-100">
-                  <div class="card-body">
-                  <h5 class="card-title">${playlist.title}${playlist.private ? '<i class="bi bi-lock-fill text-success"></i>' : ''}</h5>
-                  <p class="card-text">${playlist.description}</p>
-                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
-                  onclick="showSongs('${playlist._id}', ${stringified})">
-                  View Songs
-                  </button>
-                  <button class="btn btn-primary" onclick="toggleCreateCommunityPlaylist(this,'${playlist._id}')">
-                  Add Playlist
-                  </button>
+            var stringified = JSON.stringify(playlist.songs).replace(/"/g, '&quot;');
+            const card = `
+               <div class="col-md-4 mb-4">
+               <div class="card h-100">
+               <div class="card-body">
+               <h5 class="card-title">${playlist.title}${playlist.private ? '<i class="bi bi-lock-fill text-success"></i>' : ''}</h5>
+               <p class="card-text">${playlist.description}</p>
+               <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
+               onclick="showSongs('${playlist._id}', ${stringified})">View Songs</button>
+               <button class="btn btn-primary" onclick="toggleCreateCommunityPlaylist(this,'${playlist._id}')">
+               Add Playlist
+               </button>
 
-                  </div>
-                  </div>
-                  </div>
-                  `;
-               playlistContainer.innerHTML += card;
+               </div>
+               </div>
+               </div>
+            `;
+            playlistContainer.innerHTML += card;
          });
          break;
 
