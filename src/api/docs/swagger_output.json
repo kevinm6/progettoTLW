@@ -246,6 +246,9 @@
                 },
                 "members": {
                   "example": "any"
+                },
+                "playlists": {
+                  "example": "any"
                 }
               }
             }
@@ -855,10 +858,13 @@
                 "creatorId": {
                   "example": "any"
                 },
+                "op": {
+                  "example": "any"
+                },
                 "member": {
                   "example": "any"
                 },
-                "op": {
+                "pid": {
                   "example": "any"
                 }
               }
@@ -868,9 +874,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
           },
           "500": {
             "description": "Internal Server Error"

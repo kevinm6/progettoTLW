@@ -65,6 +65,10 @@ export async function createCommunity(req, res) {
       let memberId = newCommunity.members[member]._id;
       newCommunity.members[member]._id = new ObjectId(memberId);
    }
+   for (const playlist in newCommunity.playlists) {
+      let pid = newCommunity.playlists[pid]._id;
+      newCommunity.members[member]._id = new ObjectId(pid);
+   }
 
    let collection = await dbCommunityCollection();
    // check collision
@@ -94,54 +98,38 @@ Do you want to go to your community?"
  */
 export async function updateCommunity(req, res) {
    let cid = req.body.creatorId;
-   let member = JSON.parse(req.body.member);
-   console.log("API updateCommunity: ", cid, member._id);
-
    var filter = { creatorId: new ObjectId(cid) };
-
-   let collection = await dbCommunityCollection();
+   var update = {};
 
    switch (req.body.op) {
       case 'removeMember':
-         var members = {
-           $pull: { members: { _id: new ObjectId(member._id) } },
-         }
-         let community = await collection.updateOne(filter, members)
-         console.log(community);
+         let member = JSON.parse(req.body.member);
+         update = {
+           $pull: { 'members': { 'uid': new ObjectId(member._id) } },
+         };
 
-         res.json(community);
+         break;
+
+      case 'removePlaylist':
+         let pid = req.body.pid;
+         update = {
+           $pull: { 'playlists': { 'pid': new ObjectId(pid) } },
+         };
+
          break;
 
       default:
-         console.log("Default action required, fallback and return!");
+         console.log("No action required, fallback and return!");
          return;
    }
-   return;
 
    try {
-      var filter = { _id: new ObjectId(id) };
-      var updatedUserToInsert = {
-         $set: {
-            name: updatedUser.name,
-            nickname: updatedUser.nickname,
-            email: updatedUser.email,
-            surname: updatedUser.surname,
-         },
-      };
+      console.log(filter, update);
+      let collection = await dbCommunityCollection();
+      let community = await collection.updateOne(filter, update);
 
-      if (updatedUser.password !== undefined && updatedUser.password !== "") {
-         updatedUserToInsert.$set.password = hash(updatedUser.password);
-      }
-      console.log(updatedUserToInsert);
-      var item = await dbCommunityCollection();
-      item.updateOne(filter, updatedUserToInsert);
-      console.log("OK");
-      res.status(200).send();
+      res.status(200).json(community);
    } catch (e) {
-      if (e.code == 11000) {
-         res.status(400).send("User already exists!");
-         return;
-      }
       res.status(500).send(`Generic Error: ${e}`);
    }
 }

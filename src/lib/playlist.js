@@ -286,6 +286,7 @@ export async function getPlaylist(res, owner_id, playlistid) {
    }
 }
 
+
 /**
  * Fetches a specific playlist from a database and responds with it as JSON.
  *
@@ -383,5 +384,5 @@ export async function deleteUserPlaylists(owner_id){
       return true
    } catch (e) {
       return false;
-   }  
+   }
 }

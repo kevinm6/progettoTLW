@@ -9,7 +9,7 @@ function createCommunity(self, uid) {
       alert("Community name can't be empty!\nUpdate it and retry");
       return;
    }
-   console.log(self);
+   // console.log(self);
 
    let newCommunity = {
       creatorId: uid,
