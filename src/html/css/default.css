@@ -46,6 +46,10 @@ footer {
   width:10%;
   height:auto;
 }
+.modal-body img {
+  max-width: 100%; /* Imposta la larghezza massima al 100% del suo contenitore */
+  height: auto; /* Imposta l'altezza automatica per mantenere l'aspetto originale */
+}
 /* ============================= MODAL SECTION AND========================= */
 .dropdown-menu{
   color:white;
@@ -82,8 +86,11 @@ footer {
   border-radius: 5px;
   color: white;
 }
+.modal-content{
+  background-color: #1c1c1c;  
+}
 
-.modal-header {
+.modal-header, .modal-footer {
   background-color: #1c1c1c;
   color: white;
 }
@@ -188,6 +195,17 @@ h1,h2,h3{
   color: var(--purplecol);
   font-style:bold;
 }
+/* ============================ PLAYER AUDIO ============================ */
+.audio-player {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+}
+
+.custom-audio-player {
+  width: 100%; 
+}
 /* ======================= HOVERS AND AFTERS SECTION ======================== */
 
 .card:hover {
@@ -225,3 +243,9 @@ h1,h2,h3{
   transform: translateY(20px); /* Puoi regolare la trasformazione se vuoi un leggero effetto di scorrimento verso l'alto */
   transition: opacity 0.5s ease, transform 0.5s ease;
 } 
+#trackModalBody {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px; /* Regola l'altezza minima del modal-body per centrare l'immagine */
+}

@@ -1,0 +1,688 @@
+[2023-09-20T16:50:17.265Z]: [LOGIN]> login > USER 64f0aee6df95e117d66b806f LOGGED IN
+[2023-09-20T16:50:20.083Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T16:50:20.214Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T16:50:20.235Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T16:56:17.158Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T16:56:17.174Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T16:59:12.799Z]: [REGISTER]> register > ERROR 400: invalid data
+[2023-09-20T16:59:13.098Z]: [REGISTER]> register > SUCCESS: USER REGISTEREED {"name":"delete","nickname":"deleteuser2","surname":"me","email":"deleteuser2@gmail.com","password":"f06d22b607bc47dad31df5c2bb89d0e3","date":"2000-01-01","genres":["acoustic"],"_id":"650b24e171585632704b107b"}
+[2023-09-20T16:59:38.359Z]: [REGISTER]> register > ERROR 400: invalid data
+[2023-09-20T17:01:42.590Z]: [REGISTER]> register > ERROR 400: invalid data
+[2023-09-20T17:01:42.935Z]: [REGISTER]> register > SUCCESS: USER REGISTEREED {"name":"delete","nickname":"deletemenow","surname":"me","email":"deleteuser3@gmail.com","password":"f06d22b607bc47dad31df5c2bb89d0e3","date":"2000-01-01","genres":["acoustic"],"_id":"650b25762f79815b3c914a7c"}
+[2023-09-20T17:01:53.047Z]: [REGISTER]> register > ERROR 400: invalid data
+[2023-09-20T17:03:44.209Z]: [REGISTER]> register > SUCCESS: USER REGISTEREED {"name":"delete","nickname":"deleteNOW","surname":"me","email":"deleteuser4@gmail.com","password":"f06d22b607bc47dad31df5c2bb89d0e3","date":"2000-01-01","genres":["acoustic"],"_id":"650b25f0ac31418f409e4d7e"}
+[2023-09-20T17:04:47.388Z]: [REGISTER]> register > SUCCESS: USER REGISTEREED {"name":"isworking","nickname":"isworking","surname":"isworking","email":"isworking@gmail.com","password":"1d84b92a6fe4f4eed210d6ba745c472f","date":"2000-01-01","genres":["acoustic"],"_id":"650b262fac31418f409e4d7f"}
+[2023-09-20T17:06:01.826Z]: [REGISTER]> register > ERROR 400: invalid nickname
+[2023-09-20T17:06:02.197Z]: [REGISTER]> register > SUCCESS: USER REGISTEREED {"name":"aaaaaaa","nickname":"aaaaaaaaaaaa","surname":"aaaaaaa","email":"asdasd@gmail.cpom","password":"5d793fc5b00a2348c3fb9ab59e5ca98a","date":"1999-01-01","genres":["alternative"],"_id":"650b267aac31418f409e4d80"}
+[2023-09-20T17:07:56.478Z]: [REGISTER]> register > ERROR 400: invalid nickname
+[2023-09-20T17:07:56.965Z]: [REGISTER]> register > SUCCESS: USER REGISTEREED {"name":"aaaaaaa","nickname":"bbbbbbbbbbb","surname":"aaaaaaa","email":"bbbbbbb@gmail.cpom","password":"5d793fc5b00a2348c3fb9ab59e5ca98a","date":"1999-01-01","genres":["acoustic"],"_id":"650b26ecac31418f409e4d81"}
+[2023-09-20T17:28:10.615Z]: [LOGIN]> login > USER 64f0aee6df95e117d66b806f LOGGED IN
+[2023-09-20T17:28:13.009Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T17:28:13.077Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T17:28:13.078Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T17:28:53.983Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T17:28:53.987Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T17:29:00.561Z]: [USER]> updateUser > SUCCESS: UPDATED USER {"_id":"64f0aee6df95e117d66b806f","email":"riemeralessandro@gmail.com","name":"Alexandro","surname":"Riemer","nickname":"StregoneDiAngmar","password":""}
+[2023-09-20T17:29:03.528Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T17:29:03.551Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T17:30:54.773Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T17:30:54.837Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T17:31:00.078Z]: [USER]> updateUser > ERROR 400: Invalid birth date
+[2023-09-20T17:31:07.136Z]: [USER]> updateUser > ERROR 400: Invalid birth date
+[2023-09-20T17:32:57.149Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T17:32:57.150Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T17:33:05.306Z]: [USER]> updateUser > SUCCESS: UPDATED USER {"$set":{"name":"Alessandro","nickname":"StregoneDiAngmar","email":"riemeralessandro@gmail.com","surname":"Riemer","date":"2000-11-09"}}
+[2023-09-20T17:33:07.382Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T17:33:07.402Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T22:41:08.758Z]: [REGISTER]> register > SUCCESS: USER REGISTEREED {"name":"delete","nickname":"deleteme","surname":"me","email":"deleteme@gmail.com","password":"f06d22b607bc47dad31df5c2bb89d0e3","date":"2000-01-01","genres":["afrobeat"],"_id":"650b7504849caf44dec36cc8"}
+[2023-09-20T22:41:17.252Z]: [LOGIN]> login > USER 650b7504849caf44dec36cc8 LOGGED IN
+[2023-09-20T22:41:19.579Z]: [LOGIN]> authuser >  USER 650b7504849caf44dec36cc8 AUTHORIZED
+[2023-09-20T22:41:19.603Z]: [LOGIN]> authuser >  USER 650b7504849caf44dec36cc8 AUTHORIZED
+[2023-09-20T22:41:19.620Z]: [LOGIN]> authuser >  USER 650b7504849caf44dec36cc8 AUTHORIZED
+[2023-09-20T22:41:26.427Z]: [USER]> deleteUser > ERROR 400: Invalid ID
+[2023-09-20T22:42:48.898Z]: [LOGIN]> authuser >  USER 650b7504849caf44dec36cc8 AUTHORIZED
+[2023-09-20T22:42:48.916Z]: [LOGIN]> authuser >  USER 650b7504849caf44dec36cc8 AUTHORIZED
+[2023-09-20T22:42:51.247Z]: [USER]> deleteUser > ERROR 400: Invalid ID
+[2023-09-20T22:43:11.700Z]: [LOGIN]> authuser >  USER 650b7504849caf44dec36cc8 AUTHORIZED
+[2023-09-20T22:43:11.711Z]: [LOGIN]> authuser >  USER 650b7504849caf44dec36cc8 AUTHORIZED
+[2023-09-20T22:43:15.794Z]: [USER]> deleteUser > SUCCESS: USER DELETED
+[2023-09-20T23:12:56.017Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T23:12:56.033Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T23:12:58.741Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T23:13:38.504Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T23:13:38.538Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T23:13:38.546Z]: [PLAYLIST]> getUserPlaylist > ERROR 400: Invalid Owner_id
+[2023-09-20T23:13:51.167Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T23:13:51.170Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T23:13:51.475Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS[{"_id":"64f9f714fcd23d64c4a40d5c","title":"Metallica","description":"canzoni dei metallica che adoro, spaccano di brutto!","tags":"metallica,metal,hard","songs":[{"id":"0LAcM6I7ijW4VVW0aytl1t","title":"One (Remastered)","artist":"Metallica","duration":"00:07:26"},{"id":"54bm2e3tk8cliUz3VSdCPZ","title":"Master of Puppets (Remastered)","artist":"Metallica","duration":"00:08:35"},{"id":"51YZAJhOwIC5Gg3jMbAmhZ","title":"For Whom The Bell Tolls (Remastered)","artist":"Metallica","duration":"00:05:09"},{"id":"1tTPC0hsnXq1IGpvWY54JC","title":"Fuel","artist":"Metallica","duration":"00:04:29"},{"id":"7wz8LNfmGZ3C0PwKW9LdDg","title":"Battery (Remastered)","artist":"Metallica","duration":"00:05:12"},{"id":"5DrNFzZZZVfXaEZCaceKnp","title":"Seek & Destroy (Remastered)","artist":"Metallica","duration":"00:06:54"},{"id":"3IolN0Ae207i0Fr9IHuNbu","title":"Harvester of Sorrow (Remastered)","artist":"Metallica","duration":"00:05:45"},{"id":"7HPhrbgMHV5cUskknWA2oo","title":"Turn The Page","artist":"Metallica","duration":"00:06:06"},{"id":"5UaDi8KzCGJqFfVAOBfXhi","title":"Sad But True (Remastered)","artist":"Metallica","duration":"00:05:24","year":"1991-08-12","album":"Metallica (Remastered)"},{"id":"3VqHuw0wFlIHcIPWkhIbdQ","title":"Enter Sandman (Remastered)","artist":"Metallica","duration":"00:05:31","year":"1991-08-12","album":"Metallica (Remastered)"}],"owner_id":"64f0aee6df95e117d66b806f","private":true},{"_id":"64f9f8fb7253748db69e0211","title":"Coldplay","description":"Migliori canzoni dei coldplay","tags":["coldplay","chill","relax"],"songs":[{"id":"1mea3bSkSGXuIRvnydlB5b","title":"Viva La Vida","artist":"Coldplay","duration":"00:04:02"},{"id":"7D0RhFcb3CrfPuTJ0obrod","title":"Sparks","artist":"Coldplay","duration":"00:03:47"},{"id":"3AJwUDP919kvQ9QcozQPxg","title":"Yellow","artist":"Coldplay","duration":"00:04:26"},{"id":"6nek1Nin9q48AVZcWs9e9D","title":"Paradise","artist":"Coldplay","duration":"00:04:38"},{"id":"0FDzzruyVECATHXKHFs9eJ","title":"A Sky Full of Stars","artist":"Coldplay","duration":"00:04:27"},{"id":"0BCPKOYdS2jbQ8iyB56Zns","title":"Clocks","artist":"Coldplay","duration":"00:05:07"},{"id":"6RUKPb4LETWmmr3iAEQktW","title":"Something Just Like This","artist":"The Chainsmokers, Coldplay","duration":"00:04:07"},{"id":"75JFxkI2RXiU7L9VXzMkle","title":"The Scientist","artist":"Coldplay","duration":"00:05:09"},{"id":"2QhURnm7mQDxBb5jWkbDug","title":"Don't Panic","artist":"Coldplay","duration":"00:02:16"},{"id":"3RiPr603aXAoi4GHyXx0uy","title":"Hymn for the Weekend","artist":"Coldplay","duration":"00:04:18"},{"id":"0R8P9KfGJCDULmlEoBagcO","title":"Trouble","artist":"Coldplay","duration":"00:04:33"},{"id":"7GdEEQDCCVD4wRns4VHUYQ","title":"Coldplay","artist":"Lizzo","duration":"00:02:55"},{"id":"7LVHVU3tWfcxj5aiPFEW4Q","title":"Fix You","artist":"Coldplay","duration":"00:04:55"},{"id":"7clUVcSOtkNWa58Gw5RfD4","title":"Speed of Sound","artist":"Coldplay","duration":"00:04:47"},{"id":"4qzoHxgp42ylb18ga1SWTL","title":"Parachutes","artist":"Coldplay","duration":"00:00:46"},{"id":"69uxyAqqPIsUyTO8txoP2M","title":"Adventure of a Lifetime","artist":"Coldplay","duration":"00:04:23"},{"id":"23khhseCLQqVMCIT1WMAns","title":"Magic","artist":"Coldplay","duration":"00:04:45"},{"id":"3FeVmId7tL5YN8B7R3imoM","title":"My Universe","artist":"Coldplay, BTS","duration":"00:03:48"},{"id":"0V3wPSX9ygBnCm8psDIegu","title":"Anti-Hero","artist":"Taylor Swift","duration":"00:03:20","year":"2022-10-21","album":"Midnights"}],"owner_id":"64f0aee6df95e117d66b806f","private":false},{"_id":"64f9f9657253748db69e0212","title":"Mozart","description":"miei pezzi preferiti di mozart","tags":["mozart","classical","music","relax","study"],"songs":[{"id":"3Fg1cgu43TezG8bMIlgLVf","title":"Piano Concerto No. 21 in C Major, K. 467: 2. Andante","artist":"Wolfgang Amadeus Mozart, Géza Anda, Camerata Salzburg","duration":"00:02:54"},{"id":"3hj6jHDmZfoQdukMi6bWF6","title":"Mozart : Requiem K. 626 - Lacrimosa","artist":"Wolfgang Amadeus Mozart, Jordi Savall, Le Concert Des Nations","duration":"00:03:03"},{"id":"0sOnnjSHvCO1wZMAkfFfGg","title":"Mozart Lacrimosa Variation (From Requiem, K. 626, Arr. for Piano and Cello by Svetoslav Karparov)","artist":"Wolfgang Amadeus Mozart, Gabriele Bagnati, Raphaela Gromes","duration":"00:02:57"},{"id":"1pHgB58K3y7aXkDHz5kryW","title":"Piano Concerto No. 21 in C Major, K. 467: 2. Andante","artist":"Wolfgang Amadeus Mozart, Géza Anda, Camerata Salzburg","duration":"00:02:51"},{"id":"5Fb8jKSvbSId9L3FWuCjic","title":"Mozart: Symphony No. 25 in G Minor, K. 183: I. Allegro con brio","artist":"Wolfgang Amadeus Mozart, Nikolaus Harnoncourt, Royal Concertgebouw Orchestra","duration":"00:10:44"},{"id":"1UvaZaHkh3D9AkmBrrnbFg","title":"Lacrimosa","artist":"Wolfgang Amadeus Mozart, Lisa Beckley, Elena Filipova, Magdaléna Hajóssyová, Peter Mikulas, Michel Piquemal, Gloria Scalchi, Michel Piquemal Vocal Ensemble, Hungarian State Opera Chorus, Oxford Schola Cantorum, Slovak Philharmonic Chorus, Hungarian State Opera Orchestra, Orchestre De La Cite, Oxford Camerata, Slovak Philharmonic","duration":"00:03:25"},{"id":"3PVE1qZRnlENsDpziKTFwh","title":"Symphony No. 29 in A Major, K. 201: II. Andante","artist":"Wolfgang Amadeus Mozart, Günter Kehr, Mainz Chamber Orchestra","duration":"00:06:29"},{"id":"5i9kK5ju47Ob2w4bcQ6cJt","title":"Mozart: Symphony No. 25 in G Minor, K. 183: II. Andante","artist":"Wolfgang Amadeus Mozart, Nikolaus Harnoncourt, Royal Concertgebouw Orchestra","duration":"00:05:33"},{"id":"6OC0v9yU90ME5DW2o1skKr","title":"Mozart: Symphony No. 40 in G Minor, K. 550: I. Molto allegro","artist":"Wolfgang Amadeus Mozart, Yehudi Menuhin, Sinfonia Varsovia","duration":"00:07:12"},{"id":"4Z08eYEBW8UGVEKHlVXCqR","title":"Piano Sonata No. 5 in G Major, K. 283: I. Allegro","artist":"Wolfgang Amadeus Mozart, Mitsuko Uchida","duration":"00:03:52"},{"id":"2RvsGIeG7ATZRFbgXrfPMX","title":"Mozart: Symphony No. 26 in E-Flat Major, K. 184: I. Molto presto","artist":"Wolfgang Amadeus Mozart, Nikolaus Harnoncourt, Royal Concertgebouw Orchestra","duration":"00:02:51"},{"id":"68pm9wnt0um0W7mfCZedIO","title":"Piano Sonata No. 8 in A Minor, K. 310: III. Presto","artist":"Wolfgang Amadeus Mozart, Hélène Grimaud","duration":"00:02:58"},{"id":"51xHvAUYQfhY29GcGlBM0n","title":"Piano Sonata No. 16 in C Major, K. 545 ","artist":"null","duration":"00:04:54"},{"id":"7gCv7PL8tp8RI5dkz6VBTv","title":"Mozart: Symphony No. 25 in G Minor, K. 183: III. Menuetto","artist":"Wolfgang Amadeus Mozart, Nikolaus Harnoncourt, Royal Concertgebouw Orchestra","duration":"00:03:30"},{"id":"4dL5cb1OB50sfDhY8ImnxV","title":"Piano Sonata No. 16 in C Major, K. 545 ","artist":"null","duration":"00:02:59"},{"id":"7zofILjmRcBo8oVSxEqlgQ","title":"Mozart: Symphony No. 25 in G Minor, K. 183: IV. Allegro","artist":"Wolfgang Amadeus Mozart, Nikolaus Harnoncourt, Royal Concertgebouw Orchestra","duration":"00:07:12"}],"owner_id":"64f0aee6df95e117d66b806f","private":true},{"_id":"64fa06640ea3b652df340a54","title":"Slayer","description":"Canzoni degli slayer","tags":["Slayer","hardcore","metal","heavy","dark"],"songs":[{"id":"06WUUNf7q18NZfjIsQFsfa","title":"Delusions of Saviour","artist":"Slayer","duration":"00:01:55","year":"2015-09-11"},{"id":"5X2I1TVUkchLBggRTCMYem","title":"Slayerr","artist":"Tm88, Lil Uzi Vert","duration":"00:03:25","year":"2019-06-21"},{"id":"01Mpj13vURSO3cCLprPt5T","title":"Raining Blood","artist":"Slayer","duration":"00:04:14","year":"1986-01-01"},{"id":"3Ky8IzV8IVSwijtaTWB2SK","title":"Seasons In The Abyss","artist":"Slayer","duration":"00:06:37","year":"1990-01-01"},{"id":"3U9gogDStAfWxSm91PJuxb","title":"South Of Heaven","artist":"Slayer","duration":"00:04:58","year":"1988-01-01"},{"id":"1f2nJKg780VxYIveVq6Xej","title":"South Of Heaven","artist":"Slayer","duration":"00:04:58","year":"1988-01-01"},{"id":"1WywY6JdJcMlswZpqUPhSM","title":"Postmortem","artist":"Slayer","duration":"00:03:27","year":"1986-01-01"},{"id":"6W2KBpMMXW17r7dPyqi8Iu","title":"Repentless","artist":"Slayer","duration":"00:03:19","year":"2015-09-11"},{"id":"6Tjr3224DVeSWdq6dXgD6A","title":"The Antichrist","artist":"Slayer","duration":"00:02:49","year":"1983-12-03"},{"id":"2RJba1by26f8314u8IgMta","title":"Bloodline","artist":"Slayer","duration":"00:03:36","year":"2001-09-11"},{"id":"2L2XquxTZBmzzNBCPCzq0p","title":"Dead Skin Mask","artist":"Slayer","duration":"00:05:20","year":"1990-01-01"},{"id":"0esBc6VgM4lFk3SOlL3Ys4","title":"Disciple","artist":"Slayer","duration":"00:03:35","year":"2001-09-11"},{"id":"3ci1aGelb4y8BxI5abOwCH","title":"Altar Of Sacrifice","artist":"Slayer","duration":"00:02:50","year":"1986-01-01"}],"owner_id":"64f0aee6df95e117d66b806f","private":true},{"_id":"64fa0bd282e7a72226837d8d","title":"Best of eminem","description":"migliori canzoni di eminem","tags":["eminem","rap","hardcore","USA"],"songs":[{"id":"77Ft1RJngppZlq59B6uP0z","title":"Lose Yourself","artist":"Eminem","duration":"00:05:20","year":"2014-11-24","album":"SHADYXV"},{"id":"4xkOaSrkexMciUUogZKVTS","title":"Till I Collapse","artist":"Eminem, Nate Dogg","duration":"00:04:57","year":"2002-05-26","album":"The Eminem Show"},{"id":"561jH07mF1jHuk7KlaeF0s","title":"Mockingbird","artist":"Eminem","duration":"00:04:10","year":"2004-11-12","album":"Encore (Deluxe Version)"},{"id":"7FIWs0pqAYbP91WWM0vlTQ","title":"Godzilla (feat. Juice WRLD)","artist":"Eminem, Juice WRLD","duration":"00:03:30","year":"2020-01-17","album":"Music To Be Murdered By"},{"id":"3UmaczJpikHgJFyBTAJVoz","title":"Stan","artist":"Eminem, Dido","duration":"00:06:44","year":"2000-05-23","album":"The Marshall Mathers LP"},{"id":"5Z01UMMf7V1o0MzF86s6WJ","title":"Lose Yourself","artist":"Eminem","duration":"00:05:26","year":"2005-12-06","album":"Curtain Call: The Hits (Deluxe Edition)"},{"id":"7iXF2W9vKmDoGAhlHdpyIa","title":"Forgot About Dre","artist":"Dr. Dre, Eminem","duration":"00:03:42","year":"1999-11-16","album":"2001"},{"id":"4woTEX1wYOTGDqNXuavlRC","title":"Superman","artist":"Eminem, Dina Rae","duration":"00:05:50","year":"2002-05-26","album":"The Eminem Show"},{"id":"15JINEqzVMv3SvJTAXAKED","title":"Love The Way You Lie","artist":"Eminem, Rihanna","duration":"00:04:23","year":"2010-06-18","album":"Recovery"}],"owner_id":"64f0aee6df95e117d66b806f","private":false},{"_id":"6501eb6204aa6a4c92e498cc","title":"WTF","description":"WTF","tags":["WTF"],"songs":[{"id":"3OYSWIgKXiwjutuQ4NEk1b","title":"wtf","artist":"boy pablo","duration":"00:01:12","year":"2018-10-05","album":"Soy Pablo"},{"id":"0gn93i7HJt0calph67R5Wu","title":"WTF (feat. Amber Van Day)","artist":"HUGEL, Amber Van Day","duration":"00:02:40","year":"2018-11-30","album":"WTF (feat. Amber Van Day)"},{"id":"4E2SrUpRFBtDWMKlWvceta","title":"Wtf U Mean (feat. Freddie Dredd)","artist":"HAARPER, Freddie Dredd","duration":"00:01:58","year":"2020-02-29","album":"Wtf U Mean (feat. Freddie Dredd)"},{"id":"6qxmbG7TbqeDolJPQnHVda","title":"WTF","artist":"Hotboii","duration":"00:02:57","year":"2022-06-03","album":"WTF"},{"id":"3HM7lgi7cujMoXTzywKnFt","title":"WTF","artist":"SugarHill Keem","duration":"00:01:29","year":"2022-09-17","album":"KING OF DRILL"},{"id":"35NkPKSmtu6lCht95nukpr","title":"WTF (feat. Nicki Minaj)","artist":"YoungBoy Never Broke Again, Nicki Minaj","duration":"00:02:40","year":"2023-04-07","album":"WTF (feat. Nicki Minaj)"},{"id":"5po4XqNwlBnXXAYLtRcvpT","title":"WTF!","artist":"SXMPRA","duration":"00:02:10","year":"2022-05-06","album":"WTF!"}],"owner_id":"64f0aee6df95e117d66b806f","private":false},{"_id":"65058ba99f3a58e204e86050","title":"Musiche di Daft Punk","description":"Migliori musiche dei Daft Punk","tags":["punk","musica","electro"],"songs":[{"id":"7MXVkk9YMctZqd1Srtv4MB","title":"Starboy","artist":"The Weeknd, Daft Punk","duration":"00:03:50","year":"2016-11-25","album":"Starboy"},{"id":"5W3cjX2J3tjhG8zb6u0qHn","title":"Harder, Better, Faster, Stronger","artist":"Daft Punk","duration":"00:03:44","year":"2001-03-12","album":"Discovery"},{"id":"69kOkLUCkxIZYexIgSG8rq","title":"Get Lucky (feat. Pharrell Williams and Nile Rodgers)","artist":"Daft Punk, Pharrell Williams, Nile Rodgers","duration":"00:06:09","year":"2013-05-20","album":"Random Access Memories"},{"id":"0P2A1ZpENuKFs5kybPNsqB","title":"Starboy","artist":"The Weeknd, Daft Punk","duration":"00:03:50","year":"2023-09-15","album":"Mega Hits Herbst 2023"},{"id":"0DiWol3AO6WpXZgp0goxAV","title":"One More Time","artist":"Daft Punk","duration":"00:05:20","year":"2001-03-12","album":"Discovery"}],"owner_id":"64f0aee6df95e117d66b806f","private":true},{"_id":"6505ac5819791bd7dcb8248d","owner_id":"64f0aee6df95e117d66b806f","title":"New Hits Playlist","description":"A playlist of the latest hits.","tags":["pop","hits","new"],"songs":[{"title":"Song 5","artist":"Artist 5","duration":"3:30"},{"title":"Song 6","artist":"Artist 6","duration":"4:15"},{"title":"Song 7","artist":"Artist 7","duration":"3:45"},{"title":"Song 8","artist":"Artist 8","duration":"3:20"},{"title":"Song 9","artist":"Artist 9","duration":"4:02"},{"title":"Song 10","artist":"Artist 10","duration":"3:50"},{"title":"Song 11","artist":"Artist 11","duration":"4:30"},{"title":"Song 12","artist":"Artist 12","duration":"3:40"},{"title":"Song 13","artist":"Artist 13","duration":"4:05"},{"title":"Song 14","artist":"Artist 14","duration":"3:15"},{"title":"Song 15","artist":"Artist 15","duration":"4:10"},{"title":"Song 16","artist":"Artist 16","duration":"3:25"},{"title":"Song 17","artist":"Artist 17","duration":"4:40"},{"title":"Song 18","artist":"Artist 18","duration":"3:55"},{"title":"Song 19","artist":"Artist 19","duration":"4:18"},{"id":"2aL4Dr516WsEswstjfnyYr","title":"Shiroyama","artist":"Sabaton","duration":"00:03:33","year":"2016-08-19","album":"The Last Stand"}],"private":false},{"_id":"6505ac8e19791bd7dcb8248e","title":"WTF","description":"WTF","tags":["WTF"],"songs":[{"id":"3OYSWIgKXiwjutuQ4NEk1b","title":"wtf","artist":"boy pablo","duration":"00:01:12","year":"2018-10-05","album":"Soy Pablo"},{"id":"0gn93i7HJt0calph67R5Wu","title":"WTF (feat. Amber Van Day)","artist":"HUGEL, Amber Van Day","duration":"00:02:40","year":"2018-11-30","album":"WTF (feat. Amber Van Day)"},{"id":"4E2SrUpRFBtDWMKlWvceta","title":"Wtf U Mean (feat. Freddie Dredd)","artist":"HAARPER, Freddie Dredd","duration":"00:01:58","year":"2020-02-29","album":"Wtf U Mean (feat. Freddie Dredd)"},{"id":"6qxmbG7TbqeDolJPQnHVda","title":"WTF","artist":"Hotboii","duration":"00:02:57","year":"2022-06-03","album":"WTF"},{"id":"3HM7lgi7cujMoXTzywKnFt","title":"WTF","artist":"SugarHill Keem","duration":"00:01:29","year":"2022-09-17","album":"KING OF DRILL"},{"id":"35NkPKSmtu6lCht95nukpr","title":"WTF (feat. Nicki Minaj)","artist":"YoungBoy Never Broke Again, Nicki Minaj","duration":"00:02:40","year":"2023-04-07","album":"WTF (feat. Nicki Minaj)"},{"id":"5po4XqNwlBnXXAYLtRcvpT","title":"WTF!","artist":"SXMPRA","duration":"00:02:10","year":"2022-05-06","album":"WTF!"}],"owner_id":"64f0aee6df95e117d66b806f","private":false},{"_id":"6505ac9819791bd7dcb8248f","owner_id":"64f0aee6df95e117d66b806f","title":"New Hits Playlist","description":"A playlist of the latest hits.","tags":["pop","hits","new"],"songs":[{"title":"Song 5","artist":"Artist 5","duration":"3:30"},{"title":"Song 6","artist":"Artist 6","duration":"4:15"},{"title":"Song 7","artist":"Artist 7","duration":"3:45"},{"title":"Song 8","artist":"Artist 8","duration":"3:20"},{"title":"Song 9","artist":"Artist 9","duration":"4:02"},{"title":"Song 10","artist":"Artist 10","duration":"3:50"},{"title":"Song 11","artist":"Artist 11","duration":"4:30"},{"title":"Song 12","artist":"Artist 12","duration":"3:40"},{"title":"Song 13","artist":"Artist 13","duration":"4:05"},{"title":"Song 14","artist":"Artist 14","duration":"3:15"},{"title":"Song 15","artist":"Artist 15","duration":"4:10"},{"title":"Song 16","artist":"Artist 16","duration":"3:25"},{"title":"Song 17","artist":"Artist 17","duration":"4:40"},{"title":"Song 18","artist":"Artist 18","duration":"3:55"},{"title":"Song 19","artist":"Artist 19","duration":"4:18"}],"private":false},{"_id":"650740d404d6373863900f3c","title":"Canzoni di guerra ww2","description":"Migliori canzoni di guerra bla bla","tags":["Guerra","ww2","passato"],"songs":[{"id":"0TMEgfhs22J2GpTSvlv0cQ","title":"Fischia Il Vento","artist":"Bandiera Rossa","duration":"00:03:28","year":"1973-01-01","album":"La Resistenza Continua..."},{"id":"1zeUhXNMqmf80JnfqT2fXK","title":"Bandiera Rossa","artist":"Bandiera Rossa","duration":"00:02:53","year":"1973-01-01","album":"La Resistenza Continua..."},{"id":"18gsp3kqbBD3SDvm364cqI","title":"Erika","artist":"Young Adult","duration":"00:02:58","year":"2017-11-08","album":"Erika"}],"owner_id":"64f0aee6df95e117d66b806f","private":false},{"_id":"650749a339e0f142bfb5bfa3","title":"canzoni sovietiche","description":"Canzoni sovietiche Coro Armata Rossa","tags":["guerra","distruzione","ww2","agonia"],"songs":[{"id":"2moegWPifiDUaZ8Ye9uLQq","title":"National Anthem of the Ussr","artist":"The Red Army Choir","duration":"00:03:44","year":"2002","album":"The Best Of The Red Army Choir"},{"id":"19RdiPkl18jXVfnvMaZBQV","title":"Katioucha","artist":"The Red Army Choir, Boris Alexandrov","duration":"00:02:31","year":"1995-01-05","album":"Chants et Marches de la Grande Guerre Patriotique (1941-1945)"},{"id":"4CgEzEvsCZlPsKMIg1NlCJ","title":"The Red Army Is the Strongest","artist":"The Red Army Choir","duration":"00:02:43","year":"2002","album":"The Best Of The Red Army Choir"},{"id":"5rRAOgZOAqHwUMwVAXkUYU","title":"Katyusha","artist":"The Red Army Choir, Валерия Курнушкина, Игорь Раевский","duration":"00:02:26","year":"2020-05-22","album":"Favorite Russian Songs, Pt. 2"},{"id":"0qYTjk4iU0evOK1Xn8EYOs","title":"Let's Go","artist":"The Red Army Choir","duration":"00:03:21","year":"2002","album":"The Best Of The Red Army Choir"},{"id":"3ZgC2xElsyZXtqCboSXH95","title":"Bella Ciao","artist":"The Red Army Choir","duration":"00:02:40","year":"2002","album":"The Best Of The Red Army Choir"},{"id":"27uHafb17vWT56bhgjXzIM","title":"First Thing","artist":"The Red Army Choir","duration":"00:01:51","year":"2023-08-04","album":"First Thing"},{"id":"2shgZrQwBscqSROIXkXs24","title":"My Army","artist":"The Red Army Choir","duration":"00:03:19","year":"2002","album":"The Best Of The Red Army Choir"},{"id":"77nJfbFdx8UbzBrgll9OvM","title":"National Anthem of USSR","artist":"The Red Army Choir","duration":"00:03:42","year":"2014-01-01","album":"The Russian Archives, Vol. 2"}],"owner_id":"64f0aee6df95e117d66b806f","private":false},{"_id":"6509ea1355f80e3aac928fc0","title":"Coldplay","description":"Migliori canzoni dei coldplay","tags":["coldplay","chill","relax"],"songs":[{"id":"1mea3bSkSGXuIRvnydlB5b","title":"Viva La Vida","artist":"Coldplay","duration":"00:04:02"},{"id":"7D0RhFcb3CrfPuTJ0obrod","title":"Sparks","artist":"Coldplay","duration":"00:03:47"},{"id":"3AJwUDP919kvQ9QcozQPxg","title":"Yellow","artist":"Coldplay","duration":"00:04:26"},{"id":"6nek1Nin9q48AVZcWs9e9D","title":"Paradise","artist":"Coldplay","duration":"00:04:38"},{"id":"0FDzzruyVECATHXKHFs9eJ","title":"A Sky Full of Stars","artist":"Coldplay","duration":"00:04:27"},{"id":"0BCPKOYdS2jbQ8iyB56Zns","title":"Clocks","artist":"Coldplay","duration":"00:05:07"},{"id":"6RUKPb4LETWmmr3iAEQktW","title":"Something Just Like This","artist":"The Chainsmokers, Coldplay","duration":"00:04:07"},{"id":"75JFxkI2RXiU7L9VXzMkle","title":"The Scientist","artist":"Coldplay","duration":"00:05:09"},{"id":"2QhURnm7mQDxBb5jWkbDug","title":"Don't Panic","artist":"Coldplay","duration":"00:02:16"},{"id":"3RiPr603aXAoi4GHyXx0uy","title":"Hymn for the Weekend","artist":"Coldplay","duration":"00:04:18"},{"id":"0R8P9KfGJCDULmlEoBagcO","title":"Trouble","artist":"Coldplay","duration":"00:04:33"},{"id":"7GdEEQDCCVD4wRns4VHUYQ","title":"Coldplay","artist":"Lizzo","duration":"00:02:55"},{"id":"7LVHVU3tWfcxj5aiPFEW4Q","title":"Fix You","artist":"Coldplay","duration":"00:04:55"},{"id":"7clUVcSOtkNWa58Gw5RfD4","title":"Speed of Sound","artist":"Coldplay","duration":"00:04:47"},{"id":"4qzoHxgp42ylb18ga1SWTL","title":"Parachutes","artist":"Coldplay","duration":"00:00:46"},{"id":"69uxyAqqPIsUyTO8txoP2M","title":"Adventure of a Lifetime","artist":"Coldplay","duration":"00:04:23"},{"id":"23khhseCLQqVMCIT1WMAns","title":"Magic","artist":"Coldplay","duration":"00:04:45"},{"id":"3FeVmId7tL5YN8B7R3imoM","title":"My Universe","artist":"Coldplay, BTS","duration":"00:03:48"},{"id":"0V3wPSX9ygBnCm8psDIegu","title":"Anti-Hero","artist":"Taylor Swift","duration":"00:03:20","year":"2022-10-21","album":"Midnights"}],"owner_id":"64f0aee6df95e117d66b806f","private":false},{"_id":"650abcbe55c92e037526d434","title":"canzoni di Xsara","description":"Canzoni di Xara","tags":["xara","canzoni",""],"songs":[{"id":"3q3tlN8y29EW9cV2CPFLjR","title":"ballare e gridare aiut","artist":"Xara","duration":"00:00:32","year":"2023-09-14","album":"Crazy Girl"},{"id":"1XeBkFram8teR4n90WuI7G","title":"dai","artist":"Xara","duration":"00:00:32","year":"2023-09-14","album":"Crazy Girl"},{"id":"7JOakWRjjerfCJKP5QQzXI","title":"Sono felice yeppie ye","artist":"Xara","duration":"00:00:26","year":"2023-09-14","album":"Crazy Girl"},{"id":"4mXoBCCNyWLG3JmZEuI0Rf","title":"tu sai che (big beatbox moment)","artist":"Xara","duration":"00:00:21","year":"2023-09-14","album":"Crazy Girl"},{"id":"0YvYmts239EygTm48KQXIi","title":"senti qui","artist":"Xara, Winx Club","duration":"00:00:51","year":"2023-09-14","album":"Crazy Girl"},{"id":"3KoTdcpkFJ2aIHVcfBmBc3","title":"cosa fai","artist":"Xara","duration":"00:00:41","year":"2023-09-14","album":"Crazy Girl"},{"id":"5GXzdzMzuZbwtG9X7qmdQI","title":"devo partire (mi dispiace)","artist":"Xara","duration":"00:02:14","year":"2023-09-14","album":"Crazy Girl"},{"id":"4bZBisHB6cakYDBrOXcuij","title":"canta canta yeppie ye","artist":"Xara","duration":"00:01:01","year":"2023-09-14","album":"Crazy Girl"},{"id":"13EzUmvGteZ0VOOrEScJ4q","title":"canta canta qui e lì","artist":"Xara","duration":"00:00:53","year":"2023-09-14","album":"Crazy Girl"},{"id":"7oDKneBqXBzi68FsiOEEza","title":"canzone tristissima commuovente :","artist":"Xara","duration":"00:01:02","year":"2023-09-14","album":"Crazy Girl"},{"id":"1kBl3bUWCiGpJ8rS50Kd8E","title":"Null Moon","artist":"Akira Yamaoka","duration":"00:02:50","year":"2001-10-03","album":"SILENT HILL2 (Original Soundtrack)"},{"id":"4ss2tOwx5ICqkKLhrrichE","title":"Null auf 100","artist":"Helene Fischer","duration":"00:03:57","year":"2023-09-05","album":"Schlager Musik 2023"}],"owner_id":"64f0aee6df95e117d66b806f","private":false},{"_id":"650adeae55c92e037526d435","title":"Canzoni di 2PAC","description":"Canzoni di 2PAC","tags":["2pac","rap","rapper"],"songs":[{"id":"0Z2J91b2iTGLVTZC4fKgxf","title":"Hit 'Em Up - Single Version","artist":"2Pac, Outlawz","duration":"00:05:12","year":"1998-01-01","album":"Greatest Hits"},{"id":"5g9lS8deSIxItFBmZRC4vN","title":"Ambitionz Az A Ridah","artist":"2Pac","duration":"00:04:38","year":"1996-02-13","album":"All Eyez On Me"},{"id":"4VQNCzfZ3MdHEwwErNXpBo","title":"All Eyez On Me (ft. Big Syke)","artist":"2Pac, Big Syke","duration":"00:05:07","year":"1996-02-13","album":"All Eyez On Me"},{"id":"3ia3dJETSOllPsv3LJkE35","title":"California Love - Original Version","artist":"2Pac, Roger, Dr. Dre","duration":"00:04:44","year":"1998-01-01","album":"Greatest Hits"},{"id":"6tDxrq4FxEL2q15y37tXT9","title":"Dear Mama","artist":"2Pac","duration":"00:04:40","year":"1995-03-14","album":"Me Against The World"},{"id":"1ZB2zIoc8AjSuyqKRcJgbO","title":"How Do U Want It","artist":"2Pac, K-Ci & JoJo","duration":"00:04:47","year":"1998-01-01","album":"Greatest Hits"},{"id":"3djNBlI7xOggg7pnsOLaNm","title":"California Love - Original Version","artist":"2Pac, Roger, Dr. Dre","duration":"00:04:44","year":"2007-12-03","album":"The Best of 2Pac"},{"id":"6LwrEZNkvFTOypNwSLjuaJ","title":"2 Of Amerikaz Most Wanted (ft. Snoop Doggy Dogg)","artist":"2Pac, Snoop Dogg","duration":"00:04:06","year":"1996-02-13","album":"All Eyez On Me"},{"id":"0NzNKU2MJ9LCetT2uZMJH2","title":"So Many Tears","artist":"2Pac","duration":"00:03:59","year":"1995-03-14","album":"Me Against The World"},{"id":"71jzSTkT0F0w1v4moZIDyc","title":"Picture Me Rollin'","artist":"2Pac, Danny Boy, Syke, C-PO","duration":"00:05:14","year":"1998-01-01","album":"Greatest Hits"}],"owner_id":"64f0aee6df95e117d66b806f","private":true}]
+[2023-09-20T23:45:42.828Z]: [LOGIN]> login > USER 64f0aee6df95e117d66b806f LOGGED IN
+[2023-09-20T23:45:45.159Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T23:45:45.217Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T23:45:45.224Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T23:45:46.488Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T23:45:46.517Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T23:45:46.849Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-20T23:45:49.594Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T23:45:49.604Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T23:45:59.291Z]: [PLAYLIST]> addSongToPlaylist > ERROR 400: Invalid song year
+[2023-09-20T23:46:38.263Z]: [PLAYLIST]> addSongToPlaylist > ERROR 400: Invalid song year
+[2023-09-20T23:51:51.728Z]: [PLAYLIST]> addSongToPlaylist > ERROR 400: Invalid song year
+[2023-09-20T23:53:40.394Z]: [PLAYLIST]> addSongToPlaylist > ERROR 400: Invalid song artist
+[2023-09-20T23:54:22.594Z]: [PLAYLIST]> addSongToPlaylist > ERROR 400: Invalid song artist
+[2023-09-20T23:54:50.477Z]: [PLAYLIST]> addSongToPlaylist > ERROR 400: Invalid song artist
+[2023-09-20T23:55:32.705Z]: [PLAYLIST]> addSongToPlaylist > ERROR 500: INTERNAL ERROR: ReferenceError: songExistsInPlaylist is not defined
+[2023-09-20T23:57:23.676Z]: [PLAYLIST]> addSongToPlaylist > ERROR 400: SONG ALREADY IN PLAYLIST
+[2023-09-20T23:57:35.436Z]: [PLAYLIST]> addSongToPlaylist > ERROR 400: SONG ALREADY IN PLAYLIST
+[2023-09-20T23:57:46.867Z]: [PLAYLIST]> addSongToPlaylist > ERROR 400: SONG ALREADY IN PLAYLIST
+[2023-09-20T23:57:50.408Z]: [PLAYLIST]> addSongToPlaylist > SUCCESS: ADDED SONG {"id":"0dqGfCMAGyDgpUAgLNOjWd","title":"Fade To Black (Remastered)","artist":"Metallica","duration":"00:06:57","year":"1984-07-27","album":"Ride The Lightning (Deluxe Remaster)","playlistID":"64f9f714fcd23d64c4a40d5c","owner_id":"64f0aee6df95e117d66b806f"} TO PLAYLIST 64f9f714fcd23d64c4a40d5c
+[2023-09-20T23:57:51.834Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-20T23:57:51.836Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:00:31.997Z]: [PLAYLIST]> addSongToPlaylist > ERROR 400: SONG ALREADY IN PLAYLIST
+[2023-09-21T00:03:08.444Z]: [PLAYLIST]> addSongToPlaylist > ERROR 400: SONG ALREADY IN PLAYLIST
+[2023-09-21T00:03:48.394Z]: [PLAYLIST]> addSongToPlaylist > ERROR 400: SONG ALREADY IN PLAYLIST
+[2023-09-21T00:04:25.877Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:04:25.879Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:04:33.752Z]: [PLAYLIST]> addSongToPlaylist > ERROR 400: SONG ALREADY IN PLAYLIST
+[2023-09-21T00:29:12.979Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:29:12.989Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:29:14.342Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:29:14.352Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:29:14.651Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T00:29:17.583Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:29:17.607Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:29:42.689Z]: [PLAYLIST]> createPlaylist > SUCCESS: PLAYLIST SUCCESFULLY CREATED
+[2023-09-21T00:29:48.576Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:29:48.593Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:29:48.858Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T00:30:09.856Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:30:09.893Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:30:30.710Z]: [PLAYLIST]> createPlaylist > SUCCESS: PLAYLIST SUCCESFULLY CREATED
+[2023-09-21T00:30:35.317Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:30:35.320Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:30:35.607Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T00:39:36.398Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:39:36.413Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:39:36.661Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T00:39:38.462Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:39:38.479Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:39:45.818Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:39:45.820Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:39:46.100Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T00:39:50.675Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:39:50.685Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:39:50.986Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T00:39:55.222Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:39:55.270Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:40:16.450Z]: [PLAYLIST]> createPlaylist > SUCCESS: PLAYLIST SUCCESFULLY CREATED
+[2023-09-21T00:40:19.033Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:40:19.035Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:40:19.390Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T00:41:58.987Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:41:59.006Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:41:59.852Z]: [PLAYLIST]> createPlaylist > ERROR 400: INVALID PLAYLIST TITLE
+[2023-09-21T00:51:07.978Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:51:07.980Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:51:26.617Z]: [PLAYLIST]> createPlaylist > SUCCESS: PLAYLIST SUCCESFULLY CREATED
+[2023-09-21T00:51:28.964Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:51:28.984Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:51:29.276Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T00:51:33.674Z]: [PLAYLIST]> deletePlaylist > ERROR 400: INVALID PLAYLIST ID
+[2023-09-21T00:52:08.549Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:52:08.568Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:52:08.812Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T00:52:13.326Z]: [PLAYLIST]> deletePlaylist > SUCCESS: PLAYLIST 650b90f0fe518b4e4e4226a8 DELETED
+[2023-09-21T00:52:16.168Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:52:16.173Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:52:16.435Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T00:52:20.470Z]: [PLAYLIST]> deletePlaylist > SUCCESS: PLAYLIST 650b938e863915c3fde64225 DELETED
+[2023-09-21T00:52:22.164Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:52:22.185Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T00:52:22.431Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T01:01:10.788Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:01:10.790Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:01:11.077Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T01:01:12.370Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:01:12.387Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:01:21.898Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:01:21.901Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:25:42.442Z]: [PLAYLIST]> updatePlaylist > SUCCESS: PLAYLIST 64f9f714fcd23d64c4a40d5c CREATED
+[2023-09-21T01:25:45.795Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:25:45.796Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:32:26.207Z]: 🟢 Server listening on port: 3000
+[2023-09-21T01:33:09.827Z]: 🟢 Server listening on port: 3000
+[2023-09-21T01:34:47.750Z]: 🟢 Server listening on port: 3000
+[2023-09-21T01:36:08.935Z]: 🟢 Server listening on port: 3000
+[2023-09-21T01:36:50.318Z]: 🟢 Server listening on port: 3000
+[2023-09-21T01:37:02.208Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:37:02.218Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:37:32.656Z]: 🟢 Server listening on port: 3000
+[2023-09-21T01:38:31.456Z]: 🟢 Server listening on port: 3000
+[2023-09-21T01:38:34.504Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:38:34.521Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:38:34.833Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T01:38:46.078Z]: [PLAYLIST]> deletePlaylist > SUCCESS: PLAYLIST 6501eb6204aa6a4c92e498cc DELETED
+[2023-09-21T01:38:48.509Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:38:48.540Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:38:48.785Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T01:38:55.469Z]: [PLAYLIST]> deletePlaylist > SUCCESS: PLAYLIST 6505ac8e19791bd7dcb8248e DELETED
+[2023-09-21T01:39:03.498Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:39:03.499Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:39:03.807Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T01:47:01.025Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:48:41.015Z]: 🟢 Server listening on port: 3000
+[2023-09-21T01:49:06.106Z]: 🟢 Server listening on port: 3000
+[2023-09-21T01:57:07.736Z]: 🟢 Server listening on port: 3000
+[2023-09-21T01:58:15.727Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:58:44.790Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T01:58:51.796Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:02:24.762Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:02:31.296Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:03:22.617Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:05:51.107Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:05:55.053Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:05:59.233Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:08:40.119Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:08:42.876Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:09:06.475Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:09:09.709Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:09:24.193Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:09:55.821Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:09:58.045Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:10:12.092Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:10:21.359Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:11:26.899Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:11:29.754Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:12:12.301Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:12:14.643Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:12:24.465Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:12:59.370Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:13:11.900Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:13:16.200Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:13:57.106Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:14:59.707Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:15:02.981Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:15:04.716Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:15:10.814Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:15:12.994Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:16:45.222Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:21:05.907Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:21:20.516Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:21:56.512Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:23:21.045Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:24:39.028Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:29:07.205Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:29:10.647Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:29:14.028Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:29:14.037Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:29:14.338Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:29:18.509Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:29:18.521Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:29:18.781Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:30:16.273Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:30:19.344Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:30:19.362Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:30:19.773Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:30:23.709Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:30:23.742Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:30:23.743Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:30:25.302Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:30:25.413Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:30:25.774Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:30:42.232Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:30:44.792Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:30:44.793Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:30:45.123Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:30:50.352Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:30:58.115Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:30:58.143Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:30:58.433Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:31:23.850Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:31:26.883Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:31:26.903Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:31:27.180Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:31:44.307Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:31:46.859Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:31:46.865Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:31:47.153Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:31:55.547Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:31:55.635Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:31:55.640Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:31:56.682Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:31:56.689Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:31:56.957Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:32:41.003Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:32:44.846Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:32:44.852Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:32:45.141Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:33:32.903Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:34:27.589Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:34:27.608Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:34:27.919Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:34:49.985Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:34:50.280Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:38:46.033Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:38:48.894Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:39:39.138Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:39:43.246Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:39:43.248Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:39:43.538Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:40:08.640Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:40:09.089Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:40:49.482Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:41:08.646Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:41:17.076Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:41:20.861Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:41:21.195Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:41:24.238Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:41:24.308Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:41:24.510Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:43:49.801Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:43:54.256Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:43:54.274Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:43:54.582Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:44:37.510Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:45:36.876Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:45:39.117Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:45:39.177Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:45:39.466Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:49:08.945Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:49:12.673Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:49:12.693Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:49:13.000Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:50:52.528Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:51:10.740Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:51:13.368Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:51:13.369Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:51:13.697Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:52:08.325Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:52:11.894Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:52:11.901Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:52:38.837Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:52:41.279Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:52:41.282Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:52:41.566Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T02:53:02.076Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:55:33.635Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:59:17.116Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:59:31.698Z]: 🟢 Server listening on port: 3000
+[2023-09-21T02:59:35.870Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:59:35.872Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T02:59:36.168Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:01:33.772Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:01:48.817Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:01:48.928Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:01:48.930Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:01:50.139Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:01:50.175Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:01:50.458Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:02:18.608Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:02:30.962Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:02:32.322Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:02:32.347Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:02:32.588Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:02:49.065Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:02:49.094Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:02:49.337Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:03:16.051Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:03:16.057Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:03:18.533Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:03:18.546Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:03:19.131Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:03:25.053Z]: [USER]> getUser > SUCCESS: FETCHED USER
+[2023-09-21T03:03:29.133Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:03:29.148Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:03:29.717Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:03:35.099Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:03:35.113Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:03:35.360Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:05:58.090Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:05:58.181Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:05:58.436Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:09:30.845Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:09:42.744Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:09:52.695Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:11:55.371Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:12:07.664Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:12:11.631Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:12:11.677Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:12:11.983Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:13:16.550Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:15:31.218Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:15:42.827Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:15:42.840Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:15:43.141Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:16:09.281Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:16:12.828Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:16:12.853Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:16:13.129Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:16:22.397Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:16:25.962Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:16:25.965Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:16:26.249Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:17:27.704Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:17:35.799Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:17:35.801Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:17:36.078Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:18:03.149Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:18:05.970Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:18:05.989Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:18:06.290Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:18:15.078Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:18:15.094Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:18:15.344Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:19:07.555Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:19:10.711Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:19:10.729Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:19:10.979Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:19:31.045Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:19:33.969Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:19:33.979Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:19:34.242Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:20:05.829Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:20:08.299Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:20:08.313Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:20:08.639Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:20:27.464Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:21:25.541Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:21:49.094Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:21:53.958Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:21:54.007Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:21:54.308Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:23:20.838Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:23:24.059Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:23:24.061Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:23:24.376Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:24:21.076Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:26:34.291Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:26:34.320Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:26:34.604Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:28:28.560Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:28:32.301Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:28:32.304Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:28:32.621Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:29:48.872Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:29:48.888Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:29:49.136Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:30:41.316Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:32:35.812Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:33:17.210Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:33:20.630Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:33:20.643Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:33:35.897Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:33:35.923Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:33:36.509Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:34:57.065Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:34:59.587Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:34:59.605Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:35:00.266Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:35:28.268Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:35:28.283Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:35:28.925Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:36:04.719Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:36:07.873Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:36:07.893Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:36:08.567Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:37:48.586Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:37:48.603Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:37:49.150Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:38:43.364Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:40:56.201Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:41:18.546Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:41:18.556Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:41:19.087Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:41:36.908Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:41:39.772Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:41:39.794Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:41:40.320Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:44:33.217Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:44:46.901Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:44:46.907Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:44:47.457Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:45:03.486Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:45:14.423Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:45:17.163Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:45:17.199Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:45:17.837Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:46:26.765Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:46:36.754Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:46:36.783Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:46:37.401Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:47:12.562Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:47:15.431Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:47:15.451Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:47:15.969Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:47:32.178Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:47:32.191Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:47:32.743Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:47:43.764Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:47:44.045Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:48:35.149Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:48:39.777Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:48:39.803Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:48:40.385Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:49:18.876Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:49:21.303Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:49:21.305Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:49:21.863Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:52:46.802Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:53:51.382Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:53:55.621Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:53:55.650Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:53:56.199Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:54:54.197Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:54:59.333Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:54:59.344Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:54:59.921Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:55:38.024Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:55:40.364Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:55:40.389Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:55:40.916Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T03:59:14.885Z]: 🟢 Server listening on port: 3000
+[2023-09-21T03:59:17.619Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:59:17.629Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T03:59:18.194Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T04:00:31.185Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:00:34.745Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:00:34.759Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:00:35.367Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T04:01:15.202Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:01:19.089Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:01:19.095Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:01:19.632Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T04:01:46.882Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:01:50.092Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:01:50.107Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:01:50.627Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T04:02:06.930Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:02:09.486Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:02:09.523Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:02:10.069Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T04:02:22.229Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:04:05.464Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:08:26.451Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:25:49.000Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:28:20.018Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:28:37.053Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:29:05.224Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:29:05.225Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:29:05.777Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T04:29:21.513Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:29:24.836Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:29:24.856Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:29:25.455Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T04:30:27.456Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:30:45.109Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:31:03.508Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:32:19.555Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:34:06.836Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:34:31.556Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:34:34.927Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:34:34.930Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:34:35.517Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T04:35:03.894Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:35:06.157Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:35:06.159Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:35:06.716Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T04:36:12.566Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:36:15.811Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:36:15.830Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:36:16.391Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T04:36:35.758Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:36:40.316Z]: [PLAYLIST]> getPlaylistFromId > SUCCESS: SUCCESFULLY FETCHED PLAYLIST 64f9f714fcd23d64c4a40d5c
+[2023-09-21T04:38:57.418Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:39:16.483Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:39:19.016Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:39:19.032Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:39:19.588Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T04:41:35.412Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:42:08.906Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:42:08.920Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:42:09.486Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T04:43:18.226Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:43:18.239Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:43:18.838Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T04:46:10.225Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:46:12.539Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:46:24.622Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:46:24.631Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:46:25.235Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T04:49:59.814Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:50:03.649Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:50:03.685Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:50:04.325Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T04:50:39.470Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:51:27.660Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:51:33.009Z]: 🟢 Server listening on port: 3000
+[2023-09-21T04:51:41.359Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:51:41.368Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T04:51:41.893Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T04:56:49.542Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:01:10.305Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:01:14.489Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:01:14.502Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:01:15.112Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:01:49.856Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:02:04.324Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:02:06.930Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:02:06.933Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:02:07.440Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:03:39.745Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:03:49.906Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:05:42.806Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:06:29.982Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:06:49.624Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:12:15.924Z]: [>>>>>>> TOKEN <<<<<<<<<] GENERATING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:12:16.024Z]: [>>>>>>> TOKEN <<<<<<<<<] SCHEDULING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:12:16.301Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:12:16.733Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:12:51.414Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:12:51.728Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:13:06.089Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:13:06.396Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:13:12.420Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:13:12.730Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:15:48.739Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:15:55.863Z]: [>>>>>>> TOKEN <<<<<<<<<] GENERATING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:15:55.982Z]: [>>>>>>> TOKEN <<<<<<<<<] SCHEDULING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:15:56.158Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:15:56.586Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:18:27.837Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:18:28.014Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:19:08.592Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:19:12.442Z]: [>>>>>>> TOKEN <<<<<<<<<] GENERATING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:19:12.548Z]: [>>>>>>> TOKEN <<<<<<<<<] SCHEDULING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:19:12.734Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:19:13.171Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:19:35.929Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:19:38.084Z]: [>>>>>>> TOKEN <<<<<<<<<] GENERATING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:19:38.199Z]: [>>>>>>> TOKEN <<<<<<<<<] SCHEDULING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:19:38.378Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:19:38.772Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:19:44.270Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:21:32.506Z]: [>>>>>>> TOKEN <<<<<<<<<] GENERATING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:21:32.617Z]: [>>>>>>> TOKEN <<<<<<<<<] SCHEDULING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:21:32.862Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:21:33.198Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:21:42.239Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:21:42.519Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:22:16.994Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:22:17.240Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:22:55.933Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:22:56.107Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:23:44.276Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:23:44.527Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:23:58.107Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:23:58.169Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:23:58.689Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:24:14.661Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:24:14.901Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:24:16.647Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:24:16.664Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:24:17.158Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:24:24.272Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:24:24.532Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:25:52.467Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:25:56.073Z]: [>>>>>>> TOKEN <<<<<<<<<] GENERATING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:25:56.169Z]: [>>>>>>> TOKEN <<<<<<<<<] SCHEDULING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:25:56.337Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:25:56.749Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:29:02.079Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:29:02.321Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:29:11.365Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:29:13.387Z]: [>>>>>>> TOKEN <<<<<<<<<] GENERATING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:29:13.506Z]: [>>>>>>> TOKEN <<<<<<<<<] SCHEDULING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:29:13.670Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:29:14.047Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:29:36.214Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:29:36.530Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:29:50.308Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:29:50.311Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:29:50.838Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:29:52.889Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:29:52.899Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:30:31.197Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:30:31.232Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:30:52.946Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:30:52.961Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:31:12.828Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:31:12.852Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:31:22.786Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:31:22.794Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:31:23.332Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:31:25.581Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:31:25.590Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:31:28.810Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:31:29.086Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:31:45.988Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:31:46.245Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:32:01.373Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:32:01.665Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:32:16.051Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:32:16.381Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:32:24.989Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:32:25.225Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:32:31.938Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:32:31.981Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:32:32.468Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS
+[2023-09-21T05:32:41.628Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:32:41.637Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:33:27.895Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:33:30.468Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:33:30.470Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:33:31.889Z]: [>>>>>>> TOKEN <<<<<<<<<] GENERATING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:33:31.904Z]: [>>>>>>> TOKEN <<<<<<<<<] GENERATING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:33:31.977Z]: [>>>>>>> TOKEN <<<<<<<<<] SCHEDULING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:33:41.671Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:33:48.267Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:33:50.607Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:33:50.609Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:33:52.420Z]: [>>>>>>> TOKEN <<<<<<<<<] GENERATING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:33:52.467Z]: [>>>>>>> TOKEN <<<<<<<<<] GENERATING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:33:52.508Z]: [>>>>>>> TOKEN <<<<<<<<<] SCHEDULING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:35:10.191Z]: 🟢 Server listening on port: 3000
+[2023-09-21T05:35:13.130Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:35:13.148Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:35:14.715Z]: [>>>>>>> TOKEN <<<<<<<<<] GENERATING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:35:14.811Z]: [>>>>>>> TOKEN <<<<<<<<<] SCHEDULING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]
+[2023-09-21T05:35:15.045Z]: [LOGIN]> authuser >  USER 64f0aee6df95e117d66b806f AUTHORIZED
+[2023-09-21T05:35:15.351Z]: [PLAYLIST]> getUserPlaylist > SUCCESS: Fetched 64f0aee6df95e117d66b806f PLAYLISTS

@@ -1,0 +1,7 @@
+[2023-09-20T16:44:33.906Z]: [LOGIN]> login > USER 64f0aee6df95e117d66b806f LOGGED IN
+[2023-09-20T16:44:36.104Z]: [LOGIN]> authuser > ERROR 400: missing nickname
+[2023-09-20T16:44:36.292Z]: [LOGIN]> authuser > ERROR 400: missing nickname
+[2023-09-20T16:44:36.296Z]: [LOGIN]> authuser > ERROR 400: missing nickname
+[2023-09-20T16:44:36.393Z]: [LOGIN]> authuser > ERROR 500: INTERNAL ERROR Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[2023-09-20T16:44:36.635Z]: [LOGIN]> authuser > ERROR 500: INTERNAL ERROR Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[2023-09-20T16:44:36.637Z]: [LOGIN]> authuser > ERROR 500: INTERNAL ERROR Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client

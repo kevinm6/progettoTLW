@@ -1,54 +1,130 @@
 /** file created for dealing with function used in playlists.html exclusively */
 async function fetchPlaylists() {
-   try {
-     const userId = localStorage.getItem("_id");
-     const response = await fetch(`/playlist/${userId}`);
-     const playlistsData = await response.json();
-     return playlistsData;
+    try {
+        const userId = localStorage.getItem("_id");
+        const response = await fetch(`/playlist/${userId}`);
+        const playlistsData = await response.json();
+        return playlistsData;
     } catch (error) {
         console.error("Errore durante il recupero delle playlist:", error);
         return [];
     }
 }
 
-async function populatePlaylistCards() {
+async function populatePlaylistCards(ddoptions) {
     const playlistsData = await fetchPlaylists();
     const playlistContainer = document.getElementById("playlistContainer");
 
-    playlistsData.forEach(playlist => {
+    playlistsData.forEach(async playlist => {
         //var stringified = JSON.stringify(playlist.songs).replace(/"/g, '&quot;');
         var stringified = JSON.stringify(playlist.songs).replace(/"/g, '&quot;');
         const card = `
         <div class="col-md-4 mb-4">
-        <div class="card h-100">
+          <div class="card h-100">
             <div class="card-body">
-                <h5 class="card-title">${playlist.title}${playlist.private ? '<i class="private bi bi-lock-fill text-success"></i>' : ''}</h5>
-                <p class="card-text">${playlist.description}</p>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
-                    onclick="showSongs('${playlist._id}', ${stringified})">
-                    View Songs
+              <h5 class="card-title">${playlist.title}${playlist.private ? '<i class="private bi bi-lock-fill text-success"></i>' : ''}</h5>
+              <p class="card-text">${playlist.description}</p>
+              <p class="card-text">Tags: <b>${playlist.tags}</b></p>
+              <button class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}" onclick="showSongs('${playlist._id}', ${stringified})">
+                View Songs
+              </button>
+              <button class="btn btn-primary mb-2" onclick="fetchEditPlaylist('${playlist._id}')">
+                Edit playlist
+              </button>
+              <button class="btn btn-danger mb-2" onclick="deletePlaylist('${playlist._id}','${playlist.title}')">
+                Delete
+              </button>
+              ${!playlist.private ? ` 
+              <div class="btn-group dropup mb-2">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Add to Community
                 </button>
-                <button class="btn btn-primary" onclick="fetchEditPlaylist('${playlist._id}')">
-                    Edit playlist
-                </button>
-                <button class="btn btn-danger" onclick="deletePlaylist('${playlist._id}','${playlist.title}')" >
-                    Delete
-                </button>
-
+                <div class="dropdown-menu dropdown-menu-right" id="communityDropdown${playlist._id}" aria-labelledby="dropdownMenuButton"> 
+                </div>
+              </div>
+              ` : ''}
             </div>
+          </div>
         </div>
-    </div>
-        `;
+      `;
+      
         playlistContainer.innerHTML += card;
+        if(!playlist.private)
+            await populateDropdown(playlist._id, ddoptions);
     });
 }
 
+async function populateDropdown(playlistID, dropdownOptions) {
+    const dropdownMenu = document.getElementById(`communityDropdown${playlistID}`);
+    dropdownMenu.innerHTML = "";
+    dropdownOptions.forEach((option) => {
+        dropdownMenu.innerHTML += `<a class="dropdown-item" onClick='addPlaylistToCommunity("${playlistID}","${option._id}")'>${option.name}</a>`;
+    });
+    console.log(dropdownMenu);
+}
+
+function addPlaylistToCommunity(playlistID, communityID) {
+    var owner_id = localStorage.getItem("_id");
+    fetch(`/addplaylisttocommunity/${communityID}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ playlist_id: playlistID, owner_id: owner_id }),
+    })
+        .then((response) => {
+            if (response.ok) {
+                alert("Success: Playlist added to community");
+            } else {
+                response.text().then(errorMessage => {
+                    alert(errorMessage);
+                });
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+            alert(error.message);
+        });
+}
+
+async function getDropdownOptions() {
+    var owner_id = localStorage.getItem("_id");
+    return fetch(`/communities/${owner_id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('An error occurred. Try again later.');
+            }
+        })
+        .then((data) => {
+            // ARRAY OF OPTIONS
+            const dropdownOptions = data.map((community) => ({
+                name: community.name,
+                _id: community._id,
+            }));
+            console.log(dropdownOptions);
+            return dropdownOptions;
+
+        })
+        .catch((error) => {
+            console.error(error);
+            alert(error);
+        });
+}
+
+
 async function fetchEditPlaylist(playlistID) {
-    window.location.href=`/src/html/editplaylist.html?id=${playlistID}`;
+    window.location.href = `/src/html/editplaylist.html?id=${playlistID}`;
 }
 
 async function deletePlaylist(playlistID, playlistTitle) {
-    var del = await showConfirmationModal("Are you sure?", "You are about to delete the playlist: '"+playlistTitle+"'","Delete playlist","Cancel");
+    var del = await showConfirmationModal("Are you sure?", "You are about to delete the playlist: '" + playlistTitle + "'", "Delete playlist", "Cancel");
     if (!del) return;
     // Ottieni l'ID dall'archivio locale (localStorage)
     const localStorageID = localStorage.getItem("_id");

@@ -16,13 +16,15 @@ function saveChanges() {
     var userName = document.getElementById("nome").value;
     var userSurname = document.getElementById("cognome").value;
     var userId = localStorage.getItem("_id");
+    var birthdate = document.getElementById("date").value;
     var updatedData = {
         _id: userId,
         email: userEmail,
         name: userName,
         surname: userSurname,
         nickname: userNickname,
-        password: userPassword
+        password: userPassword,
+        date:birthdate,
 
     };
     fetch(`/users/${updatedData._id}`, {
@@ -39,10 +41,13 @@ function saveChanges() {
             localStorage.setItem("_id", userId);
             window.location.href = "/profile";
         } else {
-            throw new Error("Errore durante il salvataggio delle modifiche");
+            response.text().then(errorMessage => {
+                alert(errorMessage);
+             });
         }
     }).catch(error => {
-        console.error("An error has occurred:", error);
+        console.error(error);
+        alert(error);
     });
 }
 async function deleteUser(){
@@ -62,10 +67,13 @@ async function deleteUser(){
             localStorage.removeItem("_id");
             window.location.href = "/register";
         } else {
-            throw new Error("Errore durante l'eliminazione dell'account");
+            response.text().then(errorMessage => {
+                alert(errorMessage);
+             });
         }
     }).catch(error => {
-        console.error("An error has occurred:", error);
+        console.error(error);
+        alert(error);
     });
 }
 function logout() {

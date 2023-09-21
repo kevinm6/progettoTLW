@@ -2,6 +2,7 @@
  * Generate Spotify token and access from API via client_credentials
  */
 import { spotify } from "../../config/prefs.js";
+import * as utils from "../utils.js";
 
 /**
  * Generate a new Spotify API token.
@@ -28,11 +29,11 @@ export const generateSpotifyToken = async () => {
    }
    try {
       console.log("📡 Generating Spotify token...")
+      utils.logonly("[>>>>>>> TOKEN <<<<<<<<<] GENERATING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]")
 
       let response = await fetch(spotify.token_url, authOptions)
       const data = await response.json();
       process.env.SPOTIFY_TOKEN = data.access_token;
-      // console.log(data.access_token);
 
       if (!scheduled) {
          scheduleRenewSpotifyDevToken();
@@ -58,6 +59,7 @@ export const generateSpotifyToken = async () => {
  */
 const scheduleRenewSpotifyDevToken = async () => {
    console.log("⏱️  Scheduling Spotify Token");
+   utils.logonly("[>>>>>>> TOKEN <<<<<<<<<] SCHEDULING SPOTIFY TOKEN [>>>>>>> TOKEN <<<<<<<<<]")
    const anHourInMilliseconds = 3600000;
    setInterval(generateSpotifyToken, anHourInMilliseconds);
 }

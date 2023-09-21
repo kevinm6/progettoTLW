@@ -85,11 +85,8 @@ function generateCards(trackname, artists, duration, albumname, trackid, trackur
         </div>
     </div>
 `;
-    
-    
-
     return trackCard;
-
+    
 }
 /**
  * @description Manages the behavior of "Add Song" buttons.

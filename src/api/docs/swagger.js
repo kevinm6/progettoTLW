@@ -77,7 +77,7 @@ const doc = {
        },
        playlists: {
          _id: "ObjectId('64e748f0cb18ad90657b9043')",
-         owner_id: "64df73b31e5eda5eb868ddcd",
+         owner_id: "ObjectId('64df73b31e5eda5eb868ddcd')",
          title: "Example Playlist",
          description: "Description of playlist",
          public: true,
@@ -116,6 +116,13 @@ const doc = {
             $nickname:"johndough",
             $email: "johndough@gmail.com"
        },
+       song: {
+         $_id: "78kf73b31e6yda5eb868dder",
+         $artist:"['artist1','artist2']",
+         $duration: "00:11:22", 
+         $year: "1984",
+         $album: "Album Name"
+       },
        loginrequest: {
          email: "johndough@gmail.com",
          nickname:"johndough",        
@@ -131,6 +138,11 @@ const doc = {
          $_id: "64df73b31e5eda5eb868ddcd",
          $nickname: "johndough",
          $email: "johndough@gmail.com"
+       },
+       removesong: {
+         $playlist_id: "ObjectId('64e748f0cb18ad90657b9043')",
+         $track_id: "78kf73b31e6yda5eb868dder",
+         $owner_id: "ObjectId('64df73b31e5eda5eb868ddcd')"
        }
    }
 }

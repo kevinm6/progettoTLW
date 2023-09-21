@@ -205,26 +205,26 @@ function showTrackInfo(info) {
    let cardText = item.cardText || null;
    if (cardText) {
       modalLabel.innerHTML = `
-<h2>${item.cardText}: ${item.name}</h2>
-<h4 style="color: grey">${item.secondBodyText}</h4>
-`;
+         <h2>${item.cardText}: ${item.name}</h2>
+         <h4 style="color: grey">${item.secondBodyText}</h4>
+         `;
    } else {
       modalLabel.innerHTML = `
-<h2>${item.name}</h2>
-<h4 style="color: grey">${item.secondBodyText}</h4>
-`;
+         <h2>${item.name}</h2>
+         <h4 style="color: grey">${item.secondBodyText}</h4>
+         `;
    }
 
    let hasPreviewUrl = item.audioSrc || null;
    if (hasPreviewUrl) {
       let modalFooter = document.getElementById('trackModalFooter' + item.id);
       modalFooter.innerHTML = `
-<div class="audio-player">
-   <audio controls class="custom-audio-player">
-      <source src=${hasPreviewUrl} type="audio/mpeg">
-         Il tuo browser non supporta l'elemento audio.
-   </audio>
-</div>
+         <div class="audio-player custom-audio-player">
+            <audio controls class="custom-audio-player">
+               <source src=${hasPreviewUrl} type="audio/mpeg">
+                  Il tuo browser non supporta l'elemento audio.
+            </audio>
+         </div>
 `;
    }
 
@@ -490,14 +490,14 @@ function setContainerHtml(items) {
                         </div>
                         
                         <!-- Modal -->
-                        <div class="modal" id="trackModal" tabindex="-1" aria-labelledby="trackModalLabel" aria-hidden="true">
+                        <div class="modal mb" id="trackModal" tabindex="-1" aria-labelledby="trackModalLabel" aria-hidden="true">
                            <div class="modal-dialog modal-dialog-centered modal-lg">
                               <!-- Modal content -->
                               <div class="modal-content">
                                  <div class="modal-header">
                                     <h5 class="modal-title text-center" id="trackModalLabel"></h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="modalclose"></button>
-                                 </div>
+                                 </div>   
                                  <div class="modal-body" id="trackModalBody">
                                     <img class="img-responsive" alt="">
                                  </div>

@@ -88,9 +88,10 @@ function validateForm() {
  * @returns {void}
  */
 function checkUserLogged() {
+   var id = localStorage.getItem("_id");
    var email = localStorage.getItem("email");
    var nickname = localStorage.getItem("nickname");
-   if (email && nickname) {
+   if (email && nickname && id) {
       // User is logged, bring him to profile page
       window.location.href = "/profile";
    }

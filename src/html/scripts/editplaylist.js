@@ -218,7 +218,7 @@ function generateCards(trackname, artists, duration, albumname, trackid, trackur
                         <source src="${trackurl}" type="audio/mpeg">
                         Your browser does not support audio type
                     </audio>
-                </div>
+                </div><br>
                 <button class="btn btn-success add-button add-track" onclick="addSong('${playlistID}', '${song}')">
                     Add song
                 </button>
@@ -256,16 +256,9 @@ async function addSong(playlistID,song){
             alert("Song added successfully");
             window.location.href = "/src/html/editplaylist.html?id=" + playlistID;
         } else {
-            if (response.status === 400) {
-                const responseBody = await response.text();
-                if (responseBody === 'EXISTS') {
-                    alert("Song is already in the playlist!");
-                } else {
-                    alert("An error occurred while adding the song to the playlist. Please try again later.");
-                }
-            } else {
-                alert("An error occurred while adding the song to the playlist. Please try again later.");
-            }
+            response.text().then(errorMessage => {
+                alert(errorMessage);
+             });
         }
     } catch (error) {
         console.error("Error adding song to playlist:", error);

@@ -106,10 +106,13 @@
             }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Data is not valid, missing parameter"
           },
           "401": {
             "description": "User not authorized"
+          },
+          "500": {
+            "description": "Internal error"
           }
         }
       }
@@ -146,7 +149,7 @@
             "description": "succesfully registered."
           },
           "400": {
-            "description": "User already exists"
+            "description": "User already exists, invalid parameter"
           },
           "500": {
             "description": "Generic error"
@@ -329,6 +332,12 @@
             "schema": {
               "$ref": "#/definitions/user"
             }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -359,7 +368,7 @@
             "description": "user updated."
           },
           "400": {
-            "description": "Missing name / nickname / email / User already exists"
+            "description": "Missing parameter, Invalid Parameters"
           },
           "500": {
             "description": "Generic error"
@@ -376,6 +385,9 @@
         "responses": {
           "200": {
             "description": "List of users."
+          },
+          "500": {
+            "description": "Internal Error."
           }
         }
       }
@@ -401,6 +413,9 @@
           },
           "400": {
             "description": "User does not exist"
+          },
+          "500": {
+            "description": "Internal Error"
           }
         }
       }
@@ -428,97 +443,14 @@
               "$ref": "#/definitions/user"
             }
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/search": {
-      "get": {
-        "tags": [
-          "tracks"
-        ],
-        "description": "ADD DESCRIPTION",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/tracks": {
-      "get": {
-        "tags": [
-          "tracks"
-        ],
-        "description": "ADD DESCRIPTION",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/tracks/{id}": {
-      "get": {
-        "tags": [
-          "tracks"
-        ],
-        "description": "ADD DESCRIPTION",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/artist/{id}": {
-      "get": {
-        "tags": [
-          "artists"
-        ],
-        "description": "ADD DESCRIPTION",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/artists/{id}": {
-      "get": {
-        "tags": [
-          "artists"
-        ],
-        "description": "ADD DESCRIPTION",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
+            "description": "Invalid body parameter"
+          },
+          "500": {
+            "description": "Internal Error"
           }
         }
       }
@@ -588,6 +520,45 @@
           "200": {
             "description": "playlist updated"
           },
+          "400": {
+            "description": "Invalid Parameters, Missing parameters"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/addsongtoplaylist/{id}": {
+      "put": {
+        "tags": [
+          "playlist"
+        ],
+        "description": "Endpoint that allows to add song to playlist",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id of the playlist we want to add song to."
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "tuple used for verification",
+            "schema": {
+              "$ref": "#/definitions/song"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "playlist updated"
+          },
+          "400": {
+            "description": "Invalid Parameters, Missing parameters"
+          },
           "500": {
             "description": "Server error"
           }
@@ -620,6 +591,9 @@
             "schema": {
               "$ref": "#/definitions/playlists"
             }
+          },
+          "400": {
+            "description": "Invalid parameters, Missing parameters"
           },
           "404": {
             "description": "Playlist Not Found"
@@ -723,31 +697,6 @@
         }
       }
     },
-    "/addsongtoplaylist/{id}": {
-      "put": {
-        "tags": [
-          "playlist"
-        ],
-        "description": "Endpoint that allows to add song to playlist",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "Id of the playlist we want to add song to."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "playlist updated"
-          },
-          "500": {
-            "description": "Server error"
-          }
-        }
-      }
-    },
     "/deleteSongFromPlaylist": {
       "delete": {
         "tags": [
@@ -758,19 +707,9 @@
           {
             "name": "body",
             "in": "body",
+            "description": "parameters used to identify playlist of the user where the song to be deleted is in",
             "schema": {
-              "type": "object",
-              "properties": {
-                "playlist_id": {
-                  "example": "any"
-                },
-                "track_id": {
-                  "example": "any"
-                },
-                "owner_id": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/removesong"
             }
           }
         ],
@@ -779,10 +718,10 @@
             "description": "Song removed."
           },
           "400": {
-            "description": "Missing parameter"
+            "description": "Missing parameter, Invalid parameter"
           },
           "404": {
-            "description": "Song not found or not valid"
+            "description": "Song not found"
           },
           "500": {
             "description": "Internal error"
@@ -816,6 +755,95 @@
           },
           "500": {
             "description": "Internal error"
+          }
+        }
+      }
+    },
+    "/search": {
+      "get": {
+        "tags": [
+          "tracks"
+        ],
+        "description": "ADD DESCRIPTION",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/tracks": {
+      "get": {
+        "tags": [
+          "tracks"
+        ],
+        "description": "ADD DESCRIPTION",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/tracks/{id}": {
+      "get": {
+        "tags": [
+          "tracks"
+        ],
+        "description": "ADD DESCRIPTION",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/artist/{id}": {
+      "get": {
+        "tags": [
+          "artists"
+        ],
+        "description": "ADD DESCRIPTION",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/artists/{id}": {
+      "get": {
+        "tags": [
+          "artists"
+        ],
+        "description": "ADD DESCRIPTION",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
           }
         }
       }
@@ -983,7 +1011,7 @@
         },
         "owner_id": {
           "type": "string",
-          "example": "64df73b31e5eda5eb868ddcd"
+          "example": "ObjectId('64df73b31e5eda5eb868ddcd')"
         },
         "title": {
           "type": "string",
@@ -1125,6 +1153,38 @@
         "email"
       ]
     },
+    "song": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "78kf73b31e6yda5eb868dder"
+        },
+        "artist": {
+          "type": "string",
+          "example": "['artist1','artist2']"
+        },
+        "duration": {
+          "type": "string",
+          "example": "00:11:22"
+        },
+        "year": {
+          "type": "string",
+          "example": "1984"
+        },
+        "album": {
+          "type": "string",
+          "example": "Album Name"
+        }
+      },
+      "required": [
+        "_id",
+        "artist",
+        "duration",
+        "year",
+        "album"
+      ]
+    },
     "loginrequest": {
       "type": "object",
       "properties": {
@@ -1192,6 +1252,28 @@
         "_id",
         "nickname",
         "email"
+      ]
+    },
+    "removesong": {
+      "type": "object",
+      "properties": {
+        "playlist_id": {
+          "type": "string",
+          "example": "ObjectId('64e748f0cb18ad90657b9043')"
+        },
+        "track_id": {
+          "type": "string",
+          "example": "78kf73b31e6yda5eb868dder"
+        },
+        "owner_id": {
+          "type": "string",
+          "example": "ObjectId('64df73b31e5eda5eb868ddcd')"
+        }
+      },
+      "required": [
+        "playlist_id",
+        "track_id",
+        "owner_id"
       ]
     }
   }

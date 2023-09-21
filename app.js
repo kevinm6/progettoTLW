@@ -16,6 +16,7 @@ import { register } from "./src/lib/register.js";
 import { search, getGenres, getRecommended, getTrack } from "./src/lib/spotify/fetch.js"
 import * as playlist from "./src/lib/playlist.js";
 import * as community from "./src/lib/community.js";
+import * as utils from "./src/lib/utils.js";
 
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './src/api/docs/swagger_output.json'assert { type: 'json' };; // Specifica il percorso al tuo file Swagger JSON generato
@@ -106,6 +107,7 @@ app.get("/editplaylist/:id", async function (req, res) {
 /* ------------------- USERS ------------------- */
 
 // User specific Endpoint
+// CALLS FILE: USER.JS
 app.get("/users/:id", async function (req, res) {
    // #swagger.tags = ['users']
    // #swagger.description = 'Endpoint that allows to obtain a specific user given its _id'
@@ -119,16 +121,22 @@ app.get("/users/:id", async function (req, res) {
 
 
 // Endpoint for all users
+// CALLS FILE: USER.JS
 app.get("/users", async function (_, res) {
    // #swagger.tags = ['users']
    // #swagger.description = 'Endpoint that allows to fetch all users from the database'
    /* #swagger.responses[200] = {
          description: 'List of users.'
-      } */
+      }
+      #swagger.responses[500] = {
+         description: 'Internal Error.'
+      }  
+      */
    getUsers(res)
 });
 
 // User update Endpoint
+// CALLS FILE: USER.JS
 app.put("/users/:id", function (req, res) {
    // #swagger.tags = ['users']
    // #swagger.description = 'Endpoint that allows to update of a specific user given its _id and the new Data'
@@ -140,13 +148,13 @@ app.put("/users/:id", function (req, res) {
          type: 'object',
          schema: { $ref: "#/definitions/updateuser" }
       }
-*/
+   */
 
    /* #swagger.responses[200] = {
          description: 'user updated.'
       }
       #swagger.responses[400] = {
-         description: 'Missing name / nickname / email / User already exists'
+         description: 'Missing parameter, Invalid Parameters'
       }
       #swagger.responses[500] = {
          description: 'Generic error'
@@ -156,6 +164,7 @@ app.put("/users/:id", function (req, res) {
 });
 
 // User delete Endpoint
+// CALLS FILE: USER.JS
 app.delete("/deleteUser/:id", function (req, res) {
    // #swagger.tags = ['users']
    // #swagger.description = 'Endpoint that allows to delete a specific user from the database'
@@ -169,6 +178,9 @@ app.delete("/deleteUser/:id", function (req, res) {
       #swagger.responses[400] = {
          description: 'User does not exist'
       }
+      #swagger.responses[500] = {
+         description: 'Internal Error'
+      }
       */
    deleteUser(res, req.params.id);
 });
@@ -176,6 +188,7 @@ app.delete("/deleteUser/:id", function (req, res) {
 
 /* ------------------- AUTHENTICATION ------- ------------------- */
 // Login Endpoint
+// CALLS FILE: LOGIN.JS
 app.post("/login", async (req, res) => {
    // #swagger.tags = ['auth']
    // #swagger.description = 'Endpoint that allows to check if user's login data is correct and valid for logging in the application'
@@ -186,9 +199,7 @@ app.post("/login", async (req, res) => {
          schema: { $ref: "#/definitions/loginrequest" }
       }
 */
-   /* #swagger.responses[200] = {
-         description: 'user found.'
-      }
+   /* 
       #swagger.responses[200] = {
          schema: { $ref: "#/definitions/loggeduser" },
          description: 'User login data is valid'
@@ -196,12 +207,19 @@ app.post("/login", async (req, res) => {
       #swagger.responses[401] = {
          description: 'User not authorized'
       }
+      #swagger.responses[400] = {
+         description: 'Data is not valid, missing parameter'
+      }
+      #swagger.responses[500] = {
+         description: 'Internal error'
+      }
       */
    login(req, res);
 });
 
 
-
+// Register endpoint
+// CALLS FILE: REGISTER.JS
 app.post("/register", function (req, res) {
    // #swagger.tags = ['auth']
    // #swagger.description = 'Endpoint that allows to register a new user in the database'
@@ -216,7 +234,7 @@ app.post("/register", function (req, res) {
          description: 'succesfully registered.'
       }
       #swagger.responses[400] = {
-         description: 'User already exists'
+         description: 'User already exists, invalid parameter'
       }
       #swagger.responses[500] = {
          description: 'Generic error'
@@ -225,6 +243,8 @@ app.post("/register", function (req, res) {
    register(res, req.body);
 });
 
+// Auth user
+// CALLS FILE: LOGIN.JS
 app.post("/authuser", async (req, res) => {
    // #swagger.tags = ['auth']
    // #swagger.description = 'Endpoint that allows to verify if user tuple of _id, email and nickname are valid in the database.'
@@ -242,53 +262,20 @@ app.post("/authuser", async (req, res) => {
       #swagger.responses[401] = {
          description: 'Unauthorized'
       }
+      #swagger.responses[401] = {
+         description: 'Invalid body parameter'
+      }
+      #swagger.responses[500] = {
+         description: 'Internal Error'
+      }
       */
    authuser(req, res);
 });
 
-/* ------------------- TRACKS ------------------- */
-app.get("/search", async function (req, res) {
-   // #swagger.tags = ['tracks']
-   // #swagger.description = 'ADD DESCRIPTION'
-   search(req.query, res);
-})
-app.get("/tracks", async function (req, res) {
-   // #swagger.tags = ['tracks']
-   // #swagger.description = 'ADD DESCRIPTION'
-   getRecommended(req.params, res);
-})
-
-app.get("/tracks/:id", async function (req, res) {
-   // #swagger.tags = ['tracks']
-   // #swagger.description = 'ADD DESCRIPTION'
-   getTrack(req.params.id, res);
-})
-
-
-/* ------------------- ARTISTS ------------------- */
-// app.get("/artists", async function (req, res) {
-//    res.sendFile(config.__dirname + "/src/html/artists.html");
-// })
-
-app.get("/artist/:id", async function (req, res) {
-   // #swagger.tags = ['artists']
-   // #swagger.description = 'ADD DESCRIPTION'
-   getArtists(false, req.params.id, res);
-})
-
-app.get("/artists/:id", async function (req, res) {
-   // #swagger.tags = ['artists']
-   // #swagger.description = 'ADD DESCRIPTION'
-   getArtists(true, req.params.id, res);
-})
-
-
-/* ------------------- EXPLORE ------------------- */
-
-
 
 /* -------------------- PLAYLIST ------------------- */
 
+// CHIEDERE A KEV!!
 app.get("/playlists", async (req, res) => {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to obtain all public playlists'
@@ -301,6 +288,9 @@ app.get("/playlists", async (req, res) => {
       */
    playlist.getPublicPlaylists(req, res);
 });
+
+// Gets playlist from user
+// CALLS FILE : PLAYLIST.JS
 app.get("/playlist/:id", async (req, res) => {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to obtain user's playlists'
@@ -314,6 +304,8 @@ app.get("/playlist/:id", async (req, res) => {
       */
    playlist.getUserPlaylists(res, req.params.id);
 });
+
+// CHIEDERE A KEV, SERVE DAVVERO?
 app.put("/playlist/:id", async (req, res) => {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to edit user's playlists'
@@ -324,10 +316,42 @@ app.put("/playlist/:id", async (req, res) => {
       #swagger.responses[500] = {
          description: 'Server error'
       }
+      #swagger.responses[400] = {
+         description: 'Invalid Parameters, Missing parameters'
+      }
       */
    playlist.addSongToPlaylist(req, res);
 });
 
+// Adds song to playlist
+// CALLS FILE : PLAYLIST.JS
+app.put("/addsongtoplaylist/:id", async (req, res) => {
+   // #swagger.tags = ['playlist']
+   // #swagger.description = 'Endpoint that allows to add song to playlist'
+   // #swagger.parameters['id'] = { description: 'Id of the playlist we want to add song to.' }
+   /**
+    #swagger.parameters['body'] = {
+	      in: 'body',
+         description: 'tuple used for verification',
+         type: 'object',
+         schema: { $ref: "#/definitions/song" }
+      }
+    */
+   /* #swagger.responses[200] = {
+         description: 'playlist updated'
+      }
+      #swagger.responses[400] = {
+         description: 'Invalid Parameters, Missing parameters'
+      }
+      #swagger.responses[500] = {
+         description: 'Server error'
+      }
+      */
+   playlist.addSongToPlaylist(res,req.params.id,req.body);
+});
+
+// Fetches song by song id
+// CALLS FILE : PLAYLIST.JS
 app.get("/getplaylist/:id", async (req, res) => {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to obtain a specific playlist from given id'
@@ -339,6 +363,9 @@ app.get("/getplaylist/:id", async (req, res) => {
       #swagger.responses[500] = {
          description: 'Server error'
       }
+      #swagger.responses[400] = {
+         description: 'Invalid parameters, Missing parameters'
+      }
       #swagger.responses[404] = {
          description: 'Playlist Not Found'
       }
@@ -346,6 +373,7 @@ app.get("/getplaylist/:id", async (req, res) => {
    playlist.getPlaylistFromId(res, req.params.id);
 });
 
+// DEVE DIVENTARE UNA GET PRIMA DI ESSERE FIXATA!
 app.post("/getplaylist", async (req, res) => {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to obtain a specific playlist'
@@ -365,6 +393,8 @@ app.post("/getplaylist", async (req, res) => {
    playlist.getPlaylist(res, req.body.owner_id,req.body.id);
 });
 
+// creates palylist
+// CALLS FILE : PLAYLIST.JS
 app.post("/createplaylist", function (req, res) {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to create a new playlist'
@@ -387,6 +417,9 @@ app.post("/createplaylist", function (req, res) {
       */
    playlist.createplaylist(res, req.body);
 });
+
+// deletes palylist
+// CALLS FILE : PLAYLIST.JS
 app.delete("/deleteplaylist/:id", function (req, res) {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to delete a playlist given the ID'
@@ -406,31 +439,26 @@ app.delete("/deleteplaylist/:id", function (req, res) {
       */
    playlist.deletePlaylist(res,req.params.id, req.body._id);
 });
-app.put("/addsongtoplaylist/:id", async (req, res) => {
-   // #swagger.tags = ['playlist']
-   // #swagger.description = 'Endpoint that allows to add song to playlist'
-   // #swagger.parameters['id'] = { description: 'Id of the playlist we want to add song to.' }
-   /* #swagger.responses[200] = {
-         description: 'playlist updated'
-      }
-      #swagger.responses[500] = {
-         description: 'Server error'
-      }
-      */
-   playlist.addSongToPlaylist(res,req.params.id,req.body);
-});
+
+// deletes song from playlist
+// CALLS FILE : PLAYLIST.JS
 app.delete("/deleteSongFromPlaylist", function (req, res) {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to delete song from a playlist'
-
+   /**#swagger.parameters['body'] = {
+	      in: 'body',
+         description: 'parameters used to identify playlist of the user where the song to be deleted is in',
+         type: 'object',
+         schema: { $ref: "#/definitions/removesong" }
+      } */
    /* #swagger.responses[200] = {
          description: 'Song removed.'
       }
       #swagger.responses[400] = {
-         description: 'Missing parameter'
+         description: 'Missing parameter, Invalid parameter'
       }
       #swagger.responses[404] = {
-         description: 'Song not found or not valid'
+         description: 'Song not found'
       }
       #swagger.responses[500] = {
          description: 'Internal error'
@@ -439,7 +467,8 @@ app.delete("/deleteSongFromPlaylist", function (req, res) {
    playlist.removeSongFromPlaylist(res,req.body.playlist_id,req.body.track_id,req.body.owner_id);
 });
 
-
+// updates title, description, tags and privacy
+// CALLS FILE : PLAYLIST.JS
 app.put("/updateplaylist/:id", function (req, res) {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to update some data from a playlist'
@@ -460,6 +489,44 @@ app.put("/updateplaylist/:id", function (req, res) {
    playlist.updatePlaylist(res,req.params.id,req.body);
 });
 
+////////////////////////////////////////////////////////////////////////////////// DA CONTROLLARE //////////////////////////////////////////////////////////////////////////////////
+
+/* ------------------- TRACKS ------------------- */
+app.get("/search", async function (req, res) {
+   // #swagger.tags = ['tracks']
+   // #swagger.description = 'ADD DESCRIPTION'
+   search(req.query, res);
+})
+app.get("/tracks", async function (req, res) {
+   // #swagger.tags = ['tracks']
+   // #swagger.description = 'ADD DESCRIPTION'
+   getRecommended(req.params, res);
+})
+
+app.get("/tracks/:id", async function (req, res) {
+   // #swagger.tags = ['tracks']
+   // #swagger.description = 'ADD DESCRIPTION'
+   getTrack(req.params.id, res);
+})
+
+/* ------------------- ARTISTS ------------------- */
+// app.get("/artists", async function (req, res) {
+//    res.sendFile(config.__dirname + "/src/html/artists.html");
+// })
+
+app.get("/artist/:id", async function (req, res) {
+   // #swagger.tags = ['artists']
+   // #swagger.description = 'ADD DESCRIPTION'
+   getArtists(false, req.params.id, res);
+})
+
+app.get("/artists/:id", async function (req, res) {
+   // #swagger.tags = ['artists']
+   // #swagger.description = 'ADD DESCRIPTION'
+   getArtists(true, req.params.id, res);
+})
+
+/* ------------------- EXPLORE ------------------- */
 /* -------------------- COMMUNITY ------------------- */
 
 app.get("/community/:id", async (req, res) => {
@@ -467,6 +534,15 @@ app.get("/community/:id", async (req, res) => {
    // #swagger.tags = ['community']
    // #swagger.description = 'ADD DESCRIPTION'
    community.getCommunity(id, res);
+});
+app.get("/communities/:id", async (req, res) => {
+   let id = req.params.id;
+   // #swagger.tags = ['community']
+   // #swagger.description = 'ADD DESCRIPTION'
+   community.getCommunities(id, res);
+});
+app.put("/addplaylisttocommunity/:id", async (req, res) => {
+   community.addPlaylistToCommunity(req.body.playlist_id,req.params.id,req.body.owner_id, res);
 });
 app.put("/community/:id", async (req, res) => {
    community.updateCommunity(req, res);
@@ -489,12 +565,11 @@ app.get("/getGenres", async function (_, res) {
 });
 
 
-
 /* ------------------- DB AND SERVER START ------------------- */
 export const db = Db();
-
 app.listen(config.port, config.host, () => {
    console.log(`🟢 Server listening on port: ${config.port}`);
+   utils.logonly(`🟢 Server listening on port: ${config.port}`)
 });
 
 // export default app
