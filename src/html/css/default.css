@@ -51,8 +51,10 @@ footer {
   height: auto; /* Imposta l'altezza automatica per mantenere l'aspetto originale */
 }
 .homepageimg{
-  width:25%;
+  width:20%;
   height: auto;
+  display: block; 
+  margin: 0 auto;
 }
 /* ============================= MODAL SECTION AND========================= */
 .dropdown-menu{
