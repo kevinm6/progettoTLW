@@ -220,6 +220,8 @@ async function populateMembers(members, endpoint) {
 }
 
 
+
+
 async function setModalContent(endpoint) {
    let users = "";
    let _ = await fetch('/users').then(response => {
@@ -247,7 +249,7 @@ async function setModalContent(endpoint) {
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="selectMemberModalTitle">Select Member to add</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" onclick="reenableHoverOnCards()" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -266,7 +268,7 @@ async function setModalContent(endpoint) {
       </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" onclick="reenableHoverOnCards()" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -375,6 +377,7 @@ async function populateCreatorPlaylistDropdown(cid, userPlaylists, communityPlay
 
 
 async function addMemberToCommunity() {
+   disableHoverOnCards();
    let modal = document.getElementById('#selectMemberModal');
    let selectMemberModal = new bootstrap.Modal(modal);
 
@@ -393,7 +396,6 @@ function removePlaylist(pid, title) {
       body: JSON.stringify({ op: 'removePlaylist', creatorId: user._id, pid: pid })
    }).then(response => {
          console.log(response.json());
-         // alert(response);
          if (response.ok) {
             window.location.replace('/community');
          }

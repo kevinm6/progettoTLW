@@ -91,11 +91,17 @@ function hideConfirmationModal() {
     return;
 }
 
-  
 
-  
-  
-  
-
-
+function disableHoverOnCards() {
+   const cards = document.querySelectorAll('.card');
+   cards.forEach(card => {
+      card.classList.add('disable-hover');
+   });
+}
+function reenableHoverOnCards() {
+   const cards = document.querySelectorAll('.card');
+   cards.forEach(card => {
+      card.classList.remove('disable-hover');
+   });
+}
 

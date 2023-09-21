@@ -232,20 +232,6 @@ function showTrackInfo(info) {
 
 }
 
-function disableHoverOnCards() {
-   console.log("hover disabled");
-   const cards = document.querySelectorAll('.card');
-   cards.forEach(card => {
-      card.classList.add('disable-hover');
-   });
-}
-function reenableHoverOnCards() {
-   console.log("hover reenabled");
-   const cards = document.querySelectorAll('.card');
-   cards.forEach(card => {
-      card.classList.remove('disable-hover');
-   });
-}
 
 function getItems(type, query, offset) {
 
@@ -478,7 +464,7 @@ function setContainerHtml(items) {
                         <p class="card-text">
                            <small class="text-body-secondary"></small>
                         </p>
-                        
+
                         <!-- Trigger the modal with a button -->
                         <button type="button" class="btn">Info</button>
                         <div class="btn-group dropup">
@@ -488,7 +474,7 @@ function setContainerHtml(items) {
                            <div class="dropdown-menu dropdown-menu-right" id="playlist-select-">
                            </div>
                         </div>
-                        
+
                         <!-- Modal -->
                         <div class="modal mb" id="trackModal" tabindex="-1" aria-labelledby="trackModalLabel" aria-hidden="true">
                            <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -497,7 +483,7 @@ function setContainerHtml(items) {
                                  <div class="modal-header">
                                     <h5 class="modal-title text-center" id="trackModalLabel"></h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="modalclose"></button>
-                                 </div>   
+                                 </div>
                                  <div class="modal-body" id="trackModalBody">
                                     <img class="img-responsive" alt="">
                                  </div>

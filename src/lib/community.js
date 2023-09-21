@@ -206,7 +206,7 @@ export async function deleteCommunity(req, res) {
    if(!utils.isValidString(creatorId)){
       res.status(400).send("Invalid Parameter");
       utils.log("[COMMUNITY]> deleteCommunity > ERROR 400 : INVALID creatorId");
-      return;      
+      return;
    }
    let creatorObjectId = new ObjectId(creatorId);
    try {
@@ -283,7 +283,8 @@ export async function updateCommunity(req, res) {
    switch (req.body.op) {
       case 'removeMember':
          let mem = req.body.member;
-         let memberId = (typeof mem == 'string') ?  mem : JSON.parse(req.body.member);
+         console.log(JSON.parse(req.body.member)._id, typeof mem);
+         let memberId = JSON.parse(mem) ? JSON.parse(mem)._id : mem;
          update = {
            $pull: { 'members': { 'uid': new ObjectId(memberId) } },
          };
