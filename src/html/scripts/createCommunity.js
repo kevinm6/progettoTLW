@@ -9,7 +9,6 @@ function createCommunity(self, uid) {
       alert("Community name can't be empty!\nUpdate it and retry");
       return;
    }
-   // console.log(self);
 
    let newCommunity = {
       creatorId: uid,
@@ -47,7 +46,7 @@ function createCommunity(self, uid) {
 
 
 function toggleCreateCommunityPlaylist(self, pid) {
-   console.log(self, pid);
+   // DEBUG: console.log(self, pid);
    switch (self.innerText) {
       case 'Add Playlist':
          playlists.push(pid);
@@ -65,7 +64,6 @@ function toggleCreateCommunityPlaylist(self, pid) {
       default:
          break;
    }
-   console.log(playlists);
 }
 
 

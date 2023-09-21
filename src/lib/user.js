@@ -28,6 +28,7 @@ export const dbUserCollection = () => Db('users');
 export async function getUser(req, res) {
    let collection = await dbUserCollection();
    let id = req.params.id;
+   console.log("USER_ID", id);
    if (!isValidString(id) ){
       res.status(400).send('invalid parameter');
       log("[USER]> getUser > ERROR 400: Invalid Parameter");
@@ -41,7 +42,7 @@ export async function getUser(req, res) {
    }catch(e){
       res.status(500).send('Internal Error');
       log("[USER]> getUser > ERROR 500: Internal Error "+e);
-      return;  
+      return;
    }
 }
 
@@ -70,7 +71,7 @@ export async function getUsers(res) {
    }catch(e){
       res.status(500).send('Internal Error nickname');
       log("[USER]> getUsers > ERROR 500: INTERNAL ERROR");
-      return;      
+      return;
    }
 }
 
@@ -172,7 +173,7 @@ export async function deleteUser(res, id) {
    if(!isValidString(id)){
       res.status(400).send('Invalid id');
       log("[USER]> deleteUser > ERROR 400: Invalid ID");
-      return;      
+      return;
    }
    id=new ObjectId(id);
    try {
@@ -182,11 +183,11 @@ export async function deleteUser(res, id) {
       var playlistdel=await deleteUserPlaylists(id);
       res.status(200).send();
       log("[USER]> deleteUser > SUCCESS: USER DELETED");
-      return;  
+      return;
    } catch (e) {
       res.status(500).send('Internal Error');
       log("[USER]> deleteUser > ERROR 500: INTERNAL ERROR");
-      return;  
+      return;
    }
 }
 

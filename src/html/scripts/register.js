@@ -172,8 +172,8 @@ function register() {
          localStorage.removeItem("nickname");
          alert("Registrazione avvenuta con successo, verrai reindirizzato alla pagina di login");
          setTimeout(function () {
-            window.location.href = "/login";
-         }, 500); 
+            window.location.replace("/#");
+         }, 500);
       }
       else {
          response.text().then(errorMessage => {

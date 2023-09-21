@@ -51,9 +51,9 @@ async function checkIfUserHasCommunity(endpoint, uid) {
             return
          };
 
-         var userPlaylists = await getUserPlaylists(uid, endpoint);
+         var userPlaylists = await getUserPlaylists(uid);
          populateMembers([], endpoint);
-         populatePlaylists(community._id, userPlaylists, endpoint);
+         populatePlaylists(null, userPlaylists, endpoint);
 
          break;
 
@@ -75,7 +75,7 @@ async function checkIfUserHasCommunity(endpoint, uid) {
          populateMembers(community.members, endpoint);
          let communityPlaylists = await fetchCommunityPlaylists(community.playlists, endpoint);
          populatePlaylists(community._id, communityPlaylists, endpoint);
-         var userPlaylists = await getUserPlaylists(uid, endpoint);
+         var userPlaylists = await getUserPlaylists(uid);
          populateCreatorPlaylistDropdown(community._id, userPlaylists, communityPlaylists);
          communityHandleUI(community);
 
@@ -83,7 +83,6 @@ async function checkIfUserHasCommunity(endpoint, uid) {
          deleteCommunityButton.addEventListener("click", () => {
             // console.log(user);
             if (window.confirm("Do you really want to delete this community?")) {
-               try {
                   fetch(`/community/${user.id}`, {
                      method: 'DELETE',
                      headers: {
@@ -91,17 +90,14 @@ async function checkIfUserHasCommunity(endpoint, uid) {
                      },
                      body: JSON.stringify({ creatorId: user._id})
                   }).then(response => {
-                        console.log(response.json());
+                        // console.log(response.json());
                         alert(response);
                         if (response.ok) {
                            window.location.replace('/community');
                         }
-                     })
-               } catch (err) {
-                  console.error(err)
+                     }).catch(err => console.error(err));
                }
-            }
-         });
+            });
          break;
 
       default: break;
@@ -109,24 +105,10 @@ async function checkIfUserHasCommunity(endpoint, uid) {
 }
 
 
-async function getUserPlaylists(uid, endpoint) {
-   let playlistsData = [];
-
+async function getUserPlaylists(uid) {
    let response = await fetch(`/playlist/${uid}`);
    let data = await response.json();
 
-   /* .then((response) => {
-      if (response.ok) {
-         response.json().then((userPlaylists) => {
-            return userPlaylists;
-            // if (endpoint == 'community') {
-            //    populateCreatorPlaylistDropdown(uid, userPlaylists);
-            //    return;
-            // };
-            // populatePlaylists(userPlaylists, endpoint);
-         })
-      }
-   }); */
    return data;
 }
 
@@ -191,7 +173,7 @@ async function populateMembers(members, endpoint) {
       case 'community':
          for (let i in members) {
             if (i == 0) {
-               var clone = card.cloneNode(true)
+               let clone = card.cloneNode(true);
                clone.id = 'card-cast-' + user._id;
                clone.getElementsByClassName('card-text')[0].innerHTML = "Add New member";
 
@@ -213,29 +195,24 @@ async function populateMembers(members, endpoint) {
 
             /* Skip card creation for creator of community */
             if (user._id == members[i].uid) continue;
-            fetch(`/users/${members[i].uid}`).then((response) => {
-               if (response.ok) {
-                  response.json().then((m) => {
-                     var clone = card.cloneNode(true)
-                     clone.id = 'card-cast-' + m._id
-                     clone.getElementsByClassName('card-text')[0].innerHTML = m.name
-                     clone.getElementsByClassName('text-body-secondary')[0].innerHTML = m.nickname
 
-                     clone.getElementsByClassName('card-img-top')[0].src =
-                        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+            let response = await fetch(`/users/${members[i].uid}`);
+            let m = await response.json().catch(err => console.error(err));
 
-                     let strMember = JSON.stringify(m);
-                     clone.getElementsByClassName('btn btn-danger')[0]
-                        .setAttribute('onClick', `removeMemberFromCommunity('${strMember}')`);
+            let clone = card.cloneNode(true);
+            clone.id = 'card-cast-' + m.uid
+            clone.getElementsByClassName('card-text')[0].innerHTML = m.name
+            clone.getElementsByClassName('text-body-secondary')[0].innerHTML = m.nickname
 
-                     clone.classList.remove('d-none')
-                     card.before(clone)
-                  })
-               }
-            }).catch((err) => {
-                  console.error("Error fetching members of community:", err);
-                  alert("Error fetching members of community. Retry!");
-               })
+            clone.getElementsByClassName('card-img-top')[0].src =
+               'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+
+            let strMember = JSON.stringify(m);
+            clone.getElementsByClassName('btn btn-danger')[0]
+               .setAttribute('onClick', `removeMemberFromCommunity('${strMember}')`);
+
+            clone.classList.remove('d-none')
+            card.before(clone)
          }
 
          break;
@@ -578,7 +555,7 @@ function toggleEditCommunity(self) {
    const creatorSharePlaylist = document.getElementById('creator-share-playlist');
    const creatorSharePlaylistBtn = document.getElementById('share-playlist-btn');
    const creatorAddMemberCard = document.getElementById('card-cast-'+user._id);
-   console.log(communityDesc);
+   // DEBUG: console.log(communityDesc);
 
    if (edit) {
       edit = false;
