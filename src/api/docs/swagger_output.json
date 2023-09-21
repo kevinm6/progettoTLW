@@ -799,65 +799,33 @@
         }
       }
     },
-    "/artist/{id}": {
-      "get": {
-        "tags": [
-          "artists"
-        ],
-        "description": "ADD DESCRIPTION",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/artists/{id}": {
-      "get": {
-        "tags": [
-          "artists"
-        ],
-        "description": "ADD DESCRIPTION",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/community/{id}": {
       "get": {
         "tags": [
           "community"
         ],
-        "description": "ADD DESCRIPTION",
+        "description": "Endpoint that Fetches community Data given its creator ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "ID of the creator of the community we want to fetch"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "community fetched. returns the community data"
+          },
+          "400": {
+            "description": "Missing parameter, Invalid parameter"
+          },
+          "404": {
+            "description": "Community not found"
+          },
+          "500": {
+            "description": "Internal error"
           }
         }
       },
@@ -941,21 +909,28 @@
         "tags": [
           "community"
         ],
-        "description": "ADD DESCRIPTION",
+        "description": "Endpoint that Fetches community Data given its creator ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "ID of the creator of the community we want to fetch"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "community fetched. returns the community data on array format"
+          },
+          "400": {
+            "description": "Missing parameter, Invalid parameter"
+          },
+          "404": {
+            "description": "Community not found"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal error"
           }
         }
       }

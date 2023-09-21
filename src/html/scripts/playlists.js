@@ -34,33 +34,34 @@ async function populatePlaylistCards(ddoptions) {
               <button class="btn btn-danger mb-2" onclick="deletePlaylist('${playlist._id}','${playlist.title}')">
                 Delete
               </button>
-              ${!playlist.private ? `
-              <div class="btn-group dropup mb-2">
+              <div class="btn-group dropup mb-2 "id="dropDownToHide${playlist._id}">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Add to Community
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" id="communityDropdown${playlist._id}" aria-labelledby="dropdownMenuButton">
                 </div>
               </div>
-              ` : ''}
             </div>
           </div>
         </div>
       `;
 
         playlistContainer.innerHTML += card;
-        if(!playlist.private)
-            await populateDropdown(playlist._id, ddoptions);
+        await populateDropdown(playlist._id, ddoptions);
     });
 }
 
 async function populateDropdown(playlistID, dropdownOptions) {
     const dropdownMenu = document.getElementById(`communityDropdown${playlistID}`);
+    const ddth = document.getElementById(`dropDownToHide${playlistID}`);
     dropdownMenu.innerHTML = "";
-    dropdownOptions.forEach((option) => {
-        dropdownMenu.innerHTML += `<a class="dropdown-item" onClick='addPlaylistToCommunity("${playlistID}","${option._id}")'>${option.name}</a>`;
-    });
-    console.log(dropdownMenu);
+    if (dropdownOptions != null) {
+        dropdownOptions.forEach((option) => {
+            dropdownMenu.innerHTML += `<a class="dropdown-item" onClick='addPlaylistToCommunity("${playlistID}","${option._id}")'>${option.name}</a>`;
+        });
+    } else {
+        ddth.classList.add('d-none');
+    }
 }
 
 function addPlaylistToCommunity(playlistID, communityID) {
@@ -97,20 +98,21 @@ async function getDropdownOptions() {
     })
         .then((response) => {
             if (response.ok) {
-                return response.json();
+                return response.json()
+                    .then((data) => {
+                        const dropdownOptions = data.map((community) => ({
+                            name: community.name,
+                            _id: community._id,
+                        }));
+                        console.log(dropdownOptions);
+                        return dropdownOptions;
+                    });
+            } else if (response.status === 404) {
+                // Handle a 404 error by returning null
+                return null;
             } else {
                 throw new Error('An error occurred. Try again later.');
             }
-        })
-        .then((data) => {
-            // ARRAY OF OPTIONS
-            const dropdownOptions = data.map((community) => ({
-                name: community.name,
-                _id: community._id,
-            }));
-            console.log(dropdownOptions);
-            return dropdownOptions;
-
         })
         .catch((error) => {
             console.error(error);

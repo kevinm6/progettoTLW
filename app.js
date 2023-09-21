@@ -509,36 +509,49 @@ app.get("/tracks/:id", async function (req, res) {
    getTrack(req.params.id, res);
 })
 
-/* ------------------- ARTISTS ------------------- */
-// app.get("/artists", async function (req, res) {
-//    res.sendFile(config.__dirname + "/src/html/artists.html");
-// })
 
-app.get("/artist/:id", async function (req, res) {
-   // #swagger.tags = ['artists']
-   // #swagger.description = 'ADD DESCRIPTION'
-   getArtists(false, req.params.id, res);
-})
-
-app.get("/artists/:id", async function (req, res) {
-   // #swagger.tags = ['artists']
-   // #swagger.description = 'ADD DESCRIPTION'
-   getArtists(true, req.params.id, res);
-})
-
-/* ------------------- EXPLORE ------------------- */
 /* -------------------- COMMUNITY ------------------- */
 
+// fetches community data given its creator id
+// CALLS FILE : COMMUNITY.JS
 app.get("/community/:id", async (req, res) => {
    let id = req.params.id;
    // #swagger.tags = ['community']
-   // #swagger.description = 'ADD DESCRIPTION'
+   // #swagger.description = 'Endpoint that Fetches community Data given its creator ID'
+   /**#swagger.parameters['id'] = {description: 'ID of the creator of the community we want to fetch',} */
+   /* #swagger.responses[200] = {
+         description: 'community fetched. returns the community data'
+      }
+      #swagger.responses[400] = {
+         description: 'Missing parameter, Invalid parameter'
+      }
+      #swagger.responses[404] = {
+         description: 'Community not found'
+      }
+      #swagger.responses[500] = {
+         description: 'Internal error'
+      }
+      */
    community.getCommunity(id, res);
 });
 app.get("/communities/:id", async (req, res) => {
    let id = req.params.id;
    // #swagger.tags = ['community']
-   // #swagger.description = 'ADD DESCRIPTION'
+   // #swagger.description = 'Endpoint that Fetches community Data given its creator ID'
+   /**#swagger.parameters['id'] = {description: 'ID of the creator of the community we want to fetch',} */
+   /* #swagger.responses[200] = {
+         description: 'community fetched. returns the community data on array format'
+      }
+      #swagger.responses[400] = {
+         description: 'Missing parameter, Invalid parameter'
+      }
+      #swagger.responses[404] = {
+         description: 'Community not found'
+      }
+      #swagger.responses[500] = {
+         description: 'Internal error'
+      }
+      */31
    community.getCommunities(id, res);
 });
 app.put("/addplaylisttocommunity/:id", async (req, res) => {

@@ -10,39 +10,96 @@ import * as playlist from "./playlist.js";
  */
 export const dbCommunityCollection = () => Db('community');
 
-
 /**
- * TODO:
- *  - improve
- *  - complete functions
- *  - complete docs
- */
-
-/**
- * Async function to get specific community from id
+ * Handles the request to retrieve data for a specific community.
  *
- * @param req - request passed from express
- * @returns {object} community information from id passed as request param
+ * This function takes the community's creator ID from the HTTP request and returns the
+ * corresponding community data, if present in the database. If the community is not found,
+ * it will return an HTTP 404 response. In case of missing or invalid input,
+ * it returns a 400 status. For internal errors, a 500 status with an error
+ * message will be returned.
+ *
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} res - The HTTP response object.
+ * @returns {data} - JSON data if found.
+ *
+ * @throws {Error} - If an error occurs while retrieving community data.
+ *
  */
 export async function getCommunity(req, res) {
-   console.log(req)
+   if (req == undefined) {
+      res.status(400).send("Missing creator ID");
+      utils.log("[COMMUNITY]> getCommunity > ERROR 400: MISSING CREATOR ID ");
+      return;
+   }
+   if (!utils.isValidString(req)) {
+      res.status(400).send("Invalid creator ID");
+      utils.log("[COMMUNITY]> getCommunity > ERROR 400: INVALID CREATOR ID ");
+      return;
+   }
    let cid = req;
-
-   let collection = await dbCommunityCollection();
-   let community = await collection
-      .findOne({ creatorId: new ObjectId(cid) });
-   res.json(community);
+   try {
+      let collection = await dbCommunityCollection();
+      let community = await collection
+         .findOne({ creatorId: new ObjectId(cid) });
+      if (!community) {
+         res.json(null);
+         utils.log("[COMMUNITY]> getCommunity > ERROR 404: COMMUNITY NOT FOUND");
+         return;
+      }
+      res.json(community);
+      utils.log("[COMMUNITY]> getCommunity > SUCCESS: FETCHED COMMUNITY "+JSON.stringify(community));
+      return;
+   } catch (e) {
+      res.status(500).send("Internal Error");
+      utils.log("[COMMUNITY]> getCommunity > ERROR 500: INTERNAL ERROR "+e);
+      return;
+   }
 }
 
-export async function getCommunities(creator_id, res) {
-   const cid = creator_id;
+/**
+ * Handles the request to retrieve data for a specific community.
+ *
+ * This function takes the community's creator ID from the HTTP request and returns the
+ * corresponding community data, if present in the database. If the community is not found,
+ * it will return an HTTP 404 response. In case of missing or invalid input,
+ * it returns a 400 status. For internal errors, a 500 status with an error
+ * message will be returned.
+ *
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} res - The HTTP response object.
+ * @returns {data} - JSON ARRAY data if found.
+ *
+ * @throws {Error} - If an error occurs while retrieving community data.
+ *
+ */
+export async function getCommunities(req, res) {
+   if (req == undefined) {
+      res.status(400).send("Missing creator ID");
+      utils.log("[COMMUNITY]> getCommunities > ERROR 400: MISSING CREATOR ID ");
+      return;
+   }
+   if (!utils.isValidString(req)) {
+      res.status(400).send("Invalid creator ID");
+      utils.log("[COMMUNITY]> getCommunities > ERROR 400: INVALID CREATOR ID ");
+      return;
+   }
+   let cid = req;
    try {
-      const collection = await dbCommunityCollection();
-      const communities = await collection.find({ creatorId: new ObjectId(cid) }).toArray();
-      res.json(communities);
-   } catch (error) {
-      res.status(500).send('Internal Error');
-      console.error(error);
+      let collection = await dbCommunityCollection();
+      const community= await collection.find({ creatorId: new ObjectId(cid) }).toArray();
+      if (community.length==0) {
+         res.status(404).send("Community not found"); 
+         utils.log("[COMMUNITY]> getCommunities > ERROR 404: COMMUNITY NOT FOUND");
+         return;
+      }
+      res.json(community);
+      utils.log("[COMMUNITY]> getCommunities > SUCCESS: FETCHED COMMUNITY ");
+      return;
+   } catch (e) {
+      res.status(500).send("Internal Error");
+      utils.log("[COMMUNITY]> getCommunities > ERROR 500: INTERNAL ERROR "+e);
+      return;
    }
 }
 
@@ -104,7 +161,16 @@ Do you want to go to your community?"
 
 
 export async function addPlaylistToCommunity(playlist_id, community_id, owner_id, res) {
-   console.log("OK");
+   if(community_id ==undefined || playlist_id == undefined || owner_id==undefined){
+      res.status(400).send("Missing parameter");
+      utils.log("[COMMUNITY]> addPlaylistToCommunity > ERROR 400: INVALID CREATOR ID ");
+      return;
+   }
+   if(!utils.isValidString(community_id)){
+      res.status(400).send("Invalid community id");
+      utils.log("[COMMUNITY]> addPlaylistToCommunity > ERROR 400: INVALID CREATOR ID ");
+      return;
+   }
    try {
       const collection = await dbCommunityCollection();
       const filter = {
@@ -117,7 +183,6 @@ export async function addPlaylistToCommunity(playlist_id, community_id, owner_id
          res.status(404).send("Community not found.");
          return;
       }
-
       /**
        * .some() è un metodo degli array che verifica se almeno un elemento dell'array soddisfa una determinata condizione.
        * In questo caso,cerco di vedere se almeno una playlist all'interno dell'array playlists soddisfa la condizione.
