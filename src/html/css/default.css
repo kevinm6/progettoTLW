@@ -50,6 +50,10 @@ footer {
   max-width: 100%; /* Imposta la larghezza massima al 100% del suo contenitore */
   height: auto; /* Imposta l'altezza automatica per mantenere l'aspetto originale */
 }
+.homepageimg{
+  width:25%;
+  height: auto;
+}
 /* ============================= MODAL SECTION AND========================= */
 .dropdown-menu{
   color:white;
@@ -248,4 +252,7 @@ h1,h2,h3{
   justify-content: center;
   align-items: center;
   min-height: 200px; /* Regola l'altezza minima del modal-body per centrare l'immagine */
+}
+*:hover {
+  color: white; /* Colore del testo al passaggio del cursore */
 }

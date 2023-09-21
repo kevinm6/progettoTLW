@@ -174,9 +174,7 @@ async function populateMembers(members, endpoint) {
                let clone = card.cloneNode(true);
                clone.id = 'card-cast-' + user._id;
                clone.getElementsByClassName('card-text')[0].innerHTML = "Add New member";
-
                clone.getElementsByClassName('card-body')[0].innerHTML += await setModalContent(endpoint);
-
                clone.getElementsByClassName('card-img-top')[0].src =
                   'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
 
@@ -208,7 +206,7 @@ async function populateMembers(members, endpoint) {
             let strMember = JSON.stringify(m);
             clone.getElementsByClassName('btn btn-danger')[0]
                .setAttribute('onClick', `removeMemberFromCommunity('${strMember}')`);
-
+            
             clone.classList.remove('d-none')
             card.before(clone)
          }
@@ -328,8 +326,6 @@ function populatePlaylists(cid, playlists, endpoint) {
               </div>
           </div>`;
          playlistPublicContainer.innerHTML += creatorSharePlaylist;
-
-
          // console.log(playlists);
          playlists.forEach(playlist => {
            var stringified = JSON.stringify(playlist.songs).replace(/"/g, '&quot;');

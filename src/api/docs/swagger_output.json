@@ -829,6 +829,47 @@
           }
         }
       },
+      "delete": {
+        "tags": [
+          "community"
+        ],
+        "description": "Endpoint that deletes community given the id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the community to be deleted"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "creatorId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "playlist deleted"
+          },
+          "400": {
+            "description": "Missing parameter, Invalid parameter"
+          },
+          "404": {
+            "description": "Community not found"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
+      },
       "put": {
         "description": "",
         "parameters": [
@@ -874,34 +915,6 @@
             "description": "Internal Server Error"
           }
         }
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "creatorId": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
       }
     },
     "/communities/{id}": {
@@ -937,13 +950,17 @@
     },
     "/addplaylisttocommunity/{id}": {
       "put": {
-        "description": "",
+        "tags": [
+          "community"
+        ],
+        "description": "Endpoint that adds playlist to community",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "ID of the creator of the community we want to add the playlist to"
           },
           {
             "name": "body",
@@ -962,8 +979,17 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "playlist added"
+          },
+          "400": {
+            "description": "Missing parameter, Invalid parameter, playlist already in community"
+          },
+          "404": {
+            "description": "Community not found"
+          },
+          "500": {
+            "description": "Internal error"
           }
         }
       }
