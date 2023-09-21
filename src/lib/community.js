@@ -89,7 +89,7 @@ export async function getCommunities(req, res) {
       let collection = await dbCommunityCollection();
       const community= await collection.find({ creatorId: new ObjectId(cid) }).toArray();
       if (community.length==0) {
-         res.status(404).send("Community not found"); 
+         res.status(404).send("Community not found");
          utils.log("[COMMUNITY]> getCommunities > ERROR 404: COMMUNITY NOT FOUND");
          return;
       }

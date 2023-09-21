@@ -46,7 +46,6 @@ function createCommunity(self, uid) {
 
 
 function toggleCreateCommunityPlaylist(self, pid) {
-   // DEBUG: console.log(self, pid);
    switch (self.innerText) {
       case 'Add Playlist':
          playlists.push(pid);
@@ -61,8 +60,6 @@ function toggleCreateCommunityPlaylist(self, pid) {
 
          break;
 
-      default:
-         break;
    }
 }
 

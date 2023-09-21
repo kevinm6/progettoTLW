@@ -28,6 +28,46 @@
   }
 </style>
 
+<!--toc:start-->
+- [Introduzione](#introduzione)
+    - [Autori](#autori)
+    - [Link ed informazioni utili](#link-ed-informazioni-utili)
+- [Struttura dell'Applicazione](#struttura-dellapplicazione)
+  - [Front-End](#front-end)
+  - [Back-End](#back-end)
+    - [NODEJS](#nodejs)
+      - [COS'E' NODEJS ED  EXPRESS](#cose-nodejs-ed-express)
+      - [FILE NODEJS](#file-nodejs)
+    - [DATABASE MONGODB](#database-mongodb)
+      - [COMMUNITY](#community)
+        - [DESCRIZIONE](#descrizione)
+        - [VALIDAZIONE JSON](#validazione-json)
+        - [ATTRIBUTI](#attributi)
+      - [PLAYLISTS](#playlists)
+        - [DESCRIZIONE](#descrizione)
+        - [VALIDAZIONE JSON](#validazione-json)
+        - [ATTRIBUTI](#attributi)
+      - [USERS](#users)
+        - [DESCRIZIONE](#descrizione)
+        - [VALIDAZIONE JSON](#validazione-json)
+        - [ATTRIBUTI](#attributi)
+    - [SISTEMA DI LOGGING e AUDITING](#sistema-di-logging-e-auditing)
+        - [CODICE](#codice)
+        - [ESEMPIO DI UTILIZZO](#esempio-di-utilizzo)
+        - [ENTRY NEL FILE SERVERLOGS.LOG](#entry-nel-file-serverlogslog)
+- [Configurazione dell'applicazione](#configurazione-dellapplicazione)
+- [Scelte implementative e features](#scelte-implementative-e-features)
+  - [Swagger JS](#swagger-js)
+        - [FILE SWAGGER.JS](#file-swaggerjs)
+        - [INTERFACCIA GRAFICA SWAGGER](#interfaccia-grafica-swagger)
+        - [INSTALLAZIONE](#installazione)
+  - [Documentazione JavaScript-Doc](#documentazione-javascript-doc)
+        - [Esempio commento JavaDoc](#esempio-commento-javadoc)
+  - [Gestione codici HTTP](#gestione-codici-http)
+        - [ESEMPIO DI GESTIONE](#esempio-di-gestione)
+  - [Lingua](#lingua)
+<!--toc:end-->
+
 # Introduzione
 
 Questo documento rappresenta la relazione del progetto "Social Network for Music", sviluppato nel contesto del corso "Programmazione e Linguaggi per il Web" durante l'anno accademico 2023.
@@ -47,16 +87,16 @@ Il progetto è stato realizzato da:
 > **Front End:** 
 Il Front-End è la parte dell'applicazione che si occupa dell'interfaccia utente e dell'interazione con l'utente. Si concentra sulla progettazione e sull'implementazione dell'aspetto visivo dell'applicazione e sulla gestione delle interazioni utente.
 
-All'interno della directory /src/html/, sono presenti i seguenti elementi principali:
+All'interno della directory `/src/html/`, sono presenti i seguenti elementi principali:
 
 - **Elementi HTML**: Questi file definiscono l'interfaccia grafica dell'applicazione, determinando come l'applicazione appare nel browser.
 
-- **/css/**: Questa directory contiene i file di stile che definiscono l'aspetto visivo dell'applicazione. Alcuni dei file principali includono:
+- `/css/`: Questa directory contiene i file di stile che definiscono l'aspetto visivo dell'applicazione. Alcuni dei file principali includono:
   - /src/html/css/confirmationmodal.css
   - /src/html/css/default.css
   - /src/html/css/explore.css
 
-- **/src/scripts/**: Questa directory contiene file JavaScript (JScript) che gestiscono la logica del Front-End. Alcuni dei file principali includono:
+- `/src/scripts/`: Questa directory contiene file JavaScript (JScript) che gestiscono la logica del Front-End. Alcuni dei file principali includono:
   - /src/html/community.html
   - /src/html/createcommunity.html
   - /src/html/createplaylist.html
@@ -77,22 +117,24 @@ Per ulteriori dettagli sull'implementazione del Front-End, si rimanda alle speci
 Il Back-End è responsabile delle funzionalità e della logica dell'applicazione lato server. Esso comprende una serie di elementi chiave presenti nella nostra struttura di lavoro. Possiamo suddividere il backend in 3 sezioni principali
 
 ### NODEJS
+
 #### COS'E' NODEJS ED  EXPRESS
 **Node.js** ed **Express** costituiscono un binomio potente nell'ambito dello sviluppo web di applicazioni scalabili ed efficienti. <br>*Node.js* fornisce un ambiente runtime JavaScript server-side, ottimizzato per l'efficienza e la scalabilità. 
 <br>*Express*, un framework web basato su Node.js, semplifica la creazione di applicazioni web, offrendo funzionalità come la gestione delle richieste HTTP e dell'autenticazione. 
+Ulteriori info a questa [pagina](https://kevinm6.github.io/TecnologieLinguaggiWeb/#nodejs).
 
 #### FILE NODEJS
 
-- **/serverlogs/**: Questa directory contiene il file di log 'serverlogs.log', che registra i log del server per monitorare il suo funzionamento e le policy associate.
+- `/serverlogs/`: Questa directory contiene il file di log 'serverlogs.log', che registra i log del server per monitorare il suo funzionamento e le policy associate.
 
-- **/src/api/docs/**: In questa directory sono presenti i file utilizzati per la gestione della documentazione pubblica delle nostre API, inclusi:
+- `/src/api/docs/`: In questa directory sono presenti i file utilizzati per la gestione della documentazione pubblica delle nostre API, inclusi:
   - swagger.js
   - swagger_output.js
 
-- **/src/config/**: Questa cartella contiene i file dedicati alla configurazione dell'applicazione, ad eccezione delle variabili d'ambiente. Al suo interno, sono presenti:
+- `/src/config/`: Questa cartella contiene i file dedicati alla configurazione dell'applicazione, ad eccezione delle variabili d'ambiente. Al suo interno, sono presenti:
   - prefs.js
 
-- **/src/lib/**: La directory lib contiene tutte le funzioni Node.js utilizzate per le funzionalità degli endpoint. Inoltre, include le immagini pubbliche del sito. Alcuni dei file e delle directory principali sono:
+- `/src/lib/`: La directory lib contiene tutte le funzioni Node.js utilizzate per le funzionalità degli endpoint. Inoltre, include le immagini pubbliche del sito. Alcuni dei file e delle directory principali sono:
   - /src/lib/auth.js
   - /src/lib/community.js
   - /src/lib/database.js
@@ -105,7 +147,7 @@ Il Back-End è responsabile delle funzionalità e della logica dell'applicazione
   - /src/lib/spotify/token.js
   - /src/lib/spotify/images
 
-- **app.js**: Questo file rappresenta il punto di ingresso principale dell'applicazione, contenente le istruzioni per l'avvio dell'app e la definizione degli endpoint.
+- `app.js`: Questo file rappresenta il punto di ingresso principale dell'applicazione, contenente le istruzioni per l'avvio dell'app e la definizione degli endpoint.
 
 La struttura ben organizzata del Back-End garantisce una gestione efficiente delle funzionalità server-side e contribuisce al corretto funzionamento dell'applicazione.
 
@@ -182,7 +224,8 @@ La collezione *community* ha lo scopo di raccogliere informazioni relative alle 
 - **playlists**: lista di playlist associate alla community, di tipo **array**. Contiene una serie di ObjectId che identificano le playlist associate a questa community.
 
 #### PLAYLISTS
-##### DESCRIZIONE
+
+**DESCRIZIONE**  
 La collezione *playlists* è stata creata per rappresentare le playlist musicali all'interno della nostra applicazione. 
 
 ##### VALIDAZIONE JSON
@@ -349,8 +392,32 @@ if (!isValidNickname(nickname)) {
 ```
 
 # Configurazione dell'applicazione
-inserire qua elementi riguardanti .env, funzionamento .env e parlare magari del file prefs.js
+Il progetto necessita di un file `.env` nella directory principale del dove sono contenuti i
+parametri necessari per il funzionamento.
+Il file `.env` è gestito attraverso il pacchetto npm [dotenv](https://www.npmjs.com/package/dotenv)
+che si occupa di popolare le relative variabili d'ambienti e renderne semplice l'utilizzo e accesso
+tramite JavaScript.
 
+*Un esempio di file env*
+
+```sh
+# Server HOST and PORT
+HOST='localhost'
+PORT=3000
+
+# Parametri e Credenziali MongoDB
+DATABASE='mongodb-cluster'
+DB_NAME='mongodb-name'
+DB_URI="mongodb+srv://user:token@DATABASE.server_id.mongodb.net/"
+
+# Parametri e Credenziali Spotify
+BASE_URL="https://api.spotify.com/v1"
+TOKEN_URL="https://accounts.spotify.com/api/token"
+CLIENT_ID='token_client_generated_from_spotify'
+CLIENT_SECRET='token_generated_from_spotify'
+```
+
+---
 
 # Scelte implementative e features
 ## Swagger JS
@@ -488,14 +555,14 @@ aggiungere immagini una volta sistemato 100%
 ``` npm install --save-dev swagger-autogen ```<br>
 ulteriori informazioni sono presenti al link sopra riportato
 
-## Documentazione Java-Doc
-La maggior parte delle funzioni ( prinipalmente back-end ) in questa applicazione sono state descritte tramite la convenzione **javadoc**
->La convenzione **JavaDoc**, ampiamente utilizzata nella programmazione Java e JavaScript, consiste nell'includere commenti strutturati nel codice per documentare funzioni, classi e metodi. Questi commenti migliorano la chiarezza del codice, facilitano la comprensione e consentono la generazione automatica di documentazione tecnica. Questo standard è cruciale per progetti complessi e la collaborazione tra sviluppatori.
+## Documentazione JavaScript-Doc
+La maggior parte delle funzioni ( principalmente back-end ) in questa applicazione sono state descritte tramite la convenzione **jsdoc**
+>La convenzione **JSDoc**, ampiamente utilizzata nella programmazione JavaScript, consiste nell'includere commenti strutturati nel codice per documentare funzioni, classi e metodi. Questi commenti migliorano la chiarezza del codice, facilitano la comprensione e consentono la generazione automatica di documentazione tecnica. Questo standard è cruciale per progetti complessi e la collaborazione tra sviluppatori.
 
 ##### Esempio commento JavaDoc
 Di seguito un esempio di un commento utilizzando lo standard JavaDoc
-```javascript
 
+```javascript
 /**
  * Retrieves a playlist by its ID.
  * 
@@ -544,9 +611,12 @@ export async function getPlaylistFromId(res, playlistid) {
       return; 
    }
 }
-
 ```
+
+---
+
 ## Gestione codici HTTP
+
 >I codici HTTP sono standard utilizzati per indicare lo stato di una richiesta HTTP effettuata tra un client (spesso un browser web) e un server. Nell'applicazione, vengono ampiamente utilizzati alcuni di questi codici per comunicare lo stato delle richieste e delle risposte:
 
 - **Codice 400 (BAD REQUEST)**: Questo codice indica che la richiesta effettuata dal client è stata malformata o non valida. Viene utilizzato quando i dati inviati non corrispondono alle aspettative del server.
@@ -560,6 +630,7 @@ export async function getPlaylistFromId(res, playlistid) {
 - **Codice 200 (OK)**: Codice di successo. Indica che la richiesta è stata elaborata correttamente e che il server sta restituendo i dati richiesti al client.
 
 ##### ESEMPIO DI GESTIONE
+
 La gestione che abbiamo deciso di attuare è stata quella di comunicare al sender il codice che la sua richiesta ha "generato"
 Nell'esempio di seguito è possibile vedere la gestione dei codici 400,404,500 200
 >**NB**: res.json(data) viene percepito dal client come un codice 200
@@ -595,7 +666,9 @@ export async function getPlaylistFromId(res, playlistid) {
    }
 }
 ```
+---
 
 ## Lingua
+
 La scelta di utilizzare la lingua inglese, come standard di programmazione, è ampiamente diffusa nell'industria del software ed è guidata principalmente dal desiderio di aderire allo standard internazionale. Questo standard è anche noto nella community di programmatori come **"English-based programming"** . <br>
 Adottare questa convenzione ha numerosi vantaggi, in quanto rende il codice più leggibile e comprensibile per un pubblico globale di sviluppatori.

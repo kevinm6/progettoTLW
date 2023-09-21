@@ -3,9 +3,8 @@
 <!--toc:start-->
 - [Progetto Manca Kevin - Riemer Alessandro](#progetto-manca-kevin-riemer-alessandro)
   - [Requisiti](#requisiti)
-  - [Idee](#idee)
-  - [Database](#database)
     - [Dependencies](#dependencies)
+      - [Usage](#usage)
 <!--toc:end-->
 
 ---
@@ -19,18 +18,8 @@
 ## Requisiti
 
 - NodeJS (`npm install`)
--
 
-## Idee
-
-- modularizzare tutto (più facile accedervi e modificare)
-
-## Database
-
-- come memorizzare i vari dati su MongoDb?
-- diagrammi e struttura del db
-- brainstorming e descrizione delle collections.
-- rappresentazione ggitrafica della base dati
+Il file `package.json` contiene già le dipendenze e requisiti necessari per il progetto.  
 
 ---
 
@@ -44,3 +33,11 @@
      ├ [swagger-ui-express@4.6.3](https://www.npmjs.com/package/swagger-ui-express)  
     *dev*  
      └ [swagger-autogen@2.23.5](https://www.npmjs.com/package/swagger-autogen)  
+
+
+---
+
+#### Usage
+
+Dopo aver configurato i file `.env` come riportato nella [Relazione](./docs/Relazione.md),  
+è sufficiente eseguire il comando `npm start` da terminale.  

@@ -73,7 +73,7 @@ async function checkIfUserHasCommunity(endpoint, uid) {
          };
 
          populateMembers(community.members, endpoint);
-         let communityPlaylists = await fetchCommunityPlaylists(community.playlists, endpoint);
+         let communityPlaylists = await fetchCommunityPlaylists(community.playlists);
          populatePlaylists(community._id, communityPlaylists, endpoint);
          var userPlaylists = await getUserPlaylists(uid);
          populateCreatorPlaylistDropdown(community._id, userPlaylists, communityPlaylists);
@@ -91,7 +91,6 @@ async function checkIfUserHasCommunity(endpoint, uid) {
                      body: JSON.stringify({ creatorId: user._id})
                   }).then(response => {
                         // console.log(response.json());
-                        alert(response);
                         if (response.ok) {
                            window.location.replace('/community');
                         }
@@ -113,7 +112,7 @@ async function getUserPlaylists(uid) {
 }
 
 
-async function fetchCommunityPlaylists(playlists, endpoint) {
+async function fetchCommunityPlaylists(playlists) {
    let playlistsData = [];
 
    for await (const i of playlists) {
@@ -121,7 +120,6 @@ async function fetchCommunityPlaylists(playlists, endpoint) {
       let pl = await res.json();
       playlistsData.push(pl);
    }
-   // populatePlaylists(playlistsData, endpoint);
    return playlistsData;
 }
 
@@ -186,7 +184,7 @@ async function populateMembers(members, endpoint) {
                clone.getElementsByClassName('btn btn-danger')[0].setAttribute('data-bs-toggle', 'modal');
                clone.getElementsByClassName('btn btn-danger')[0].setAttribute('data-bs-target', '#selectMemberModal');
                clone.getElementsByClassName('btn btn-danger')[0]
-                  .setAttribute('onClick', `addMemberToCommunity(this)`);
+                  .setAttribute('onClick', `addMemberToCommunity()`);
 
                clone.setAttribute('hidden', true);
                clone.classList.remove('d-none')
@@ -224,7 +222,7 @@ async function populateMembers(members, endpoint) {
 
 async function setModalContent(endpoint) {
    let users = "";
-   let u = await fetch('/users').then(response => {
+   let _ = await fetch('/users').then(response => {
       if (response.ok) {
          response.json().then(data => {
             for (item in data) {
@@ -282,27 +280,28 @@ function populatePlaylists(cid, playlists, endpoint) {
    var container = document.getElementById('container-cast');
    container.append(card)
 
-   // console.log(playlists, endpoint)
+   // DEBUG: console.log(playlists, endpoint)
    switch (endpoint) {
       case 'createcommunity':
          let playlistContainer = document.getElementById("playlistContainer");
          playlists.forEach(playlist => {
             var stringified = JSON.stringify(playlist.songs).replace(/"/g, '&quot;');
             const card = `
-               <div class="col-md-4 mb-4">
+            <div class="col-md-4 mb-4">
                <div class="card h-100">
-               <div class="card-body">
-               <h5 class="card-title">${playlist.title}${playlist.private ? '<i class="bi bi-lock-fill text-success"></i>' : ''}</h5>
-               <p class="card-text">${playlist.description}</p>
-               <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
-               onclick="showSongs('${playlist._id}', ${stringified})">View Songs</button>
-               <button class="btn btn-primary" onclick="toggleCreateCommunityPlaylist(this,'${playlist._id}')">
-               Add Playlist
-               </button>
+                  <div class="card-body">
+                     <h5 class="card-title">${playlist.title}</h5>
+                     <p class="card-text">${playlist.description}</p>
+                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
+                        onclick="showSongs('${playlist._id}', '${stringified}')">View Songs</button>
 
+                     <button class="btn btn-primary" onclick="toggleCreateCommunityPlaylist(this,'${playlist._id}')">
+                        Add Playlist
+                     </button>
+
+                  </div>
                </div>
-               </div>
-               </div>
+            </div>
             `;
             playlistContainer.innerHTML += card;
          });
@@ -360,16 +359,14 @@ function populatePlaylists(cid, playlists, endpoint) {
 }
 
 async function populateCreatorPlaylistDropdown(cid, userPlaylists, communityPlaylists) {
+   // DEBUG: console.log(userPlaylists, communityPlaylists);
    const dropdownMenu = document.getElementById(`playlist-community${cid}`);
    dropdownMenu.innerHTML = "";
 
    let playlistToShow = userPlaylists.filter(
-      pl => {
-         // console.log(pl._id)
-         return communityPlaylists.find(p => p._id != pl._id);
-         // !communityPlaylists.includes(pl);
-      }
+      pl => { return !communityPlaylists.find(p => p._id == pl._id); }
    );
+
    for (const key in playlistToShow) {
      let p = playlistToShow[key];
      dropdownMenu.innerHTML += `<a class="dropdown-item" onClick='addPlaylistToCommunity("${p._id}","${cid}")'>${p.title}</a>`;
@@ -377,31 +374,11 @@ async function populateCreatorPlaylistDropdown(cid, userPlaylists, communityPlay
 }
 
 
-async function addMemberToCommunity(self) {
-   // let response = await fetch('/users');
-   // let users = await response.json();
-
-   // const songsTableBody = document.getElementById("");
-   // songsTableBody.innerHTML = ""; // Pulisce la tabella
-
-   // users.forEach(user => {
-   //     console.log(user);
-   //     const row = `
-   //     <tr>
-   //         <td>${user}</td>
-   //     </tr>
-   // `;
-   //     self.innerHTML += row;
-   // });
-
+async function addMemberToCommunity() {
    let modal = document.getElementById('#selectMemberModal');
    let selectMemberModal = new bootstrap.Modal(modal);
 
    selectMemberModal.show();
-
-   // <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-   //   ...
-   // </div>
 }
 
 
