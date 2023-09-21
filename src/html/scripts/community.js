@@ -466,10 +466,13 @@ function addUserToCommunityMembers(userId, endpoint) {
                         alert("User already added to member of community.Cancel...");
                         return;
                      }
-                     communityMembers[user.nickname] = {_id: userId};
+                     communityMembers.push({uid: userId});
                      checkboxLabel.innerHTML = `<small style="color:green">Added</small>`;
                   } else {
-                     delete communityMembers[user.nickname];
+                     const index = communityMembers.indexOf({uid: userId});
+                     if (index > -1) {
+                       communityMembers.splice(index, 1);
+                     }
                      checkboxLabel.innerHTML = `<small style="color:gray">Add to community</small>`;
                   }
                });
