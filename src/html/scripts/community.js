@@ -203,6 +203,77 @@ function populateMembers(members, endpoint) {
    }
 }
 
+function populatePlaylists(playlists, endpoint) {
+   var card = document.getElementById('card-cast');
+   var container = document.getElementById('container-cast');
+   container.append(card)
+
+   // console.log(playlists, endpoint)
+   switch (endpoint) {
+      case 'createcommunity':
+         const playlistContainer = document.getElementById("playlistContainer");
+         playlists.forEach(playlist => {
+               var stringified = JSON.stringify(playlist.songs).replace(/"/g, '&quot;');
+               const card = `
+                  <div class="col-md-4 mb-4">
+                  <div class="card h-100">
+                  <div class="card-body">
+                  <h5 class="card-title">${playlist.title}${playlist.private ? '<i class="bi bi-lock-fill text-success"></i>' : ''}</h5>
+                  <p class="card-text">${playlist.description}</p>
+                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
+                  onclick="showSongs('${playlist._id}', ${stringified})">
+                  View Songs
+                  </button>
+                  <button class="btn btn-primary" onclick="toggleCreateCommunityPlaylist(this,'${playlist._id}')">
+                  Add Playlist
+                  </button>
+
+                  </div>
+                  </div>
+                  </div>
+                  `;
+               playlistContainer.innerHTML += card;
+         });
+         break;
+
+      case 'community':
+         // TODO: add button to remove member from community
+
+         for (const member in members) {
+            /* Skip card creation for creator of community */
+            if (user._id == members[i]._id) continue;
+            fetch(`/users/${members[member]._id}`).then((response) => {
+               if (response.ok) {
+                  response.json().then((m) => {
+                     var clone = card.cloneNode(true)
+                     // console.log(m);
+                     clone.id = 'card-cast-' + m._id
+                     clone.getElementsByClassName('card-text')[0].innerHTML = m.name
+                     clone.getElementsByClassName('text-body-secondary')[0].innerHTML = m.nickname
+
+                     // IDT we want to add the profile picture for users... just use a placeholder
+                     clone.getElementsByClassName('card-img-top')[0].src =
+                        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+
+                     let strMember = JSON.stringify(m);
+                     clone.getElementsByClassName('btn btn-danger')[0]
+                        .setAttribute('onClick', `removeMemberFromCommunity('${strMember}')`);
+
+                     clone.classList.remove('d-none')
+                     card.before(clone)
+                  })
+               }
+            }).catch((err) => {
+                  console.error("Error fetching members of community:", err);
+                  alert("Error fetching members of community. Retry!");
+               })
+         }
+
+         break;
+
+      default: break;
+   }
+}
 
 function populatePlaylists(playlists, endpoint) {
    var card = document.getElementById('card-cast');
