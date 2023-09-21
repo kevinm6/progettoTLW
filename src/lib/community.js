@@ -281,6 +281,13 @@ export async function updateCommunity(req, res) {
    var update = {};
 
    switch (req.body.op) {
+      case 'removeMemberFromId':
+         var mid = req.body.member._id;
+         update = {
+           $pull: { 'members': { 'uid': new ObjectId(mid) } },
+         };
+
+         break;
       case 'removeMember':
          let mem = req.body.member;
          console.log(JSON.parse(req.body.member)._id, typeof mem);
@@ -298,7 +305,7 @@ export async function updateCommunity(req, res) {
 
          break;
       case 'addMember':
-         let mid = req.body.mid;
+         var mid = req.body.mid;
          update = {
             $push: { 'members': { 'uid': new ObjectId(mid) } },
           }

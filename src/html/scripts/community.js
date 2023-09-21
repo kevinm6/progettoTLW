@@ -443,7 +443,7 @@ function addUserToCommunityMembers(userId, endpoint) {
                headers: {
                   'Content-Type': 'application/json;charset=utf-8'
                },
-               body: JSON.stringify({ op: 'removeMember', creatorId: user._id, member: userId })
+               body: JSON.stringify({ op: 'removeMemberFromId', creatorId: user._id, member: userId })
             }).then(response => {
                   console.log(response.json());
                   if (response.ok) {
