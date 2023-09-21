@@ -34,12 +34,12 @@ async function populatePlaylistCards(ddoptions) {
               <button class="btn btn-danger mb-2" onclick="deletePlaylist('${playlist._id}','${playlist.title}')">
                 Delete
               </button>
-              ${!playlist.private ? ` 
+              ${!playlist.private ? `
               <div class="btn-group dropup mb-2">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Add to Community
                 </button>
-                <div class="dropdown-menu dropdown-menu-right" id="communityDropdown${playlist._id}" aria-labelledby="dropdownMenuButton"> 
+                <div class="dropdown-menu dropdown-menu-right" id="communityDropdown${playlist._id}" aria-labelledby="dropdownMenuButton">
                 </div>
               </div>
               ` : ''}
@@ -47,7 +47,7 @@ async function populatePlaylistCards(ddoptions) {
           </div>
         </div>
       `;
-      
+
         playlistContainer.innerHTML += card;
         if(!playlist.private)
             await populateDropdown(playlist._id, ddoptions);

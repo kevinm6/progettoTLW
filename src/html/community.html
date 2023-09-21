@@ -24,9 +24,9 @@
       <h2 style="text-align: center">Community</h2>
       <!-- The buttons are probably to be placed on the right -->
       <div>
-         <button style="vertical-align:right; position:absolute; right:2%;" class="btn btn-primary"
+         <button style="position:absolute; right:2%;" class="btn btn-primary"
             id="communityGeneralButton">Edit Community</button>
-         <button style="position:absolute; right:11%;" class="btn btn-danger" id="deleteCommunityButton" disabled hidden>Delete
+         <button style="position:absolute; right:14%;" class="btn btn-danger" id="deleteCommunityButton" disabled hidden>Delete
             Community</button>
       </div>
 
@@ -46,53 +46,11 @@
                   <p class="card-text "></p>
                   <p class="card-text"><small class="text-body-secondary"></small></p>
 
-                  <button type="button" class="btn btn-danger">
+                  <button type="button" class="btn btn-danger" hidden>
                      <i class="fa fa-close"></i></button>
                </div>
 
             </div>
-         </div>
-
-         <br><br>
-       <div class="container">
-         <br><br>
-         <h2 style="text-align:center;">Public Playlists</h2>
-         <div class="row" id="playlistPublicContainer">
-            <!-- Card are dynamically created -->
-         </div>
-      </div>
-      <div class="modal fade custom-modal-xl" id="songsModal" tabindex="-1" aria-labelledby="songsModalLabel"
-         aria-hidden="true">
-         <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-               <div class="modal-header">
-                  <h5 class="modal-title" id="songsModalLabel">Your songs</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-               </div>
-               <div class="modal-body">
-                  <table class="table">
-                     <thead>
-                        <tr>
-                           <th scope="col">Title</th>
-                           <th scope="col">Artists</th>
-                           <th scope="col">Album</th>
-                           <th scope="col">Genres</th>
-                           <th scope="col">Duration</th>
-                           <th scope="col">Year</th>
-                        </tr>
-                     </thead>
-                     <tbody id="songsTableBody">
-                        <!-- Songs will be added here dinamically -->
-                     </tbody>
-                  </table>
-               </div>
-            </div>
-         </div>
-      </div>
-      `;
-        <h3 style="text-align: center;">Playlists</h3>
-         <div class="row justify-content-center">
-
          </div>
       </div>
 
@@ -137,6 +95,7 @@
    <script src="scripts/menu.js"></script>
    <script src="scripts/scripts.js"></script>
    <script src="scripts/community.js"></script>
+   <script src="scripts/playlists.js"></script>
 
    <script>
       authAndSetUser('community');

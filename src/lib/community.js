@@ -119,9 +119,9 @@ export async function addPlaylistToCommunity(playlist_id, community_id, owner_id
       }
 
       /**
-       * .some() è un metodo degli array che verifica se almeno un elemento dell'array soddisfa una determinata condizione. 
+       * .some() è un metodo degli array che verifica se almeno un elemento dell'array soddisfa una determinata condizione.
        * In questo caso,cerco di vedere se almeno una playlist all'interno dell'array playlists soddisfa la condizione.
-       * Dentro la funzione callback playlist => playlist.pid.equals(playlist_id), eseguo un confronto tra l'ID della playlist (playlist.pid) e l'ID della playlist 
+       * Dentro la funzione callback playlist => playlist.pid.equals(playlist_id), eseguo un confronto tra l'ID della playlist (playlist.pid) e l'ID della playlist
        * che sto cercando di aggiungere (playlist_id) usando il metodo .equals().
        */
       const playlistExists = community.playlists.some(playlist => playlist.pid.equals(playlist_id));
@@ -163,9 +163,10 @@ export async function updateCommunity(req, res) {
 
    switch (req.body.op) {
       case 'removeMember':
-         let member = JSON.parse(req.body.member);
+         let mem = req.body.member;
+         let memberId = (typeof mem == 'string') ?  mem : JSON.parse(req.body.member);
          update = {
-           $pull: { 'members': { 'uid': new ObjectId(member._id) } },
+           $pull: { 'members': { 'uid': new ObjectId(memberId) } },
          };
 
          break;
@@ -177,6 +178,23 @@ export async function updateCommunity(req, res) {
          };
 
          break;
+
+      case 'addMember':
+         let mid = req.body.mid;
+         update = {
+            $push: { 'members': { 'uid': new ObjectId(mid) } },
+          }
+
+         break;
+
+      case 'updateInfo':
+         let info = req.body.info;
+         update = {
+            $set: { 'name': info.name, 'desc': info.desc },
+          }
+
+         break;
+
 
       default:
          console.log("No action required, fallback and return!");
