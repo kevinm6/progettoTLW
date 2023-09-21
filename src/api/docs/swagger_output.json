@@ -35,10 +35,6 @@
     {
       "name": "misc",
       "description": "Miscellaneous endpoints catering to various operations."
-    },
-    {
-      "name": "artists",
-      "description": "Endpoints for retrieving and managing artist-related information."
     }
   ],
   "schemes": [
@@ -229,8 +225,17 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "community"
+        ],
+        "description": "Endpoint that is used to create a playlist given its data",
         "parameters": [
+          {
+            "name": "id",
+            "description": "ID of the community to be updated",
+            "in": "query",
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
@@ -247,12 +252,22 @@
                   "example": "any"
                 }
               }
-            }
+            },
+            "description": "parameters used create the community"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "playlist updated"
+          },
+          "400": {
+            "description": "Missing parameters, Invalid parameter"
+          },
+          "404": {
+            "description": "Community not found"
+          },
+          "500": {
+            "description": "Internal error"
           }
         }
       }
@@ -871,13 +886,17 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "community"
+        ],
+        "description": "Endpoint that updates the community given the community ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "ID of the community to be updated"
           },
           {
             "name": "body",
@@ -904,15 +923,22 @@
                   "example": "any"
                 }
               }
-            }
+            },
+            "description": "parameters used update the community"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "playlist updated"
+          },
+          "400": {
+            "description": "Missing parameters, Invalid parameter"
+          },
+          "404": {
+            "description": "Community not found"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Internal error"
           }
         }
       }

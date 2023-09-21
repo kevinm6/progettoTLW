@@ -45,11 +45,7 @@ const doc = {
       {
           "name": "misc",
           "description": "Miscellaneous endpoints catering to various operations."
-      },
-      {
-         "name": "artists",
-         "description": "Endpoints for retrieving and managing artist-related information."
-     }
+      }
      
 
   ]

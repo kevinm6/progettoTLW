@@ -36,7 +36,7 @@
   - [Front-End](#front-end)
   - [Back-End](#back-end)
     - [NODEJS](#nodejs)
-      - [COS'E' NODEJS ED  EXPRESS](#cose-nodejs-ed-express)
+      - [COS'E' NODEJS ED  EXPRESS](#cose-nodejs-ed--express)
       - [FILE NODEJS](#file-nodejs)
     - [DATABASE MONGODB](#database-mongodb)
       - [COMMUNITY](#community)
@@ -44,13 +44,12 @@
         - [VALIDAZIONE JSON](#validazione-json)
         - [ATTRIBUTI](#attributi)
       - [PLAYLISTS](#playlists)
-        - [DESCRIZIONE](#descrizione)
-        - [VALIDAZIONE JSON](#validazione-json)
-        - [ATTRIBUTI](#attributi)
+        - [VALIDAZIONE JSON](#validazione-json-1)
+        - [ATTRIBUTI](#attributi-1)
       - [USERS](#users)
-        - [DESCRIZIONE](#descrizione)
-        - [VALIDAZIONE JSON](#validazione-json)
-        - [ATTRIBUTI](#attributi)
+        - [DESCRIZIONE](#descrizione-1)
+        - [VALIDAZIONE JSON](#validazione-json-2)
+        - [ATTRIBUTI](#attributi-2)
     - [SISTEMA DI LOGGING e AUDITING](#sistema-di-logging-e-auditing)
         - [CODICE](#codice)
         - [ESEMPIO DI UTILIZZO](#esempio-di-utilizzo)
@@ -549,7 +548,11 @@ const generateSwagger = async () => {
 generateSwagger();
 ```
 ##### INTERFACCIA GRAFICA SWAGGER
-aggiungere immagini una volta sistemato 100% 
+![Alt text](image-3.png)
+![Alt text](image-4.png)
+![Alt text](image-5.png)
+![Alt text](image-6.png)
+
 
 ##### INSTALLAZIONE
 ``` npm install --save-dev swagger-autogen ```<br>

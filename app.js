@@ -604,10 +604,54 @@ app.delete("/community/:id", async (req, res) => {
 });
 
 app.put("/community/:id", async (req, res) => {
+      // #swagger.tags = ['community']
+   // #swagger.description = 'Endpoint that updates the community given the community ID'
+   /**#swagger.parameters['id'] = {description: 'ID of the community to be updated',} */
+      /**#swagger.parameters['body'] = {
+	      in: 'body',
+         description: 'parameters used update the community',
+         type: 'object',
+         }
+      } */
+   /* #swagger.responses[200] = {
+         description: 'playlist updated'
+      }
+      #swagger.responses[400] = {
+         description: 'Missing parameters, Invalid parameter'
+      }
+      #swagger.responses[404] = {
+         description: 'Community not found'
+      }
+      #swagger.responses[500] = {
+         description: 'Internal error'
+      }
+      */
    community.updateCommunity(req, res);
 });
 
 app.post("/createcommunity", async (req, res) => {
+      // #swagger.tags = ['community']
+   // #swagger.description = 'Endpoint that is used to create a playlist given its data'
+   /**#swagger.parameters['id'] = {description: 'ID of the community to be updated',} */
+         /**#swagger.parameters['body'] = {
+	      in: 'body',
+         description: 'parameters used create the community',
+         type: 'object',
+         }
+      } */
+   /* #swagger.responses[200] = {
+         description: 'playlist updated'
+      }
+      #swagger.responses[400] = {
+         description: 'Missing parameters, Invalid parameter'
+      }
+      #swagger.responses[404] = {
+         description: 'Community not found'
+      }
+      #swagger.responses[500] = {
+         description: 'Internal error'
+      }
+      */
    community.createCommunity(req, res);
 });
 
