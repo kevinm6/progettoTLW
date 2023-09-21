@@ -373,7 +373,7 @@ app.get("/getplaylist/:id", async (req, res) => {
    playlist.getPlaylistFromId(res, req.params.id);
 });
 
-// DEVE DIVENTARE UNA GET PRIMA DI ESSERE FIXATA!
+
 app.post("/getplaylist", async (req, res) => {
    // #swagger.tags = ['playlist']
    // #swagger.description = 'Endpoint that allows to obtain a specific playlist'
@@ -489,7 +489,6 @@ app.put("/updateplaylist/:id", function (req, res) {
    playlist.updatePlaylist(res,req.params.id,req.body);
 });
 
-////////////////////////////////////////////////////////////////////////////////// DA CONTROLLARE //////////////////////////////////////////////////////////////////////////////////
 
 /* ------------------- TRACKS ------------------- */
 app.get("/search", async function (req, res) {
@@ -519,6 +518,7 @@ app.get("/community/:id", async (req, res) => {
    // #swagger.tags = ['community']
    // #swagger.description = 'Endpoint that Fetches community Data given its creator ID'
    /**#swagger.parameters['id'] = {description: 'ID of the creator of the community we want to fetch',} */
+
    /* #swagger.responses[200] = {
          description: 'community fetched. returns the community data'
       }
@@ -534,6 +534,9 @@ app.get("/community/:id", async (req, res) => {
       */
    community.getCommunity(id, res);
 });
+
+// fetches community into array given creator id
+// CALLS FILE: COMMUNITY.JS
 app.get("/communities/:id", async (req, res) => {
    let id = req.params.id;
    // #swagger.tags = ['community']
@@ -551,17 +554,57 @@ app.get("/communities/:id", async (req, res) => {
       #swagger.responses[500] = {
          description: 'Internal error'
       }
-      */31
+      */
    community.getCommunities(id, res);
 });
+
+
+// fetches add playlist to community
+// CALLS FILE: COMMUNITY.JS
 app.put("/addplaylisttocommunity/:id", async (req, res) => {
+      // #swagger.tags = ['community']
+   // #swagger.description = 'Endpoint that adds playlist to community'
+   /**#swagger.parameters['id'] = {description: 'ID of the creator of the community we want to add the playlist to',} */
+   /* #swagger.responses[200] = {
+         description: 'playlist added'
+      }
+      #swagger.responses[400] = {
+         description: 'Missing parameter, Invalid parameter, playlist already in community'
+      }
+      #swagger.responses[404] = {
+         description: 'Community not found'
+      }
+      #swagger.responses[500] = {
+         description: 'Internal error'
+      }
+      */
    community.addPlaylistToCommunity(req.body.playlist_id,req.params.id,req.body.owner_id, res);
 });
+
+// deleted the community
+// CALLS FILE: COMMUNITY.JS
+app.delete("/community/:id", async (req, res) => {
+      // #swagger.tags = ['community']
+   // #swagger.description = 'Endpoint that deletes community given the id'
+   /**#swagger.parameters['id'] = {description: 'ID of the community to be deleted',} */
+   /* #swagger.responses[200] = {
+         description: 'playlist deleted'
+      }
+      #swagger.responses[400] = {
+         description: 'Missing parameter, Invalid parameter'
+      }
+      #swagger.responses[404] = {
+         description: 'Community not found'
+      }
+      #swagger.responses[500] = {
+         description: 'Internal error'
+      }
+      */
+   community.deleteCommunity(req, res)
+});
+
 app.put("/community/:id", async (req, res) => {
    community.updateCommunity(req, res);
-});
-app.delete("/community/:id", async (req, res) => {
-   community.deleteCommunity(req, res)
 });
 
 app.post("/createcommunity", async (req, res) => {

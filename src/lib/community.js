@@ -13,7 +13,7 @@ export const dbCommunityCollection = () => Db('community');
 /**
  * Handles the request to retrieve data for a specific community.
  *
- * This function takes the community's creator ID from the HTTP request and returns the
+ * @description This function takes the community's creator ID from the HTTP request and returns the
  * corresponding community data, if present in the database. If the community is not found,
  * it will return an HTTP 404 response. In case of missing or invalid input,
  * it returns a 400 status. For internal errors, a 500 status with an error
@@ -60,7 +60,7 @@ export async function getCommunity(req, res) {
 /**
  * Handles the request to retrieve data for a specific community.
  *
- * This function takes the community's creator ID from the HTTP request and returns the
+ * @description This function takes the community's creator ID from the HTTP request and returns the
  * corresponding community data, if present in the database. If the community is not found,
  * it will return an HTTP 404 response. In case of missing or invalid input,
  * it returns a 400 status. For internal errors, a 500 status with an error
@@ -104,22 +104,132 @@ export async function getCommunities(req, res) {
 }
 
 
+
+
 /**
- * Async function to get all community members
+ * Adds a playlist to a community.
  *
- * @param {object} res - response passed from express
- * @returns {array.<object>} array of users
+ * @param {string} playlist_id - The ID of the playlist to add.
+ * @param {string} community_id - The ID of the community.
+ * @param {string} owner_id - The ID of the owner of the playlist.
+ * @param {Object} res - The response object to send HTTP responses.
+ *
+ * @throws {Error} Returns a 400 error if parameters are missing or invalid.
+ * @throws {Error} Returns a 404 error if the community is not found.
+ * @throws {Error} Returns a 400 error if the playlist already exists in the community.
+ * @throws {Error} Returns a 500 error if an unknown error occurs.
+ *
+ * @returns {void}
  */
-export async function getMembersOfCommunity(req, res) {
-   let id = req.params.id;
-   let collection = await dbCommunityCollection();
-   let community = await collection
-      .find({ creatorId: new ObjectId(id) })
-      .project({})
-      .toArray();
-   // console.log(community);
-   res.json(community);
+export async function addPlaylistToCommunity(playlist_id, community_id, owner_id, res) {
+   if(community_id ==undefined || playlist_id == undefined || owner_id==undefined){
+      res.status(400).send("Missing parameter");
+      utils.log("[COMMUNITY]> addPlaylistToCommunity > ERROR 400: INVALID CREATOR ID ");
+      return;
+   }
+   if(!utils.isValidString(community_id)){
+      res.status(400).send("Invalid community id");
+      utils.log("[COMMUNITY]> addPlaylistToCommunity > ERROR 400: INVALID CREATOR ID ");
+      return;
+   }
+   try {
+      const collection = await dbCommunityCollection();
+      const filter = {
+         _id: new ObjectId(community_id),
+         creatorId: new ObjectId(owner_id),
+      };
+      playlist_id = new ObjectId(playlist_id);
+      const community = await collection.findOne(filter);
+      if (!community) {
+         res.status(404).send("Community not found");
+         utils.log("[COMMUNITY]> addPlaylistToCommunity > ERROR 400: INVALID CREATOR ID ");
+         return;
+      }
+      /**
+       * .some() è un metodo degli array che verifica se almeno un elemento dell'array soddisfa una determinata condizione.
+       * In questo caso,cerco di vedere se almeno una playlist all'interno dell'array playlists soddisfa la condizione.
+       * Dentro la funzione callback playlist => playlist.pid.equals(playlist_id), eseguo un confronto tra l'ID della playlist (playlist.pid) e l'ID della playlist
+       * che sto cercando di aggiungere (playlist_id) usando il metodo .equals().
+       */
+      const playlistExists = community.playlists.some(playlist => playlist.pid.equals(playlist_id));
+      if (playlistExists) {
+         res.status(400).send("Playlist Already exists in community");
+         utils.log("[COMMUNITY]> addPlaylistToCommunity > ERROR 400: PLAYLIST ALREADY EXISTS IN COMMUNITY ");
+         return;
+      }
+      const playlistObject = {
+         pid: playlist_id
+      };
+      const updateDoc = {
+         $push: {
+            playlists: playlistObject
+         },
+      };
+      const comupdate = await collection.updateOne(filter, updateDoc);
+      if (comupdate.modifiedCount === 1) {
+         res.status(200).send();
+         utils.log("[COMMUNITY]> addPlaylistToCommunity > SUCCESS: ADDED PALYLIST "+playlist_id+" TO COMMUNITY "+community_id);
+         return;
+      } else {
+         res.status(500).send("playlist not added due to an unknown error");
+         utils.log("[COMMUNITY]> addPlaylistToCommunity > ERROR 500: INTERNAL ERROR WHILE ADDING PLAYLIST ");
+         return;
+      }
+   } catch (error) {
+      res.status(500).send("Internal error");
+      utils.log("[COMMUNITY]> addPlaylistToCommunity > ERROR 500: INTERNAL ERROR : "+error);
+      return;
+   }
 }
+
+/**
+ * @description Deletes a community based on the provided creator ID. This function handles the deletion
+ * of a community associated with a specific creator. It ensures that the creator ID is provided
+ * and valid, performs the deletion, and provides appropriate HTTP responses.
+ *
+ * @param {Object} req - The request object containing parameters.
+ * @param {Object} res - The response object to send HTTP responses.
+ *
+ * @throws {Error} Returns a 400 error if the creatorId is missing or invalid.
+ * @throws {Error} Returns a 404 error if the community is not found.
+ * @throws {Error} Returns a 500 error if an internal error occurs.
+ *
+ * @returns {void}
+ */
+export async function deleteCommunity(req, res) {
+   let creatorId = req.body.creatorId;
+   if(creatorId==undefined){
+      res.status(400).send("Missing Parameter");
+      utils.log("[COMMUNITY]> deleteCommunity > ERROR 400 : MISSING creatorId");
+      return;
+   }
+   if(!utils.isValidString(creatorId)){
+      res.status(400).send("Invalid Parameter");
+      utils.log("[COMMUNITY]> deleteCommunity > ERROR 400 : INVALID creatorId");
+      return;      
+   }
+   let creatorObjectId = new ObjectId(creatorId);
+   try {
+      let filter = { 'creatorId': creatorObjectId };
+
+      let collection = await dbCommunityCollection();
+      let communities = await collection
+         .findOneAndDelete(filter);
+      if(!communities){
+         res.status(404).send("Community not found");
+         utils.log("[COMMUNITY]> deleteCommunity > ERROR 404 : COMMUNITY NOT FOUND");
+         return;
+      }
+      res.send(communities);
+      utils.log("[COMMUNITY]> deleteCommunity > SUCCESS : DELETED COMMUNITY "+creatorId);
+      return;
+   } catch (e) {
+      res.status(500).send("Internal Error");
+      utils.log("[COMMUNITY]> deleteCommunity > ERROR 500 : INTERNAL ERROR");
+      return;
+   }
+}
+
 
 
 /**
@@ -150,70 +260,14 @@ export async function createCommunity(req, res) {
       community = await collection.insertOne(newCommunity);
    } else {
       let errorMsg = "Community already present for current user.\n\
-Only one community for user is allowed.\n\
-Do you want to go to your community?"
+            Only one community for user is allowed.\n\
+            Do you want to go to your community?"
       res.json({ 'error': errorMsg });
       return;
    }
 
    res.send(community);
 }
-
-
-export async function addPlaylistToCommunity(playlist_id, community_id, owner_id, res) {
-   if(community_id ==undefined || playlist_id == undefined || owner_id==undefined){
-      res.status(400).send("Missing parameter");
-      utils.log("[COMMUNITY]> addPlaylistToCommunity > ERROR 400: INVALID CREATOR ID ");
-      return;
-   }
-   if(!utils.isValidString(community_id)){
-      res.status(400).send("Invalid community id");
-      utils.log("[COMMUNITY]> addPlaylistToCommunity > ERROR 400: INVALID CREATOR ID ");
-      return;
-   }
-   try {
-      const collection = await dbCommunityCollection();
-      const filter = {
-         _id: new ObjectId(community_id),
-         creatorId: new ObjectId(owner_id),
-      };
-      playlist_id = new ObjectId(playlist_id);
-      const community = await collection.findOne(filter);
-      if (!community) {
-         res.status(404).send("Community not found.");
-         return;
-      }
-      /**
-       * .some() è un metodo degli array che verifica se almeno un elemento dell'array soddisfa una determinata condizione.
-       * In questo caso,cerco di vedere se almeno una playlist all'interno dell'array playlists soddisfa la condizione.
-       * Dentro la funzione callback playlist => playlist.pid.equals(playlist_id), eseguo un confronto tra l'ID della playlist (playlist.pid) e l'ID della playlist
-       * che sto cercando di aggiungere (playlist_id) usando il metodo .equals().
-       */
-      const playlistExists = community.playlists.some(playlist => playlist.pid.equals(playlist_id));
-      if (playlistExists) {
-         res.status(400).send("Playlist already exists in the community.");
-         return;
-      }
-      const playlistObject = {
-         pid: playlist_id
-      };
-      const updateDoc = {
-         $push: {
-            playlists: playlistObject
-         },
-      };
-      const comupdate = await collection.updateOne(filter, updateDoc);
-      if (comupdate.modifiedCount === 1) {
-         res.status(200).send();
-      } else {
-         res.status(500).send("Playlist not added to community.");
-      }
-   } catch (error) {
-      res.status(500).send("Internal Error: " + error.message);
-   }
-}
-
-
 /**
  * Async function to update an existing user
  *
@@ -235,7 +289,6 @@ export async function updateCommunity(req, res) {
          };
 
          break;
-
       case 'removePlaylist':
          let pid = req.body.pid;
          update = {
@@ -243,7 +296,6 @@ export async function updateCommunity(req, res) {
          };
 
          break;
-
       case 'addMember':
          let mid = req.body.mid;
          update = {
@@ -251,7 +303,6 @@ export async function updateCommunity(req, res) {
           }
 
          break;
-
       case 'updateInfo':
          let info = req.body.info;
          update = {
@@ -259,13 +310,10 @@ export async function updateCommunity(req, res) {
           }
 
          break;
-
-
       default:
          console.log("No action required, fallback and return!");
          return;
    }
-
    try {
       console.log(filter, update);
       let collection = await dbCommunityCollection();
@@ -278,26 +326,6 @@ export async function updateCommunity(req, res) {
 }
 
 
-/**
- * Async function to delete a user
- *
- * @param mongoClient - client mongo passed to avoid import of other module
- * @param res - response passed from express
- * @param id - id of user to be deleted
- */
-export async function deleteCommunity(req, res) {
-   let creatorId = req.body.creatorId;
-   let creatorObjectId = new ObjectId(creatorId);
-   try {
-      let filter = { 'creatorId': creatorObjectId };
 
-      let collection = await dbCommunityCollection();
-      let communities = await collection
-         .findOneAndDelete(filter);
 
-      res.send(communities);
-   } catch (e) {
-      console.error("Error deleting community.\n", e);
-   }
-}
 
