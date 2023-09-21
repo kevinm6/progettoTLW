@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import fs from 'fs';
+import path from 'path';
 import { ObjectId } from "mongodb";
 /**
  * Get hash (md5) from current input.
@@ -129,5 +130,24 @@ export function logonly(message) {
   const logMessage = `[${timestamp}]: ${message}\n`;
   var stream = fs.createWriteStream("serverlogs/serverlogs.log", {flags:'a'});
   stream.write(logMessage);
+}
+
+export function createLogFolder(){
+  const logDir = 'serverlogs';
+  const logFile = 'serverlogs/serverlogs.log';
+
+  try {
+    if (!fs.existsSync(logDir)) {
+      fs.mkdirSync(logDir);
+      console.log("LOGGING FOLDER CREATED");
+    }
+
+    if (!fs.existsSync(logFile)) {
+      fs.writeFileSync(logFile, ''); // Crea il file vuoto serverlogs.log
+      console.log("LOGGING FILE CREATED");
+    }
+  } catch (err) {
+    console.error(err);
+  }
 }
 

@@ -1,5 +1,6 @@
 import swaggerAutogen from "swagger-autogen";
-
+import * as utils from "../../lib/utils.js";
+import { config } from "../../config/prefs.js";
 const outputFile = './swagger_output.json';
 const endpointsFiles = ['../../../app.js']; // Usa il percorso relativo corretto per il tuo file app.js
 
@@ -11,7 +12,7 @@ const doc = {
        title: "SNM API",
        description: "Documentation for the APIs of our website: Social Network for Music."
    },
-   host: "localhost:3000",
+   host: `${config.host}:${config.port}`,
    basePath: "/",
    schemes: ['http'],
    consumes: ['application/json'],
@@ -53,13 +54,6 @@ const doc = {
 
   ]
   ,
-   securityDefinitions: {
-       api_key: {
-           type: "apiKey",
-           name: "api_key",
-           in: "header"
-       }
-   },
    definitions: {
        user: {
            _id: "ObjectId('64df73b31e5eda5eb868ddcd')",
@@ -150,10 +144,11 @@ const doc = {
 const generateSwagger = async () => {
   try {
     await swaggerAutogen()(outputFile, endpointsFiles,doc);
-    console.log('Documentazione Swagger generata con successo.');
+    utils.log('SWAGGER DOCUMENTATION GENERATED.');
   } catch (error) {
-    console.error('Errore durante la generazione della documentazione Swagger:', error);
+    utils.log('ERROR WHILE GENERATING SWAGGER DOCUMENTATION:', error);
   }
 };
 
+utils.createLogFolder();
 generateSwagger();

@@ -23,7 +23,7 @@ import swaggerDocument from './src/api/docs/swagger_output.json'assert { type: '
 
 // Creazione di un'istanza di Express per l'applicazione
 const app = express();
-
+utils.createLogFolder();
 // Middleware per il parsing dei dati JSON e abilitazione del CORS
 app.use(express.json());
 const corsOptions = {
@@ -570,6 +570,7 @@ export const db = Db();
 app.listen(config.port, config.host, () => {
    console.log(`🟢 Server listening on port: ${config.port}`);
    utils.logonly(`🟢 Server listening on port: ${config.port}`)
+   
 });
 
 // export default app

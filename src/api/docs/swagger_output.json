@@ -44,13 +44,6 @@
   "schemes": [
     "http"
   ],
-  "securityDefinitions": {
-    "api_key": {
-      "type": "apiKey",
-      "name": "api_key",
-      "in": "header"
-    }
-  },
   "consumes": [
     "application/json"
   ],
@@ -893,6 +886,12 @@
                   "example": "any"
                 },
                 "pid": {
+                  "example": "any"
+                },
+                "mid": {
+                  "example": "any"
+                },
+                "info": {
                   "example": "any"
                 }
               }
