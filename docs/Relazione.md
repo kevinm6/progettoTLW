@@ -517,10 +517,10 @@ const generateSwagger = async () => {
 generateSwagger();
 ```
 ##### INTERFACCIA GRAFICA SWAGGER
-![Alt text](image-3.png)
-![Alt text](image-4.png)
-![Alt text](image-5.png)
-![Alt text](image-6.png)
+![Alt text](./assets/image-3.png)
+![Alt text](./assets/image-4.png)
+![Alt text](./assets/image-5.png)
+![Alt text](./assets/image-6.png)
 
 
 ##### INSTALLAZIONE
