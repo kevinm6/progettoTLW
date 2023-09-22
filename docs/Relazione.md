@@ -45,7 +45,7 @@ Questo documento rappresenta la relazione del progetto "Social Network for Music
 Il progetto è stato realizzato da:
 
 - [Alessandro Riemer](https://github.com/FriendlyWizard23) (Matricola: 941878)
-- [Kevin Manca](https://github.com/kevinm6) (Matricola: 941878)
+- [Kevin Manca](https://github.com/kevinm6) (Matricola: 978578)
 
 ### Link ed informazioni utili
 - è disponibile una demo (AWS hosted) presso <a href="http://16.171.137.111:3000/">questo link</a>
