@@ -114,7 +114,6 @@ Ulteriori info a questa [pagina](https://kevinm6.github.io/TecnologieLinguaggiWe
   - /src/lib/utils.js
   - /src/lib/spotify/fetch.js
   - /src/lib/spotify/token.js
-  - /src/lib/spotify/images
 
 - `app.js`: Questo file rappresenta il punto di ingresso principale dell'applicazione, contenente le istruzioni per l'avvio dell'app e la definizione degli endpoint.
 
@@ -128,7 +127,7 @@ Nel corso di sviluppo della nostra applicazione, abbiamo fatto largo uso del dat
 
 Per questa applicazione abbiamo deciso di utilizzare le seguenti collections:
 
-![Alt text](image-2.png)
+![Alt text](./assets/image-2.png)
 
 Di seguito viene riportata una descrizione delle collections, del loro schema di validation JSON e dei tipi di dato
 
@@ -639,6 +638,34 @@ export async function getPlaylistFromId(res, playlistid) {
    }
 }
 ```
+---
+
+### Esempi di Utilizo
+
+**Pagina Iniziale**
+![Home](./assets/homePage.png)
+
+**Profilo**
+![Profile](./assets/profile.png)
+
+**Playlist Personali**
+![Personal Playlists](./assets/personalPlaylist.png)
+
+**Nuova Playlist**
+![New Playlists](./assets/createPlaylist.png)
+
+**Cerca Playlist pubbliche**
+![Explore Public Playlists](./assets/searchPublicPlaylists.png)
+
+**Esplora e importa Playlist**
+![Explore and Import Playlists](./assets/exploreAndAddPlaylist.png)
+
+**Comunità**
+![Community](./assets/communityView.png)
+
+**Modifica Comunità**
+![EditCommunity](./assets/communityEdit.png)
+
 ---
 
 ## Lingua
