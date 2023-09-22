@@ -206,7 +206,7 @@ async function populateMembers(members, endpoint) {
             let strMember = JSON.stringify(m);
             clone.getElementsByClassName('btn btn-danger')[0]
                .setAttribute('onClick', `removeMemberFromCommunity('${strMember}')`);
-            
+
             clone.classList.remove('d-none')
             card.before(clone)
          }
@@ -292,10 +292,10 @@ function populatePlaylists(cid, playlists, endpoint) {
                   <div class="card-body">
                      <h5 class="card-title">${playlist.title}</h5>
                      <p class="card-text">${playlist.description}</p>
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
+                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
                         onclick="showSongs('${playlist._id}', '${stringified}')">View Songs</button>
 
-                     <button class="btn btn-primary" onclick="toggleCreateCommunityPlaylist(this,'${playlist._id}')">
+                     <button type="button" class="btn btn-primary" onclick="toggleCreateCommunityPlaylist(this,'${playlist._id}')">
                         Add Playlist
                      </button>
 
