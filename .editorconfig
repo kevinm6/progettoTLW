@@ -9,3 +9,7 @@ charset = utf-8
 
 indent_style = space
 indent_size = 3
+tab_width = 3
+
+max_line_length = 90
+trim_trailing_whitespace = true

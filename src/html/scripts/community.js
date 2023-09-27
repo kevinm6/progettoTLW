@@ -150,13 +150,6 @@ async function populateMembers(members, endpoint) {
                      clone.getElementsByClassName('card-img-top')[0].src =
                         'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
 
-                     clone.getElementsByClassName('checkbox')[0].id += members[i]._id;
-                     clone.getElementsByClassName('checkbox')[0].setAttribute('onClick', `addUserToCommunityMembers('${members[i]._id}','${endpoint}')`);
-
-                     clone.getElementsByTagName('label')[0].setAttribute('id', 'label-selection-'+ members[i]._id);
-                     clone.getElementsByTagName('label')[0].setAttribute('for', 'user-selection-'+ members[i]._id);
-                     clone.getElementsByTagName('label')[0].innerHTML = `<small style="color:gray;">Add to community</small>`;
-
                      clone.classList.remove('d-none')
 
                      card.before(clone)
@@ -216,7 +209,6 @@ async function populateMembers(members, endpoint) {
       default: break;
    }
 }
-
 
 
 
@@ -293,7 +285,7 @@ function populatePlaylists(cid, playlists, endpoint) {
                      <h5 class="card-title">${playlist.title}</h5>
                      <p class="card-text">${playlist.description}</p>
                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#songsModal${playlist._id}"
-                        onclick="showSongs('${playlist._id}', '${stringified}')">View Songs</button>
+                        onclick="showSongs('${playlist._id}', ${stringified})">View Songs</button>
 
                      <button type="button" class="btn btn-primary" onclick="toggleCreateCommunityPlaylist(this,'${playlist._id}')">
                         Add Playlist
