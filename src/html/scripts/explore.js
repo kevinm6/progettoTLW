@@ -6,7 +6,6 @@ var [pageResults, offsetCached] = [0, 0];
 const itemsPerPage = 20;
 
 
-
 function prevResults(filter, query) {
    if (pageResults > 0) {
       pageResults -= 1
@@ -88,16 +87,23 @@ const createPlaylistsOption = (trackId, playlists) => {
    return playlistOptions;
 }
 
-async function populateCards(data) {
+
+async function populateCards(data, type) {
    let fetchedItems = () => {
-      if (data.tracks?.items != undefined) {
-         return data.tracks?.items
-      } else if (data.artists?.items != undefined) {
-         return data.artists?.items
-      } else if (data.albums?.items != undefined) {
-         return data.albums?.items
+      switch (type) {
+         case 'Track':
+            return data.tracks?.items;
+
+         case 'Artist':
+            return data.artists?.items;
+
+         case 'Album':
+            return data.albums?.items
+
+         default: return null;
       }
    };
+
    // console.log("DATA:", fetchedItems());
 
    setContainerHtml('default');
@@ -129,7 +135,6 @@ async function populateCards(data) {
       clone.getElementsByClassName('modal-title')[0].setAttribute('id', 'trackModalLabel' + trackId);
       clone.getElementsByClassName('modal-footer')[0].setAttribute('id', 'trackModalFooter' + trackId);
       clone.getElementsByClassName('btn-close')[0].setAttribute('data-dismiss', 'trackModal' + trackId);
-      // Quando il bottone viene chiuso, riabilita l'hover sulla card!
       clone.getElementsByClassName('btn-close')[0].setAttribute('onclick', 'reenableHoverOnCards()');
       clone.getElementsByClassName('btn')[0].setAttribute('data-toggle', 'modal');
       clone.getElementsByClassName('btn')[0].setAttribute('data-target', '#trackModal' + trackId);
@@ -137,7 +142,8 @@ async function populateCards(data) {
       clone.getElementsByClassName('btn')[0].setAttribute('onClick', `showTrackInfo(${itemToPass})`);
       clone.getElementsByClassName('dropdown-menu')[0].setAttribute('id', 'playlistSelect' + trackId);
       let playlistsOptions = playlists && Object.values(playlists).length > 0 ? createPlaylistsOption(trackId, playlists) : null;
-      if (playlistsOptions == null) {
+
+      if (playlistsOptions == null || type != 'Track') {
          clone.getElementsByClassName('dropdown-toggle')[0].disabled = true;
          clone.getElementsByClassName('dropdown-toggle')[0].hidden = true;
          clone.getElementsByClassName('dropdown-toggle')[0].className = "btn btn-outline-secondary dropdown-toggle";
@@ -157,8 +163,10 @@ async function populateCards(data) {
       // Debugging: limit to 4 elements
       // if (i == 3) break;
    }
+   card.classList.add('d-none');
 
 }
+
 
 async function populatePublicPlaylistCards(data) {
    setContainerHtml('Playlist');
@@ -188,6 +196,7 @@ async function populatePublicPlaylistCards(data) {
       playlistContainer.innerHTML += card;
    });
 }
+
 
 function showTrackInfo(info) {
    disableHoverOnCards();
@@ -266,7 +275,7 @@ function getItems(type, query, offset) {
                      return
                   }
                   response.json().then(data => {
-                     populateCards(data);
+                     populateCards(data, t);
                   })
                })
             break;
@@ -311,20 +320,21 @@ Register to the app or press 'OK' to create a new account.
 
 }
 
+
 async function addSong(playlistID, track) {
-   console.log(track);
+   // console.log(track);
    const artists = track.artists.map((artist) => artist.name).join(", ");
    var duration = msToTime(track.duration_ms);
    var year = track.album.release_date;
    var song={
-      id:track.id,
-      title:track.name,
-      artist:artists,
-      duration:duration,
-      year:track.album.release_date,
-      album:track.album.name,
-      playlistID:playlistID,
-      owner_id:localStorage.getItem("_id")
+      id: track.id,
+      title: track.name,
+      artist: artists,
+      duration: duration,
+      year: year,
+      album: track.album.name,
+      playlistID: playlistID,
+      owner_id: localStorage.getItem("_id")
   }
    try {
       const response = await fetch(`/addsongtoplaylist/${playlistID}`, {
@@ -357,10 +367,10 @@ async function addSong(playlistID, track) {
 
 }
 
+
 function importPublicPlaylist(pid) {
    console.log("playlist_id", pid);
 
-   // TODO: change the message, I can't think about it right now!!! 😅
    let msg = `
 Do you want to import this playlist to your personal list?
 `;
@@ -497,6 +507,14 @@ function setContainerHtml(items) {
             </div>
             </div>`;
 
+
+         document.getElementById('prev-page-result').addEventListener('click', function(ev) {
+            prevResults(filterSelectId.value, searchInputId.value)
+         })
+
+         document.getElementById('next-page-result').addEventListener('click', function(ev) {
+            nextResults(filterSelectId.value, searchInputId.value)
+         })
 
          break;
    }

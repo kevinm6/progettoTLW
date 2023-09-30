@@ -47,7 +47,7 @@ async function populatePlaylistCards(ddoptions) {
       `;
 
         playlistContainer.innerHTML += card;
-        await populateDropdown(playlist._id, ddoptions);
+        populateDropdown(playlist._id, ddoptions);
     });
 }
 
@@ -121,7 +121,7 @@ async function getDropdownOptions() {
 }
 
 
-async function fetchEditPlaylist(playlistID) {
+function fetchEditPlaylist(playlistID) {
     window.location.href = `/src/html/editplaylist.html?id=${playlistID}`;
 }
 

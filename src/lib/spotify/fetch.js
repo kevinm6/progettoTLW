@@ -46,9 +46,6 @@ const fetchSpotify = async (URL) => {
    * @returns {Object}
    */
 let getTrack = async (track, res) => {
-   // TODO: add manage for multiple tracks fetch via Spotify API
-   // see -> https://developer.spotify.com/documentation/web-api/reference/get-several-tracks
-   // console.log("TRACK: ", track);
    const url = `${BASE_URL}/tracks/${track}`
    const trackResult = await fetchSpotify(url);
    res.json(trackResult);

@@ -28,7 +28,6 @@ async function authAndSetUser(endpoint) {
 
 
 async function checkIfUserHasCommunity(endpoint, uid) {
-   // TODO: improve if user is not logged
    if (!uid) {
       alert("You need to register to the app!");
       return;

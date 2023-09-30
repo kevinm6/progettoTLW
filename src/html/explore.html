@@ -32,17 +32,7 @@
       </form>
    </div>
 
-   <div class="container" id="container-items">
-      <div class="row g-4 mt-4 p-4">
-         <nav aria-label="Page navigation example">
-            <ul class="pagination">
-               <li class="page-item"><button class=" btn" id="prev-page-result">Previous</button></li>
-
-               <li class="page-item"><button class=" btn" id="next-page-result">Next</button></li>
-            </ul>
-         </nav>
-      </div>
-   </div>
+   <div class="container" id="container-items"></div>
 
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
@@ -103,15 +93,6 @@
 
       // Populate page on first start
       getItems(filterSelectId.value);
-
-
-      document.getElementById('prev-page-result').addEventListener('click', function () {
-         prevResults(filterSelectId.value, searchInputId.value)
-      })
-
-      document.getElementById('next-page-result').addEventListener('click', function () {
-         nextResults(filterSelectId.value, searchInputId.value)
-      })
    </script>
    <div class="spacer"></div>
    <footer id="footer"></footer>
