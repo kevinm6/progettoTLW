@@ -161,7 +161,7 @@ async function populateMembers(members, endpoint) {
          break;
 
       case 'community':
-         for (let i in members) {
+          for (let i in members) {
             if (i == 0) {
                let clone = card.cloneNode(true);
                clone.id = 'card-cast-' + user._id;
@@ -213,24 +213,20 @@ async function populateMembers(members, endpoint) {
 
 async function setModalContent(endpoint) {
    let users = "";
-   let _ = await fetch('/users').then(response => {
-      if (response.ok) {
-         response.json().then(data => {
-            for (item in data) {
-               let user = data[item];
-               users += `
-                 <tr>
-                     <td>${user.name}</td>
-                     <td>${user.nickname}</td>
-                     <td><button type="button"
-                        class="btn btn-primary" id='add-member-${user._id}' onclick="addUserToCommunityMembers('${user._id}','${endpoint}')">Add ${data[item].name}</button>
-                     </td>
-                 </tr>
-               `;
-            }
-         })
-      }
-   }).catch(err => console.error("Error fetching users.", err));
+   let fetchUsers = await fetch('/users');
+   let data = await fetchUsers.json();
+   for (item in data) {
+      let user = data[item];
+      users += `
+        <tr>
+            <td>${user.name}</td>
+            <td>${user.nickname}</td>
+            <td><button type="button"
+               class="btn btn-primary" id='add-member-${user._id}' onclick="addUserToCommunityMembers('${user._id}','${endpoint}')">Add ${data[item].name}</button>
+            </td>
+        </tr>
+      `;
+   }
 
    let cardBody = `
 <div class="modal" role="dialog" id="selectMemberModal" aria-labelledby="selectMemberModalTitle" aria-hidden="true">
@@ -365,7 +361,7 @@ async function populateCreatorPlaylistDropdown(cid, userPlaylists, communityPlay
 
 async function addMemberToCommunity() {
    disableHoverOnCards();
-   let modal = document.getElementById('#selectMemberModal');
+   let modal = document.getElementById('selectMemberModal');
    let selectMemberModal = new bootstrap.Modal(modal);
 
    selectMemberModal.show();
