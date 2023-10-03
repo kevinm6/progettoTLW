@@ -246,9 +246,10 @@ export async function createCommunity(req, res) {
       let memberId = newCommunity.members[member].uid;
       newCommunity.members[member].uid = new ObjectId(memberId);
    }
+
    for (const playlist in newCommunity.playlists) {
-      let pid = newCommunity.playlists[pid]._id;
-      newCommunity.members[member]._id = new ObjectId(pid);
+      let pid = newCommunity.playlists[playlist].pid;
+      newCommunity.playlists[playlist].pid = new ObjectId(pid);
    }
 
    let collection = await dbCommunityCollection();

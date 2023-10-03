@@ -48,7 +48,7 @@ function createCommunity(self, uid) {
 function toggleCreateCommunityPlaylist(self, pid) {
    switch (self.innerText) {
       case 'Add Playlist':
-         playlists.push(pid);
+         playlists.push({pid: pid});
          self.innerText = 'Remove Playlist';
          self.className = 'btn btn-danger';
          break;
