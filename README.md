@@ -39,5 +39,5 @@ Il file `package.json` contiene già le dipendenze e requisiti necessari per il 
 
 #### Usage
 
-Dopo aver configurato i file `.env` come riportato nella [Relazione](./docs/Relazione.md),  
+Dopo aver configurato i file `.env` come riportato nella [Relazione](./docs/Relazione.md#configurazione-dellapplicazione),  
 è sufficiente eseguire il comando `npm start` da terminale.  
